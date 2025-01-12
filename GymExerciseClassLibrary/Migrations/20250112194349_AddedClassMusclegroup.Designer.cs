@@ -2,6 +2,7 @@
 using GymExerciseClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymExerciseClassLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250112194349_AddedClassMusclegroup")]
+    partial class AddedClassMusclegroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -46,8 +49,9 @@ namespace GymExerciseClassLibrary.Migrations
                     b.Property<string>("MachineName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MusclegroupId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Musclegroup")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -66,8 +70,6 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MusclegroupId");
 
                     b.ToTable("Exercises");
                 });
@@ -118,17 +120,6 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasForeignKey("TrainingsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GymExerciseClassLibrary.Models.Exercise", b =>
-                {
-                    b.HasOne("GymExerciseClassLibrary.Models.Musclegroup", "Musclegroup")
-                        .WithMany()
-                        .HasForeignKey("MusclegroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Musclegroup");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +27,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private bool _isActive;
         [ObservableProperty]
-        private string _musclegroup;
+        private Musclegroup _musclegroup;
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]

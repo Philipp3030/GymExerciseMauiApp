@@ -1,4 +1,4 @@
-using GymExerciseClassLibrary;
+using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ namespace GymExerciseMauiApp;
 
 public partial class AddTrainingPage : ContentPage
 {
-    private readonly ApplicationDbContext _context;
+    //private readonly ApplicationDbContext _context;
     //private readonly ExerciseViewModel _exerciseViewModel;
 
     private readonly TrainingViewModel _trainingViewModel;
@@ -15,7 +15,7 @@ public partial class AddTrainingPage : ContentPage
     public AddTrainingPage(ApplicationDbContext context)
 	{
 		InitializeComponent();
-        _context = context;
+        //_context = context;
         _trainingViewModel = new TrainingViewModel(context);
         BindingContext = _trainingViewModel;
         //_exerciseViewModel = new ExerciseViewModel(context);

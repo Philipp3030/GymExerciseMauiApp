@@ -11,7 +11,11 @@
 
             <!-- Musclegroup -->
             <Label Text="Musclegroup" />
-            <Entry x:Name="MusclegroupEntry" Placeholder="Enter muscle group" />
+            <Picker x:Name="MusclegroupOptions"
+                    Title="Select an Option"
+                    ItemsSource="{Binding Options}"
+                    ItemDisplayBinding="{Binding Name}" >
+            </Picker>
 
             <!-- Name -->
             <Label Text="Name" />

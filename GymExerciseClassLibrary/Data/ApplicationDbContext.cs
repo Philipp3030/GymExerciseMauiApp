@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymExerciseClassLibrary
+namespace GymExerciseClassLibrary.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -22,6 +22,7 @@ namespace GymExerciseClassLibrary
         {
             //Database.EnsureCreated();
             Database.Migrate();
+
         }
 
         // It is required to override this method when adding/removing migrations from class library
@@ -30,5 +31,20 @@ namespace GymExerciseClassLibrary
 
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Training> Trainings { get; set; }
+        public DbSet<Musclegroup> Musclegroups { get; set; }
+
+        public async void SeedData()
+        {
+            if (!Musclegroups.Any())
+            {
+                Musclegroups.AddRange(new[]
+                {
+                new Musclegroup { Name = "Chest" },
+                new Musclegroup { Name = "Back" },
+                new Musclegroup { Name = "Legs" }
+                });
+            }
+            await SaveChangesAsync();
+        }
     }
 }

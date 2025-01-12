@@ -1,4 +1,4 @@
-using GymExerciseClassLibrary;
+using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
 

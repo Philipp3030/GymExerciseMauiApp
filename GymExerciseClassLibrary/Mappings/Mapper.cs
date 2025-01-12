@@ -64,5 +64,14 @@ namespace GymExerciseClassLibrary.Mappings
             };
             return newTrainingVM;
         }
+
+        public static MusclegroupViewModel MapMusclegroupToViewModel(Musclegroup musclegroup)
+        {
+            MusclegroupViewModel newMusclegroupVM = new MusclegroupViewModel
+            {
+                Name = musclegroup.Name
+            };
+            return newMusclegroupVM;
+        }
     }
 }

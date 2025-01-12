@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
@@ -32,19 +31,17 @@ namespace GymExerciseClassLibrary.ViewModels
         public TrainingViewModel(ApplicationDbContext context)
         {
             _context = context;
-            //NewTrainingVM = new TrainingViewModel();
             LoadTrainings();
             LoadAllExercises();
         }
-        private async void LoadTrainings() // zu Viewmodeln machen??? wie bei AllExercises
+        private async void LoadTrainings()
         {
             AllTrainingVMs.Clear();
 
             var trainingsFromDb = await _context.Trainings.ToListAsync();
             foreach (var training in trainingsFromDb)
             {
-                TrainingViewModel trainingVM = Mapper.MapTrainingToViewModel(training);
-                AllTrainingVMs.Add(trainingVM);
+                AllTrainingVMs.Add(Mapper.MapTrainingToViewModel(training));
             }
         }
 
@@ -77,22 +74,6 @@ namespace GymExerciseClassLibrary.ViewModels
                     SelectedExerciseVMs.Remove(exercise);
             }
         }
-
-        //[RelayCommand]
-        //private void AddNewExerciseToNewTraining()
-        //{
-        //    if (!string.IsNullOrEmpty(ExerciseName)) // Make sure the exercise name is not empty
-        //    {
-        //        var newExercise = new Exercise
-        //        {
-        //            Name = ExerciseName,
-        //            Musclegroup = "Default" // You can allow the user to select the muscle group as well
-        //        };
-
-        //        ExercisesOfTraining.Add(newExercise); // Add the new exercise to the ObservableCollection
-        //        ExerciseName = string.Empty; // Reset the ExerciseName
-        //    }
-        //}
 
         [RelayCommand]
         private async Task SaveNewTraining()

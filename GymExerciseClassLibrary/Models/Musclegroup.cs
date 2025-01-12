@@ -9,7 +9,7 @@ namespace GymExerciseClassLibrary.Models
 {
     public class Musclegroup
     {
-        int Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
     }

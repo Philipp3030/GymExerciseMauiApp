@@ -1,7 +1,7 @@
 ﻿using GymExerciseClassLibrary.Models;
-using GymExerciseClassLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using GymExerciseClassLibrary.Data;
 
 namespace GymExerciseMauiApp
 {

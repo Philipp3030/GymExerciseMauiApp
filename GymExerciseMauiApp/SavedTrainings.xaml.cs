@@ -1,5 +1,5 @@
 using CommunityToolkit.Maui.Behaviors;
-using GymExerciseClassLibrary;
+using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
 

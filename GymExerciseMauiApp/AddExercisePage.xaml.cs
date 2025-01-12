@@ -1,19 +1,23 @@
 using GymExerciseClassLibrary.Models;
-using GymExerciseClassLibrary;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System.Diagnostics.Metrics;
+using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.ViewModels;
 
 namespace GymExerciseMauiApp;
 
 public partial class AddExercisePage : ContentPage
 {
     private readonly ApplicationDbContext _context;
+    private readonly MusclegroupViewModel _musclegroupViewModel;
 
     public AddExercisePage(ApplicationDbContext context)
 	{
 		InitializeComponent();
 		_context = context;
+        _musclegroupViewModel = new MusclegroupViewModel(_context);
+        BindingContext = _musclegroupViewModel;
 	}
 
     private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
@@ -32,7 +36,7 @@ public partial class AddExercisePage : ContentPage
     {
         var newExercise = new Exercise
         {
-            Musclegroup = MusclegroupEntry.Text,
+            Musclegroup = (Musclegroup)MusclegroupOptions.SelectedItem, // to viewmodel
             Name = NameEntry.Text,
             IsActive = IsActiveSwitch.IsToggled,
             MachineName = MachineNameEntry.Text,

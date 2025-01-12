@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using GymExerciseClassLibrary;
+using GymExerciseClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

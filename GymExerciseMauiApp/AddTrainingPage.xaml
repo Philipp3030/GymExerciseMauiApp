@@ -38,7 +38,11 @@
             </Frame>
 
             <!-- Save Button -->
-            <Button Text="Submit" Command="{Binding SaveNewTrainingCommand}" />
+            <Button Text="Submit" Command="{Binding SaveNewTrainingCommand}" >
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="250" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
 
             <!-- Selected Exercises Header -->
             <Label Text="Selected Exercises" FontAttributes="Bold" FontSize="16" />
