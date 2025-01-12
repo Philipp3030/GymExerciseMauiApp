@@ -11,10 +11,9 @@ namespace GymExerciseClassLibrary.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Musclegroup { get; set; }
-        [Required]
         public string Name { get; set; }
         public bool IsActive { get; set; } = true;
+        public string Musclegroup { get; set; } // public Musclegroup Musclegroup { get; set; }
         public string? MachineName { get; set; }
         public string? Description { get; set; }
         public int? Sets { get; set; }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class ExerciseViewModel : ObservableObject
+    public partial class ExerciseViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
 
@@ -22,12 +22,27 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
+        private string _name;
+        [ObservableProperty]
+        private bool _isActive;
+        [ObservableProperty]
         private string _musclegroup;
         [ObservableProperty]
-        private string _name;
+        private string? _machineName;
+        [ObservableProperty]
+        private string? _description;
+        [ObservableProperty]
+        private int? _sets;
+        [ObservableProperty]
+        private int? _repsPrevious;
+        [ObservableProperty]
+        private int? _reps;
+        [ObservableProperty]
+        private int? _repsGoal;
         [ObservableProperty]
         private bool _isSelected;
 
+        public ExerciseViewModel() { }  
         public ExerciseViewModel(ApplicationDbContext context)
         {
             _context = context;

@@ -3,100 +3,133 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class TrainingViewModel : ObservableObject
+    public partial class TrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
         [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _selectedExercises = new();
+        private ObservableCollection<TrainingViewModel> _allTrainingVMs = new();
         [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _allExercises = new();
+        private ObservableCollection<ExerciseViewModel> _selectedExerciseVMs = new();
         [ObservableProperty]
+        private ObservableCollection<ExerciseViewModel> _allExerciseVMs = new();
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "This field is required.")]
         private string _name;
         [ObservableProperty]
-        private string _description;
+        private string? _description;
+        [ObservableProperty]
+        private string? _errorMessage;
 
-        public int TrainingId { get; set; }
-        public List<Training> Trainings { get; set; } = new List<Training>();
-        public List<Exercise> ExercisesOfTraining { get; set; } = new List<Exercise>();
-        //public string ExerciseName { get; set; } = string.Empty;
-        public Training NewTraining { get; set; }
-
+        public TrainingViewModel() { }
         public TrainingViewModel(ApplicationDbContext context)
         {
             _context = context;
-            NewTraining = new Training();
-            Name = string.Empty;
+            //NewTrainingVM = new TrainingViewModel();
             LoadTrainings();
             LoadAllExercises();
         }
-        private async void LoadTrainings()
+        private async void LoadTrainings() // zu Viewmodeln machen??? wie bei AllExercises
         {
-            var trainings = await _context.Trainings.ToListAsync();
-            foreach (var training in trainings)
+            AllTrainingVMs.Clear();
+
+            var trainingsFromDb = await _context.Trainings.ToListAsync();
+            foreach (var training in trainingsFromDb)
             {
-                Trainings.Add(training);
+                TrainingViewModel trainingVM = MapTrainingToViewModel(training);
+                AllTrainingVMs.Add(trainingVM);
             }
         }
 
         private async void LoadAllExercises()
         {
+            AllExerciseVMs.Clear();
+            
             var exercisesFromDb = await _context.Exercises.ToListAsync();
-
-            // Option2: MAPPEN (Automapper) zu ExerciseViewModel, um IsSelected zu verwenden
-
-            AllExercises.Clear();
             foreach (var exercise in exercisesFromDb)
             {
-                AllExercises.Add(new ExerciseViewModel(_context)
-                {
-                    Id = exercise.Id,
-                    Name = exercise.Name,
-                    Musclegroup = exercise.Musclegroup,
-                    IsSelected = false // Default value
-                });
+                ExerciseViewModel exerciseVM = MapExerciseToViewModel(exercise);
+                exerciseVM.IsSelected = false; // Default value
+                AllExerciseVMs.Add(exerciseVM); 
             }
         }
 
-        [RelayCommand]
-        private void OnExerciseCheckedChangedCommand(ExerciseViewModel exercise)
+        private ExerciseViewModel MapExerciseToViewModel(Exercise exercise)
         {
-            //var checkbox = (CheckBox)sender;
-            //var exercise = (ExerciseViewModel)checkbox.BindingContext;
-
-            // Call the ToggleSelection method to update SelectedExercises
-            ToggleSelection(exercise);
+            ExerciseViewModel newExerciseVM = new ExerciseViewModel
+            {
+                Id = exercise.Id,
+                Name = exercise.Name,
+                IsActive = exercise.IsActive,
+                Musclegroup = exercise.Musclegroup,
+                MachineName = exercise.MachineName,
+                Description = exercise.Description,
+                Sets = exercise.Sets,
+                RepsPrevious = exercise.RepsPrevious,
+                Reps = exercise.Reps,
+                RepsGoal = exercise.RepsGoal
+            };
+            return newExerciseVM;
         }
 
+        private Exercise MapExerciseViewModelToModel(ExerciseViewModel exerciseVM)
+        {
+            Exercise newExercise = new Exercise
+            {
+                Id = exerciseVM.Id,
+                Name = exerciseVM.Name,
+                IsActive = exerciseVM.IsActive,
+                Musclegroup = exerciseVM.Musclegroup,
+                MachineName = exerciseVM.MachineName,
+                Description = exerciseVM.Description,
+                Sets = exerciseVM.Sets,
+                RepsPrevious = exerciseVM.RepsPrevious,
+                Reps = exerciseVM.Reps,
+                RepsGoal = exerciseVM.RepsGoal
+            };
+            return newExercise;
+        }
 
+        private Training MapTrainingViewModelToModel(TrainingViewModel trainingVM)
+        {
+            Training newTraining = new Training
+            {
+                Name = trainingVM.Name,
+                Description = trainingVM.Description
+            };
+            return newTraining;
+        }
+
+        private TrainingViewModel MapTrainingToViewModel(Training training)
+        {
+            TrainingViewModel newTrainingVM = new TrainingViewModel
+            {
+                Name = training.Name,
+                Description = training.Description
+            };
+            return newTrainingVM;
+        }
+
+        // handle selection of exercises on "AddTrainingPage"
         public void ToggleSelection(ExerciseViewModel exercise)
         {
             if (exercise.IsSelected)
             {
                 // Add the exercise to the selected list if it's selected
-                if (!SelectedExercises.Contains(exercise))
-                    SelectedExercises.Add(exercise);
+                if (!SelectedExerciseVMs.Contains(exercise))
+                    SelectedExerciseVMs.Add(exercise);
             }
             else
             {
                 // Remove the exercise from the selected list if it's deselected
-                if (SelectedExercises.Contains(exercise))
-                    SelectedExercises.Remove(exercise);
-            }
-        }
-
-        //[RelayCommand]
-        private async Task AddExistingExerciseToNewTraining()
-        {
-            foreach (var exerciseViewModel in SelectedExercises)
-            {
-                if (exerciseViewModel.IsSelected)
-                {
-                    ExercisesOfTraining.Add(await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseViewModel.Id));
-                }
+                if (SelectedExerciseVMs.Contains(exercise))
+                    SelectedExerciseVMs.Remove(exercise);
             }
         }
 
@@ -119,23 +152,50 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task SaveNewTraining()
         {
-            Debug.WriteLine("Test");
-            await AddExistingExerciseToNewTraining();
-            NewTraining.Name = Name;
-            NewTraining.Description = Description;
-            NewTraining.Exercises = ExercisesOfTraining;//.ToList(); // Associate the exercises with the training
-            _context.Trainings.Add(NewTraining);
-            await _context.SaveChangesAsync();
+            ValidateAllProperties();            
 
+            // Check if "Name" is empty
+            if (!HasErrors)
+            {
+                // Create list of exercises for new Training entity to save to database
+                List<Exercise> exercisesOfTraining = new List<Exercise>();
+                foreach (var exerciseVM in SelectedExerciseVMs)
+                {
+                    exercisesOfTraining.Add(MapExerciseViewModelToModel(exerciseVM));
+                }
 
-            Name = string.Empty;
-            Description = string.Empty;
-            ExercisesOfTraining.Clear(); // Clear the exercises collection after saving
-            SelectedExercises.Clear();
-            NewTraining = new Training(); // Reset the NewTraining object after saving
-            LoadAllExercises();
-            LoadTrainings();
-            await Shell.Current.GoToAsync("//MainPage");
+                // Create "Training" entity and save to database
+                Training newTraining = MapTrainingViewModelToModel(
+                    new TrainingViewModel
+                    {
+                        Name = this.Name,
+                        Description = this.Description
+                    });
+                newTraining.Exercises = exercisesOfTraining;
+                _context.Trainings.Add(newTraining);
+                await _context.SaveChangesAsync();
+
+                // Clear all
+                SelectedExerciseVMs.Clear();
+                Name = string.Empty;
+                Description = string.Empty;
+                //NewTrainingVM = new TrainingViewModel(); 
+
+                // Update all
+                LoadAllExercises();
+                LoadTrainings();
+                await Shell.Current.GoToAsync("//MainPage"); 
+            }
+            else
+            {
+                ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+            }
         }
+
+        //[RelayCommand]
+        //private async Task NavigateToThisTraining()
+        //{
+
+        //}
     }
 }
