@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
@@ -21,7 +22,6 @@ namespace GymExerciseClassLibrary.ViewModels
         private string _name;
         [ObservableProperty]
         private ObservableCollection<MusclegroupViewModel> _options = new();
-
 
         public MusclegroupViewModel() { }
         public MusclegroupViewModel(ApplicationDbContext context)

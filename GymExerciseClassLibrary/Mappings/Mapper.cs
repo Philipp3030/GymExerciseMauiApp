@@ -17,7 +17,7 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = exercise.Id,
                 Name = exercise.Name,
                 IsActive = exercise.IsActive,
-                Musclegroup = exercise.Musclegroup,
+                MusclegroupVM = MapMusclegroupToViewModel(exercise.Musclegroup),
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
                 Sets = exercise.Sets,
@@ -35,7 +35,7 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = exerciseVM.Id,
                 Name = exerciseVM.Name,
                 IsActive = exerciseVM.IsActive,
-                Musclegroup = exerciseVM.Musclegroup,
+                Musclegroup = MapMusclegroupViewModelToModel(exerciseVM.MusclegroupVM),
                 MachineName = exerciseVM.MachineName,
                 Description = exerciseVM.Description,
                 Sets = exerciseVM.Sets,
@@ -44,15 +44,6 @@ namespace GymExerciseClassLibrary.Mappings
                 RepsGoal = exerciseVM.RepsGoal
             };
             return newExercise;
-        }
-        public static Training MapTrainingViewModelToModel(TrainingViewModel trainingVM)
-        {
-            Training newTraining = new Training
-            {
-                Name = trainingVM.Name,
-                Description = trainingVM.Description
-            };
-            return newTraining;
         }
 
         public static TrainingViewModel MapTrainingToViewModel(Training training)
@@ -65,6 +56,16 @@ namespace GymExerciseClassLibrary.Mappings
             return newTrainingVM;
         }
 
+        public static Training MapTrainingViewModelToModel(TrainingViewModel trainingVM)
+        {
+            Training newTraining = new Training
+            {
+                Name = trainingVM.Name,
+                Description = trainingVM.Description
+            };
+            return newTraining;
+        }
+
         public static MusclegroupViewModel MapMusclegroupToViewModel(Musclegroup musclegroup)
         {
             MusclegroupViewModel newMusclegroupVM = new MusclegroupViewModel
@@ -72,6 +73,15 @@ namespace GymExerciseClassLibrary.Mappings
                 Name = musclegroup.Name
             };
             return newMusclegroupVM;
+        }
+
+        public static Musclegroup MapMusclegroupViewModelToModel(MusclegroupViewModel musclegroupVM)
+        {
+            Musclegroup newMusclegroup = new Musclegroup
+            {
+                Name = musclegroupVM.Name
+            };
+            return newMusclegroup;
         }
     }
 }

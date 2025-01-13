@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="GymExerciseMauiApp.AddMusclegroupPopup">
+
+    <VerticalStackLayout Padding="20" WidthRequest="300" HeightRequest="200">
+        <Label Text="Add a New Musclegroup"
+               FontSize="18"
+               HorizontalOptions="Center" />
+
+        <Entry Placeholder="Enter new Musclegroup name"
+               Text="{Binding MusclegroupVM.Name}" />
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Add"
+                    Command="{Binding AddMusclegroupCommand}" />
+            <Button Text="Cancel"
+                    BackgroundColor="LightGray"
+                    Clicked="OnCancelClicked" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</toolkit:Popup>

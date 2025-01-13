@@ -91,12 +91,12 @@ namespace GymExerciseClassLibrary.ViewModels
                 }
 
                 // Create "Training" entity and save to database
-                Training newTraining = Mapper.MapTrainingViewModelToModel(
-                    new TrainingViewModel
-                    {
-                        Name = this.Name,
-                        Description = this.Description
-                    });
+                Training newTraining = Mapper.MapTrainingViewModelToModel(this);
+                    //new TrainingViewModel
+                    //{
+                    //    Name = this.Name,
+                    //    Description = this.Description
+                    //});
                 newTraining.Exercises = exercisesOfTraining;
                 _context.Trainings.Add(newTraining);
                 await _context.SaveChangesAsync();

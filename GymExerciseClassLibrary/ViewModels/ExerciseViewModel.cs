@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,8 @@ namespace GymExerciseClassLibrary.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Exercise> _exercises = new();
+        //[ObservableProperty]
+        //private ObservableCollection<MusclegroupViewModel> _musclegroupVMs = new();
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
@@ -27,7 +30,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private bool _isActive;
         [ObservableProperty]
-        private Musclegroup _musclegroup;
+        private MusclegroupViewModel _musclegroupVM = new();
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -48,6 +51,7 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             LoadExercises();
+            LoadMusclegroups();
         }
 
         private async void LoadExercises()
@@ -58,5 +62,72 @@ namespace GymExerciseClassLibrary.ViewModels
                 Exercises.Add(exercise);
             }
         }
+
+        private void LoadMusclegroups()
+        {
+            MusclegroupVM.Options = new MusclegroupViewModel(_context).Options;
+        }
+
+        [RelayCommand]
+        private async Task AddMusclegroup()
+        {
+            ValidateAllProperties();
+
+            // Check if "Name" is empty
+            if (!HasErrors)
+            {
+                Musclegroup musclegroup = Mapper.MapMusclegroupViewModelToModel(new MusclegroupViewModel
+                {
+                    Name = MusclegroupVM.Name
+                });
+
+                _context.Musclegroups.Add(musclegroup);
+                await _context.SaveChangesAsync();
+                LoadMusclegroups();
+            }
+        }
+
+        //[RelayCommand]
+        //private async Task SaveNewExercise()
+        //{
+        //    ValidateAllProperties();
+
+        //    // Check if "Name" is empty
+        //    if (!HasErrors)
+        //    {
+        //        // Create list of exercises for new Training entity to save to database
+        //        List<Exercise> exercisesOfTraining = new List<Exercise>();
+        //        foreach (var exerciseVM in SelectedExerciseVMs)
+        //        {
+        //            exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(exerciseVM));
+        //        }
+
+        //        // Create "Training" entity and save to database
+        //        Training newTraining = Mapper.MapTrainingViewModelToModel(
+        //            new TrainingViewModel
+        //            {
+        //                Name = this.Name,
+        //                Description = this.Description
+        //            });
+        //        newTraining.Exercises = exercisesOfTraining;
+        //        _context.Trainings.Add(newTraining);
+        //        await _context.SaveChangesAsync();
+
+        //        // Clear all
+        //        SelectedExerciseVMs.Clear();
+        //        Name = string.Empty;
+        //        Description = string.Empty;
+        //        //NewTrainingVM = new TrainingViewModel(); 
+
+        //        // Update all
+        //        LoadAllExercises();
+        //        LoadTrainings();
+        //        await Shell.Current.GoToAsync("//MainPage");
+        //    }
+        //    else
+        //    {
+        //        ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+        //    }
+        //}
     }
 }
