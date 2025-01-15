@@ -30,7 +30,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private bool _isActive;
         [ObservableProperty]
-        private MusclegroupViewModel _musclegroupVM = new();
+        private MusclegroupViewModel _musclegroupVM;
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -50,12 +50,12 @@ namespace GymExerciseClassLibrary.ViewModels
         public ExerciseViewModel(ApplicationDbContext context)
         {
             _context = context;
+            MusclegroupVM = new MusclegroupViewModel(_context);
             LoadExercises();
-            LoadMusclegroups();
         }
 
         private async void LoadExercises()
-        {
+        { 
             var exercises = await _context.Exercises.ToListAsync();
             foreach (var exercise in exercises)
             {
@@ -63,27 +63,31 @@ namespace GymExerciseClassLibrary.ViewModels
             }
         }
 
-        private void LoadMusclegroups()
-        {
-            MusclegroupVM.Options = new MusclegroupViewModel(_context).Options;
-        }
-
         [RelayCommand]
         private async Task AddMusclegroup()
         {
-            ValidateAllProperties();
-
-            // Check if "Name" is empty
-            if (!HasErrors)
+            try
             {
-                Musclegroup musclegroup = Mapper.MapMusclegroupViewModelToModel(new MusclegroupViewModel
+                // Check if "Name" is empty
+                if (!string.IsNullOrWhiteSpace(MusclegroupVM.Name))
                 {
-                    Name = MusclegroupVM.Name
-                });
+                    Musclegroup musclegroup = new Musclegroup
+                    {
+                        Name = MusclegroupVM.Name
+                    };
 
-                _context.Musclegroups.Add(musclegroup);
-                await _context.SaveChangesAsync();
-                LoadMusclegroups();
+                    // Save new musclegroup to database
+                    _context.Musclegroups.Add(musclegroup);
+                    await _context.SaveChangesAsync();
+
+                    // Create new musclegroup to update view
+                    MusclegroupVM = new MusclegroupViewModel(_context);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Message: {e.Message}");
+                throw;
             }
         }
 

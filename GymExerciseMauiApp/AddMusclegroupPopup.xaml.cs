@@ -12,6 +12,8 @@ public partial class AddMusclegroupPopup : Popup
     private readonly MusclegroupViewModel _musclegroupVM;
     //private readonly ExerciseViewModel _exerciseVM;
 
+    public AddMusclegroupPopup() {  }
+
     public AddMusclegroupPopup(ApplicationDbContext context, ExerciseViewModel exerciseVM)
 	{
 		InitializeComponent();
@@ -24,6 +26,6 @@ public partial class AddMusclegroupPopup : Popup
 
     private void OnCancelClicked(object sender, EventArgs e)
     {
-        Close(); // Close the popup when "Cancel" is clicked
+        Close(); // Close the popup
     }
 }

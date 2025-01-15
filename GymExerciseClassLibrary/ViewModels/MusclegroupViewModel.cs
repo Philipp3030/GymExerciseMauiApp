@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,8 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "This field is empty.")]
         private string _name;
         [ObservableProperty]
         private ObservableCollection<MusclegroupViewModel> _options = new();

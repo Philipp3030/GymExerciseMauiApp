@@ -14,7 +14,8 @@
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Add"
-                    Command="{Binding AddMusclegroupCommand}" />
+                    Command="{Binding AddMusclegroupCommand}"
+                    Clicked="OnCancelClicked"/>
             <Button Text="Cancel"
                     BackgroundColor="LightGray"
                     Clicked="OnCancelClicked" />
