@@ -22,17 +22,17 @@ public partial class AddTrainingPage : ContentPage
         //BindingContext = _exerciseViewModel;
     }
 
-    private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (sender is Entry entry)
-        {
-            // Ensure the text contains only numeric characters
-            if (!int.TryParse(entry.Text, out _))
-            {
-                entry.Text = new string(e.OldTextValue?.Where(char.IsDigit).ToArray() ?? Array.Empty<char>());
-            }
-        }
-    }
+    //private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+    //{
+    //    if (sender is Entry entry)
+    //    {
+    //        // Ensure the text contains only numeric characters
+    //        if (!int.TryParse(entry.Text, out _))
+    //        {
+    //            entry.Text = new string(e.OldTextValue?.Where(char.IsDigit).ToArray() ?? Array.Empty<char>());
+    //        }
+    //    }
+    //}
 
     private void OnExerciseCheckedChanged(object sender, EventArgs e)
     {

@@ -18,9 +18,26 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class ExerciseViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
-
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exerciseVMs = new();
+        [ObservableProperty]
+        private MusclegroupViewModel _musclegroupVM;
+        [ObservableProperty]
+        private bool _isSelected;
+        [ObservableProperty]
+        private string? _errorMessageName;
+        [ObservableProperty]
+        private string? _errorMessageSets;
+        [ObservableProperty]
+        private string? _errorMessageRepsPrevious;
+        [ObservableProperty]
+        private string? _errorMessageReps;
+        [ObservableProperty]
+        private string? _errorMessageRepsGoal;
+        [ObservableProperty]
+        private string? _errorMessageSelectedMusclegroup;
+
+        // model properties
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
@@ -29,8 +46,6 @@ namespace GymExerciseClassLibrary.ViewModels
         private string _name;
         [ObservableProperty]
         private bool _isActive;
-        [ObservableProperty]
-        private MusclegroupViewModel _musclegroupVM;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
@@ -55,20 +70,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _repsGoal;
-        [ObservableProperty]
-        private bool _isSelected;
-        [ObservableProperty]
-        private string? _errorMessageName;
-        [ObservableProperty]
-        private string? _errorMessageSets;
-        [ObservableProperty]
-        private string? _errorMessageRepsPrevious;
-        [ObservableProperty]
-        private string? _errorMessageReps;
-        [ObservableProperty]
-        private string? _errorMessageRepsGoal;
-        [ObservableProperty]
-        private string? _errorMessageSelectedMusclegroup;
+        
         
         public ExerciseViewModel() { }  
         public ExerciseViewModel(ApplicationDbContext context)

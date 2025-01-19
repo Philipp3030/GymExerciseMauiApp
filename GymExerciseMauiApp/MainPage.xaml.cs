@@ -7,7 +7,6 @@ namespace GymExerciseMauiApp
 {
     public partial class MainPage : ContentPage
     {
-        int counter = 0;
         private readonly ApplicationDbContext _context;
 
         public MainPage(ApplicationDbContext context)

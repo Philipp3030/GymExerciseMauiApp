@@ -1,6 +1,4 @@
-using CommunityToolkit.Maui.Behaviors;
 using GymExerciseClassLibrary.Data;
-using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
 
 namespace GymExerciseMauiApp;
@@ -21,11 +19,11 @@ public partial class SavedTrainings : ContentPage
     private async void OnLabelTapped(object sender, EventArgs e)
     {
         var frame = sender as Frame;
+        var selectedTraining = frame?.BindingContext as TrainingViewModel;
 
-        var training = frame.BindingContext as Training;
-
-        var a = training.Name;
-
-        await Navigation.PushAsync(new SavedExercises(_context));
+        if (selectedTraining != null)
+        {
+            await Navigation.PushAsync(new ExercisesOfTraining(selectedTraining));
+        }
     }
 }

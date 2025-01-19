@@ -19,13 +19,16 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         [ObservableProperty]
+        private ObservableCollection<MusclegroupViewModel> _options = new();
+
+        // model properties
+        [ObservableProperty]
         private int _id;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is empty.")]
         private string _name;
-        [ObservableProperty]
-        private ObservableCollection<MusclegroupViewModel> _options = new();
+
 
         public MusclegroupViewModel() { }
         public MusclegroupViewModel(ApplicationDbContext context)

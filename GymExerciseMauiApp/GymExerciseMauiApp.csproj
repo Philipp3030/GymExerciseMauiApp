@@ -87,6 +87,9 @@
 	  <MauiXaml Update="AddTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ExercisesOfTraining.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SavedExercises.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

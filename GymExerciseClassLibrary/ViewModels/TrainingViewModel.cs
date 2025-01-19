@@ -20,6 +20,12 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _allExerciseVMs;
         [ObservableProperty]
+        private TrainingViewModel? _selectedTrainingVM;
+        [ObservableProperty]
+        private string? _errorMessage;
+
+        // model properties
+        [ObservableProperty]
         private int _id;
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -28,7 +34,8 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private string? _description;
         [ObservableProperty]
-        private string? _errorMessage;
+        private ObservableCollection<ExerciseViewModel> _exerciseVMsOfTraining = new();
+        
 
         public TrainingViewModel() { }
         public TrainingViewModel(ApplicationDbContext context)
@@ -42,7 +49,9 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             AllTrainingVMs.Clear();
 
-            var trainingsFromDb = await _context.Trainings.ToListAsync();
+            var trainingsFromDb = await _context.Trainings
+                .Include(t => t.Exercises)
+                .ToListAsync();
             foreach (var training in trainingsFromDb)
             {
                 AllTrainingVMs.Add(Mapper.MapTrainingToViewModel(training));
@@ -103,11 +112,5 @@ namespace GymExerciseClassLibrary.ViewModels
                 ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
             }
         }
-
-        //[RelayCommand]
-        //private async Task NavigateToThisTraining()
-        //{
-
-        //}
     }
 }

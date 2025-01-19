@@ -4,6 +4,7 @@ using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,11 +57,17 @@ namespace GymExerciseClassLibrary.Mappings
 
         public static TrainingViewModel MapTrainingToViewModel(Training training)
         {
+            var exercises = new ObservableCollection<ExerciseViewModel>();
+            foreach (var exercise in training.Exercises)
+            {
+                exercises.Add(MapExerciseToViewModel(exercise));
+            }
             TrainingViewModel newTrainingVM = new TrainingViewModel
             {
                 Id = training.Id,
                 Name = training.Name,
-                Description = training.Description
+                Description = training.Description,
+                ExerciseVMsOfTraining = exercises
             };
             return newTrainingVM;
         }
