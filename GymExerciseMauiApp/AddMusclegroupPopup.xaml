@@ -9,8 +9,8 @@
                FontSize="18"
                HorizontalOptions="Center" />
 
-        <Entry Placeholder="Enter new Musclegroup name"
-               Text="{Binding MusclegroupVM.Name}" />
+        <Entry Placeholder="Enter new Musclegroup name" 
+               Text="{Binding Name}"/>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Add"

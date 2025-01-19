@@ -31,15 +31,39 @@ namespace GymExerciseClassLibrary.ViewModels
         public MusclegroupViewModel(ApplicationDbContext context)
         {
             _context = context;
-            LoadMusclegroups();
+            LoadOptions();
         }
 
-        private async void LoadMusclegroups()
+        private async void LoadOptions()
         {
+            Options.Clear();
+
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
                 Options.Add(Mapper.MapMusclegroupToViewModel(musclegroup)); 
+            }
+        }
+
+        [RelayCommand]
+        private async Task AddMusclegroup()
+        {
+            try
+            {
+                // Check if "Name" is empty
+                if (!string.IsNullOrWhiteSpace(Name))
+                {
+                    // Save new musclegroup to database
+                    _context.Musclegroups.Add(Mapper.MapMusclegroupViewModelToModel(_context, this));//musclegroup);
+                    await _context.SaveChangesAsync();
+
+                    LoadOptions();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Message: {e.Message}");
+                throw;
             }
         }
     }

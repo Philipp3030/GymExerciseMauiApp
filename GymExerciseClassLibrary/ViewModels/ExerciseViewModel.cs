@@ -20,32 +20,56 @@ namespace GymExerciseClassLibrary.ViewModels
         private readonly ApplicationDbContext _context;
 
         [ObservableProperty]
-        private ObservableCollection<Exercise> _exercises = new();
-        //[ObservableProperty]
-        //private ObservableCollection<MusclegroupViewModel> _musclegroupVMs = new();
+        private ObservableCollection<ExerciseViewModel> _exerciseVMs = new();
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "This field is required.")]
         private string _name;
         [ObservableProperty]
         private bool _isActive;
         [ObservableProperty]
         private MusclegroupViewModel _musclegroupVM;
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "This field is required.")]
+        private MusclegroupViewModel _selectedMusclegroupVM;
+        [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
         private string? _description;
         [ObservableProperty]
-        private int? _sets;
+        [NotifyDataErrorInfo]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
+        private string? _sets;
         [ObservableProperty]
-        private int? _repsPrevious;
+        [NotifyDataErrorInfo]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
+        private string? _repsPrevious;
         [ObservableProperty]
-        private int? _reps;
+        [NotifyDataErrorInfo]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
+        private string? _reps;
         [ObservableProperty]
-        private int? _repsGoal;
+        [NotifyDataErrorInfo]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
+        private string? _repsGoal;
         [ObservableProperty]
         private bool _isSelected;
-
+        [ObservableProperty]
+        private string? _errorMessageName;
+        [ObservableProperty]
+        private string? _errorMessageSets;
+        [ObservableProperty]
+        private string? _errorMessageRepsPrevious;
+        [ObservableProperty]
+        private string? _errorMessageReps;
+        [ObservableProperty]
+        private string? _errorMessageRepsGoal;
+        [ObservableProperty]
+        private string? _errorMessageSelectedMusclegroup;
+        
         public ExerciseViewModel() { }  
         public ExerciseViewModel(ApplicationDbContext context)
         {
@@ -59,79 +83,46 @@ namespace GymExerciseClassLibrary.ViewModels
             var exercises = await _context.Exercises.ToListAsync();
             foreach (var exercise in exercises)
             {
-                Exercises.Add(exercise);
+                ExerciseVMs.Add(Mapper.MapExerciseToViewModel(exercise));
             }
         }
 
         [RelayCommand]
-        private async Task AddMusclegroup()
+        private async Task SaveNewExercise()
         {
-            try
+            ValidateAllProperties();
+
+            // Check for errors
+            if (!HasErrors)
             {
-                // Check if "Name" is empty
-                if (!string.IsNullOrWhiteSpace(MusclegroupVM.Name))
+                try
                 {
-                    Musclegroup musclegroup = new Musclegroup
-                    {
-                        Name = MusclegroupVM.Name
-                    };
-
-                    // Save new musclegroup to database
-                    _context.Musclegroups.Add(musclegroup);
+                    _context.Exercises.Add(Mapper.MapExerciseViewModelToModel(_context, this));   // irgendwas mit ids
                     await _context.SaveChangesAsync();
-
-                    // Create new musclegroup to update view
-                    MusclegroupVM = new MusclegroupViewModel(_context);
                 }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException.Message}");
+                    throw;
+                }
+                await Shell.Current.GoToAsync("//MainPage");
             }
-            catch (Exception e)
+            else
             {
-                Debug.WriteLine($"Message: {e.Message}");
-                throw;
+                ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+                ErrorMessageSelectedMusclegroup = GetErrors(nameof(SelectedMusclegroupVM))?.FirstOrDefault()?.ToString();
             }
         }
 
-        //[RelayCommand]
-        //private async Task SaveNewExercise()
-        //{
-        //    ValidateAllProperties();
-
-        //    // Check if "Name" is empty
-        //    if (!HasErrors)
-        //    {
-        //        // Create list of exercises for new Training entity to save to database
-        //        List<Exercise> exercisesOfTraining = new List<Exercise>();
-        //        foreach (var exerciseVM in SelectedExerciseVMs)
-        //        {
-        //            exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(exerciseVM));
-        //        }
-
-        //        // Create "Training" entity and save to database
-        //        Training newTraining = Mapper.MapTrainingViewModelToModel(
-        //            new TrainingViewModel
-        //            {
-        //                Name = this.Name,
-        //                Description = this.Description
-        //            });
-        //        newTraining.Exercises = exercisesOfTraining;
-        //        _context.Trainings.Add(newTraining);
-        //        await _context.SaveChangesAsync();
-
-        //        // Clear all
-        //        SelectedExerciseVMs.Clear();
-        //        Name = string.Empty;
-        //        Description = string.Empty;
-        //        //NewTrainingVM = new TrainingViewModel(); 
-
-        //        // Update all
-        //        LoadAllExercises();
-        //        LoadTrainings();
-        //        await Shell.Current.GoToAsync("//MainPage");
-        //    }
-        //    else
-        //    {
-        //        ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
-        //    }
-        //}
+        [RelayCommand]
+        private void CheckForErrors()
+        {
+            ValidateAllProperties();
+            
+            ErrorMessageSets = GetErrors(nameof(Sets))?.FirstOrDefault()?.ToString();
+            ErrorMessageRepsPrevious = GetErrors(nameof(RepsPrevious))?.FirstOrDefault()?.ToString();
+            ErrorMessageReps = GetErrors(nameof(Reps))?.FirstOrDefault()?.ToString();
+            ErrorMessageRepsGoal = GetErrors(nameof(RepsGoal))?.FirstOrDefault()?.ToString();
+        }
     }
 }

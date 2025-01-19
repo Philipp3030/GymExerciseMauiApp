@@ -5,6 +5,7 @@ using System.Diagnostics.Metrics;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.ViewModels;
 using CommunityToolkit.Maui.Views;
+using GymExerciseClassLibrary.Mappings;
 
 namespace GymExerciseMauiApp;
 
@@ -21,48 +22,15 @@ public partial class AddExercisePage : ContentPage
         BindingContext = _exerciseViewModel;
 	}
 
-    private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+    private void TriggerCheckForErrorsCommand(object sender, EventArgs e)
     {
-        if (sender is Entry entry)
-        {
-            // Ensure the text contains only numeric characters
-            if (!int.TryParse(entry.Text, out _))
-            {
-                entry.Text = new string(e.OldTextValue?.Where(char.IsDigit).ToArray() ?? Array.Empty<char>());
-            }
-        }
+        _exerciseViewModel.CheckForErrorsCommand?.Execute(null);
     }
 
     private void ShowAddMusclegroupPopup(object sender, EventArgs e)
     {
+        _exerciseViewModel.MusclegroupVM = new MusclegroupViewModel(_context);
         var popup = new AddMusclegroupPopup(_context, _exerciseViewModel);
         this.ShowPopup(popup); // Display the popup
     }
-
-    //private async void OnSubmitClicked(object sender, EventArgs e)
-    //{
-    //    var newExercise = new Exercise
-    //    {
-    //        Musclegroup = (Musclegroup)MusclegroupOptions.SelectedItem, // to viewmodel
-    //        Name = NameEntry.Text,
-    //        IsActive = IsActiveSwitch.IsToggled,
-    //        MachineName = MachineNameEntry.Text,
-    //        Description = DescriptionEditor.Text,
-    //        Sets = Convert.ToInt32(SetsEntry.Text),
-    //        RepsPrevious = Convert.ToInt32(RepsPreviousEntry.Text),
-    //        Reps = Convert.ToInt32(RepsEntry.Text),
-    //        RepsGoal = Convert.ToInt32(RepsGoalEntry.Text)
-    //    };
-
-    //    try
-    //    {
-    //        await _context.Exercises.AddAsync(newExercise);
-    //        await _context.SaveChangesAsync();
-    //        ResultEditor.Text = $"Exercise Added successfully";
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ResultEditor.Text = ex.Message;
-    //    }
-    //}
 }

@@ -9,7 +9,7 @@
 
             <!-- Name -->
             <Label Text="Name" />
-            <Entry x:Name="NameEntry" Placeholder="Enter training name" Text="{Binding Name, Mode=TwoWay}" />
+            <Entry x:Name="NameEntry" Placeholder="Enter training name" Text="{Binding Name}" />
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="True"/>
             <!-- Description -->
             <Label Text="Description" />

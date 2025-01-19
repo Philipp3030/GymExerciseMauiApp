@@ -6,6 +6,7 @@ using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
@@ -17,7 +18,9 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _selectedExerciseVMs = new();
         [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _allExerciseVMs = new();
+        private ObservableCollection<ExerciseViewModel> _allExerciseVMs;
+        [ObservableProperty]
+        private int _id;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
@@ -31,9 +34,10 @@ namespace GymExerciseClassLibrary.ViewModels
         public TrainingViewModel(ApplicationDbContext context)
         {
             _context = context;
+            AllExerciseVMs = new ExerciseViewModel(_context).ExerciseVMs;
             LoadTrainings();
-            LoadAllExercises();
         }
+
         private async void LoadTrainings()
         {
             AllTrainingVMs.Clear();
@@ -42,19 +46,6 @@ namespace GymExerciseClassLibrary.ViewModels
             foreach (var training in trainingsFromDb)
             {
                 AllTrainingVMs.Add(Mapper.MapTrainingToViewModel(training));
-            }
-        }
-
-        private async void LoadAllExercises()
-        {
-            AllExerciseVMs.Clear();
-            
-            var exercisesFromDb = await _context.Exercises.ToListAsync();
-            foreach (var exercise in exercisesFromDb)
-            {
-                ExerciseViewModel exerciseVM = Mapper.MapExerciseToViewModel(exercise);
-                exerciseVM.IsSelected = false; // Default value
-                AllExerciseVMs.Add(exerciseVM); 
             }
         }
 
@@ -87,29 +78,24 @@ namespace GymExerciseClassLibrary.ViewModels
                 List<Exercise> exercisesOfTraining = new List<Exercise>();
                 foreach (var exerciseVM in SelectedExerciseVMs)
                 {
-                    exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(exerciseVM));
+                    exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(_context, exerciseVM));
                 }
 
                 // Create "Training" entity and save to database
-                Training newTraining = Mapper.MapTrainingViewModelToModel(this);
-                    //new TrainingViewModel
-                    //{
-                    //    Name = this.Name,
-                    //    Description = this.Description
-                    //});
+                Training newTraining = Mapper.MapTrainingViewModelToModel(_context, this);
                 newTraining.Exercises = exercisesOfTraining;
-                _context.Trainings.Add(newTraining);
-                await _context.SaveChangesAsync();
 
-                // Clear all
-                SelectedExerciseVMs.Clear();
-                Name = string.Empty;
-                Description = string.Empty;
-                //NewTrainingVM = new TrainingViewModel(); 
+                try
+                {
+                    _context.Trainings.Add(newTraining);
+                    await _context.SaveChangesAsync();
 
-                // Update all
-                LoadAllExercises();
-                LoadTrainings();
+                }
+                catch (Exception e )
+                {
+                    Debug.WriteLine($"Message: {e.Message}");
+                    throw;
+                }
                 await Shell.Current.GoToAsync("//MainPage"); 
             }
             else

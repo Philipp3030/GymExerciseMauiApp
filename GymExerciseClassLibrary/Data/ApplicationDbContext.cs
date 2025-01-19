@@ -37,12 +37,12 @@ namespace GymExerciseClassLibrary.Data
         {
             if (!Musclegroups.Any())
             {
-                Musclegroups.AddRange(new[]
-                {
+                Musclegroups.AddRange(
+                [
                 new Musclegroup { Name = "Chest" },
                 new Musclegroup { Name = "Back" },
                 new Musclegroup { Name = "Legs" }
-                });
+                ]);
             }
             await SaveChangesAsync();
         }

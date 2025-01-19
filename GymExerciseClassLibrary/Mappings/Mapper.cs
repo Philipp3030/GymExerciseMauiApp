@@ -1,5 +1,7 @@
-﻿using GymExerciseClassLibrary.Models;
+﻿using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,71 +19,93 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = exercise.Id,
                 Name = exercise.Name,
                 IsActive = exercise.IsActive,
-                MusclegroupVM = MapMusclegroupToViewModel(exercise.Musclegroup),
+                SelectedMusclegroupVM = MapMusclegroupToViewModel(exercise.Musclegroup),
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
-                Sets = exercise.Sets,
-                RepsPrevious = exercise.RepsPrevious,
-                Reps = exercise.Reps,
-                RepsGoal = exercise.RepsGoal
+                Sets = exercise.Sets.ToString(),
+                RepsPrevious = exercise.RepsPrevious.ToString(),
+                Reps = exercise.Reps.ToString(),
+                RepsGoal = exercise.RepsGoal.ToString()
             };
             return newExerciseVM;
         }
 
-        public static Exercise MapExerciseViewModelToModel(ExerciseViewModel exerciseVM)
+        public static Exercise MapExerciseViewModelToModel(ApplicationDbContext context, ExerciseViewModel exerciseVM)
         {
-            Exercise newExercise = new Exercise
+            var existingEntity = context.Exercises.FirstOrDefault(e => e.Id == exerciseVM.Id && exerciseVM.Id != 0);
+            if (existingEntity != null)
             {
-                Id = exerciseVM.Id,
-                Name = exerciseVM.Name,
-                IsActive = exerciseVM.IsActive,
-                Musclegroup = MapMusclegroupViewModelToModel(exerciseVM.MusclegroupVM),
-                MachineName = exerciseVM.MachineName,
-                Description = exerciseVM.Description,
-                Sets = exerciseVM.Sets,
-                RepsPrevious = exerciseVM.RepsPrevious,
-                Reps = exerciseVM.Reps,
-                RepsGoal = exerciseVM.RepsGoal
-            };
-            return newExercise;
+                return existingEntity;
+            }
+            else
+            {
+                return new Exercise
+                {
+                    Name = exerciseVM.Name,
+                    IsActive = exerciseVM.IsActive,
+                    Musclegroup = MapMusclegroupViewModelToModel(context, exerciseVM.SelectedMusclegroupVM),
+                    MachineName = exerciseVM.MachineName,
+                    Description = exerciseVM.Description,
+                    Sets = Convert.ToInt32(exerciseVM.Sets),
+                    RepsPrevious = Convert.ToInt32(exerciseVM.RepsPrevious),
+                    Reps = Convert.ToInt32(exerciseVM.Reps),
+                    RepsGoal = Convert.ToInt32(exerciseVM.RepsGoal)
+                };
+            }
         }
 
         public static TrainingViewModel MapTrainingToViewModel(Training training)
         {
             TrainingViewModel newTrainingVM = new TrainingViewModel
             {
+                Id = training.Id,
                 Name = training.Name,
                 Description = training.Description
             };
             return newTrainingVM;
         }
 
-        public static Training MapTrainingViewModelToModel(TrainingViewModel trainingVM)
+        public static Training MapTrainingViewModelToModel(ApplicationDbContext context, TrainingViewModel trainingVM)
         {
-            Training newTraining = new Training
+            var existingEntity = context.Trainings.FirstOrDefault(e => e.Id == trainingVM.Id && trainingVM.Id != 0);
+            if (existingEntity != null)
             {
-                Name = trainingVM.Name,
-                Description = trainingVM.Description
-            };
-            return newTraining;
+                return existingEntity;
+            }
+            else
+            {
+                return new Training
+                {
+                    Name = trainingVM.Name,
+                    Description = trainingVM.Description
+                };
+            }
         }
 
         public static MusclegroupViewModel MapMusclegroupToViewModel(Musclegroup musclegroup)
         {
             MusclegroupViewModel newMusclegroupVM = new MusclegroupViewModel
             {
+                Id = musclegroup.Id,
                 Name = musclegroup.Name
             };
             return newMusclegroupVM;
         }
 
-        public static Musclegroup MapMusclegroupViewModelToModel(MusclegroupViewModel musclegroupVM)
+        public static Musclegroup MapMusclegroupViewModelToModel(ApplicationDbContext context, MusclegroupViewModel musclegroupVM)
         {
-            Musclegroup newMusclegroup = new Musclegroup
+            var existingEntity = context.Musclegroups.FirstOrDefault(e => e.Id == musclegroupVM.Id && musclegroupVM.Id != 0);
+            if (existingEntity != null)
             {
-                Name = musclegroupVM.Name
-            };
-            return newMusclegroup;
+                return existingEntity;
+            }
+            else
+            {
+                return new Musclegroup
+                {
+                    Name = musclegroupVM.Name
+                };
+            }
         }
     }
 }
