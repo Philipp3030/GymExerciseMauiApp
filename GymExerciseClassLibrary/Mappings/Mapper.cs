@@ -20,7 +20,7 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = exercise.Id,
                 Name = exercise.Name,
                 IsActive = exercise.IsActive,
-                SelectedMusclegroupVM = MapMusclegroupToViewModel(exercise.Musclegroup),
+                Musclegroup = MapMusclegroupToViewModel(exercise.Musclegroup),
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
                 Sets = exercise.Sets.ToString(),
@@ -44,7 +44,7 @@ namespace GymExerciseClassLibrary.Mappings
                 {
                     Name = exerciseVM.Name,
                     IsActive = exerciseVM.IsActive,
-                    Musclegroup = MapMusclegroupViewModelToModel(context, exerciseVM.SelectedMusclegroupVM),
+                    Musclegroup = MapMusclegroupViewModelToModel(context, exerciseVM.Musclegroup),
                     MachineName = exerciseVM.MachineName,
                     Description = exerciseVM.Description,
                     Sets = Convert.ToInt32(exerciseVM.Sets),
@@ -67,7 +67,7 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = training.Id,
                 Name = training.Name,
                 Description = training.Description,
-                ExerciseVMsOfTraining = exercises
+                ExercisesOfTraining = exercises
             };
             return newTrainingVM;
         }

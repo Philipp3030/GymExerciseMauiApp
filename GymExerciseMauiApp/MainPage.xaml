@@ -1,45 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GymExerciseMauiApp.MainPage">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GymExerciseMauiApp.MainPage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:MainViewModel"
+             Title="Main">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-            <Label
-                Text="Test MAUI SQLite"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-            <Button
-                x:Name="ShowSavedTrainings"
-                Text="Show Trainings"
-                Clicked="NavigateToSavedTrainings"
-                HorizontalOptions="Center" />
-            <Button
-                x:Name="NavigateBtn"
-                Text="Add Exercise"
-                Clicked="NavigateToAddExercise"
-                HorizontalOptions="Center" />
-            <Button
-                x:Name="AddTrainingBtn"
-                Text="Add Training"
-                Clicked="NavigateToAddTraining"
-                HorizontalOptions="Center" />
-            <Button
-                x:Name="ShowSavedExercises"
-                Text="Show Exercises"
-                Clicked="NavigateToSavedExercises"
-                HorizontalOptions="Center" />
-            <Editor
-                x:Name="ResultEditor"
-                WidthRequest="200"
-                HeightRequest="300"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+    <VerticalStackLayout Spacing="10" Padding="10">
+        <HorizontalStackLayout Spacing="10" Padding="10">
+            <Button Text="Add Training" Clicked="NavigateToAddTraining">
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
+            <Button Text="Add Exercise" Clicked="NavigateToAddExercise">
+            <Button.Behaviors>
+                <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
+            </Button.Behaviors>
+            </Button>
+            <Button Text="Show Exercises" Clicked="NavigateToSavedExercises">
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
+        </HorizontalStackLayout>
+        <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodel:TrainingViewModel">
+                    <Frame BorderColor="LightGray" Margin="5" Padding="10" BackgroundColor="Black">
+                        <Frame.Behaviors>
+                            <toolkit:TouchBehavior DefaultAnimationDuration="150" DefaultBackgroundColor="Black" HoveredBackgroundColor="{StaticResource Gray900}" TouchGestureCompleted="OnLabelTapped" />
+                        </Frame.Behaviors>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                            <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
 </ContentPage>

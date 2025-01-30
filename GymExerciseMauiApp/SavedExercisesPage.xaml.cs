@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymExerciseMauiApp;
 
-public partial class SavedExercises : ContentPage
+public partial class SavedExercisesPage : ContentPage
 {
     //private readonly ApplicationDbContext _context;
     private readonly ExerciseViewModel _exerciseViewModel;
 
-    public SavedExercises(ApplicationDbContext context)
+    public SavedExercisesPage(ApplicationDbContext context)
 	{
         InitializeComponent();
 		//_context = context;
-        _exerciseViewModel = new ExerciseViewModel(context);
+        //_exerciseViewModel = new ExerciseViewModel(context);
         BindingContext = _exerciseViewModel;
     }
 }

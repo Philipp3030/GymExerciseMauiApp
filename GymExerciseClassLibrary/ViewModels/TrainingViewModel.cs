@@ -12,17 +12,17 @@ namespace GymExerciseClassLibrary.ViewModels
 {
     public partial class TrainingViewModel : ObservableValidator
     {
-        private readonly ApplicationDbContext _context;
-        [ObservableProperty]
-        private ObservableCollection<TrainingViewModel> _allTrainingVMs = new();
-        [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _selectedExerciseVMs = new();
-        [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _allExerciseVMs;
-        [ObservableProperty]
-        private TrainingViewModel? _selectedTrainingVM;
-        [ObservableProperty]
-        private string? _errorMessage;
+        //private readonly ApplicationDbContext _context;
+        //[ObservableProperty]
+        //private ObservableCollection<TrainingViewModel> _allTrainingVMs = new();
+        //[ObservableProperty]
+        //private ObservableCollection<ExerciseViewModel> _selectedExerciseVMs = new();
+        //[ObservableProperty]
+        //private ObservableCollection<ExerciseViewModel> _allExerciseVMs;        // alle properties in das viewmodel oder lieber aus exercise vm holen? was macht sinn?
+        //[ObservableProperty]
+        //private TrainingViewModel? _selectedTrainingVM;
+        //[ObservableProperty]
+        //private string? _errorMessage;
 
         // model properties
         [ObservableProperty]
@@ -34,83 +34,83 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private string? _description;
         [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _exerciseVMsOfTraining = new();
+        private ObservableCollection<ExerciseViewModel> _exercisesOfTraining = new();
         
 
         public TrainingViewModel() { }
-        public TrainingViewModel(ApplicationDbContext context)
-        {
-            _context = context;
-            AllExerciseVMs = new ExerciseViewModel(_context).ExerciseVMs;
-            LoadTrainings();
-        }
+        //public TrainingViewModel(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //    AllExerciseVMs = new ExerciseViewModel(_context).ExerciseVMs;
+        //    LoadTrainings();
+        //}
 
-        private async void LoadTrainings()
-        {
-            AllTrainingVMs.Clear();
+        //private async void LoadTrainings()
+        //{
+        //    AllTrainingVMs.Clear();
 
-            var trainingsFromDb = await _context.Trainings
-                .Include(t => t.Exercises)
-                .ToListAsync();
-            foreach (var training in trainingsFromDb)
-            {
-                AllTrainingVMs.Add(Mapper.MapTrainingToViewModel(training));
-            }
-        }
+        //    var trainingsFromDb = await _context.Trainings
+        //        .Include(t => t.Exercises)
+        //        .ToListAsync();
+        //    foreach (var training in trainingsFromDb)
+        //    {
+        //        AllTrainingVMs.Add(Mapper.MapTrainingToViewModel(training));
+        //    }
+        //}
 
         // handle selection of exercises on "AddTrainingPage"
-        public void ToggleSelection(ExerciseViewModel exercise)
-        {
-            if (exercise.IsSelected)
-            {
-                // Add the exercise to the selected list if it's selected
-                if (!SelectedExerciseVMs.Contains(exercise))
-                    SelectedExerciseVMs.Add(exercise);
-            }
-            else
-            {
-                // Remove the exercise from the selected list if it's deselected
-                if (SelectedExerciseVMs.Contains(exercise))
-                    SelectedExerciseVMs.Remove(exercise);
-            }
-        }
+        //public void ToggleSelection(ExerciseViewModel exercise)
+        //{
+        //    if (exercise.IsSelected)
+        //    {
+        //        // Add the exercise to the selected list if it's selected
+        //        if (!SelectedExerciseVMs.Contains(exercise))
+        //            SelectedExerciseVMs.Add(exercise);
+        //    }
+        //    else
+        //    {
+        //        // Remove the exercise from the selected list if it's deselected
+        //        if (SelectedExerciseVMs.Contains(exercise))
+        //            SelectedExerciseVMs.Remove(exercise);
+        //    }
+        //}
 
-        [RelayCommand]
-        private async Task SaveNewTraining()
-        {
-            ValidateAllProperties();            
+        //[RelayCommand]
+        //private async Task SaveNewTraining()
+        //{
+        //    ValidateAllProperties();            
 
-            // Check if "Name" is empty
-            if (!HasErrors)
-            {
-                // Create list of exercises for new Training entity to save to database
-                List<Exercise> exercisesOfTraining = new List<Exercise>();
-                foreach (var exerciseVM in SelectedExerciseVMs)
-                {
-                    exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(_context, exerciseVM));
-                }
+        //    // Check if "Name" is empty
+        //    if (!HasErrors)
+        //    {
+        //        // Create list of exercises for new Training entity to save to database
+        //        List<Exercise> exercisesOfTraining = new List<Exercise>();
+        //        foreach (var exerciseVM in SelectedExerciseVMs)
+        //        {
+        //            exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(_context, exerciseVM));
+        //        }
 
-                // Create "Training" entity and save to database
-                Training newTraining = Mapper.MapTrainingViewModelToModel(_context, this);
-                newTraining.Exercises = exercisesOfTraining;
+        //        // Create "Training" entity and save to database
+        //        Training newTraining = Mapper.MapTrainingViewModelToModel(_context, this);
+        //        newTraining.Exercises = exercisesOfTraining;
 
-                try
-                {
-                    _context.Trainings.Add(newTraining);
-                    await _context.SaveChangesAsync();
+        //        try
+        //        {
+        //            _context.Trainings.Add(newTraining);
+        //            await _context.SaveChangesAsync();
 
-                }
-                catch (Exception e )
-                {
-                    Debug.WriteLine($"Message: {e.Message}");
-                    throw;
-                }
-                await Shell.Current.GoToAsync("//MainPage"); 
-            }
-            else
-            {
-                ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
-            }
-        }
+        //        }
+        //        catch (Exception e )
+        //        {
+        //            Debug.WriteLine($"Message: {e.Message}");
+        //            throw;
+        //        }
+        //        await Shell.Current.GoToAsync("//MainPage"); 
+        //    }
+        //    else
+        //    {
+        //        ErrorMessage = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+        //    }
+        //}
     }
 }

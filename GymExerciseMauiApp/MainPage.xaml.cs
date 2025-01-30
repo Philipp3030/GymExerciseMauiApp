@@ -1,7 +1,7 @@
-﻿using GymExerciseClassLibrary.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using CommunityToolkit.Maui.Core.Extensions;
 using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.ViewModels;
+using Microsoft.Maui.Controls.Internals;
 
 namespace GymExerciseMauiApp
 {
@@ -13,16 +13,39 @@ namespace GymExerciseMauiApp
         {
             InitializeComponent();
             _context = context;
+            BindingContext = new MainViewModel(_context);
         }
 
-        private async void NavigateToSavedTrainings(object sender, EventArgs e)
+        private async void OnLabelTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SavedTrainings(_context));
+            var frame = sender as Frame;
+            var selectedTraining = frame?.BindingContext as TrainingViewModel;
+
+            if (selectedTraining != null)
+            {
+                await Navigation.PushAsync(new ExercisesOfTrainingPage(selectedTraining));
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            RefreshPage();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
+
+        private void RefreshPage()
+        {
+            (BindingContext as MainViewModel)?.ReloadData();
         }
 
         private async void NavigateToSavedExercises(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SavedExercises(_context));
+            await Navigation.PushAsync(new SavedExercisesPage(_context));
         }
 
         private async void NavigateToAddTraining(object sender, EventArgs e)

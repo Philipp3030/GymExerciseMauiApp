@@ -20,9 +20,8 @@ namespace GymExerciseClassLibrary.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
             Database.Migrate();
-
+            //Database.EnsureDeleted();
         }
 
         // It is required to override this method when adding/removing migrations from class library
@@ -39,9 +38,9 @@ namespace GymExerciseClassLibrary.Data
             {
                 Musclegroups.AddRange(
                 [
-                new Musclegroup { Name = "Chest" },
-                new Musclegroup { Name = "Back" },
-                new Musclegroup { Name = "Legs" }
+                new Musclegroup { Name = "Brust" },
+                new Musclegroup { Name = "Rücken" },
+                new Musclegroup { Name = "Beine" }
                 ]);
             }
             await SaveChangesAsync();

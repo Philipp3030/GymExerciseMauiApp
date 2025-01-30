@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="GymExerciseMauiApp.SavedTrainings"
+             x:Class="GymExerciseMauiApp.SavedTrainingsPage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:TrainingViewModel"
              Title="SavedTrainings">
-    <CollectionView ItemsSource="{Binding AllTrainingVMs}" x:Name="TrainingCollectionView" >
+    <!--<CollectionView ItemsSource="{Binding AllTrainingVMs}" x:Name="TrainingCollectionView" >
         <CollectionView.ItemTemplate>
             <DataTemplate>
 
@@ -19,5 +21,5 @@
                 </Frame>
             </DataTemplate>
         </CollectionView.ItemTemplate>
-    </CollectionView>
+    </CollectionView>-->
 </ContentPage>

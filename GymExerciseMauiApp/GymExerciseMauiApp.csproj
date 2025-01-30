@@ -72,8 +72,14 @@
 	  <Compile Update="AddExercisePage.xaml.cs">
 	    <DependentUpon>AddExercisePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="SavedTrainings.xaml.cs">
-	    <DependentUpon>SavedTrainings.xaml</DependentUpon>
+	  <Compile Update="ExercisesOfTrainingPage.xaml.cs">
+	    <DependentUpon>ExercisesOfTrainingPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="SavedExercisesPage.xaml.cs">
+	    <DependentUpon>SavedExercisesPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="SavedTrainingsPage.xaml.cs">
+	    <DependentUpon>SavedTrainingsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -87,13 +93,13 @@
 	  <MauiXaml Update="AddTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ExercisesOfTraining.xaml">
+	  <MauiXaml Update="ExercisesOfTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedExercises.xaml">
+	  <MauiXaml Update="SavedExercisesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedTrainings.xaml">
+	  <MauiXaml Update="SavedTrainingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -21,8 +21,6 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exerciseVMs = new();
         [ObservableProperty]
-        private MusclegroupViewModel _musclegroupVM;
-        [ObservableProperty]
         private bool _isSelected;
         [ObservableProperty]
         private string? _errorMessageName;
@@ -49,7 +47,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
-        private MusclegroupViewModel _selectedMusclegroupVM;
+        private MusclegroupViewModel _musclegroup = new();
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -73,48 +71,50 @@ namespace GymExerciseClassLibrary.ViewModels
         
         
         public ExerciseViewModel() { }  
-        public ExerciseViewModel(ApplicationDbContext context)
-        {
-            _context = context;
-            MusclegroupVM = new MusclegroupViewModel(_context);
-            LoadExercises();
-        }
+        //public ExerciseViewModel(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //    MusclegroupVM = new MusclegroupViewModel(_context);
+        //    LoadExercises();
+        //}
 
-        private async void LoadExercises()
-        { 
-            var exercises = await _context.Exercises.ToListAsync();
-            foreach (var exercise in exercises)
-            {
-                ExerciseVMs.Add(Mapper.MapExerciseToViewModel(exercise));
-            }
-        }
+        //private async void LoadExercises()
+        //{ 
+        //    var exercises = await _context.Exercises
+        //    .Include
+        //    .ToListAsync();
+        //    foreach (var exercise in exercises)
+        //    {
+        //        ExerciseVMs.Add(Mapper.MapExerciseToViewModel(exercise));
+        //    }
+        //}
 
-        [RelayCommand]
-        private async Task SaveNewExercise()
-        {
-            ValidateAllProperties();
+        //[RelayCommand]
+        //private async Task SaveNewExercise()
+        //{
+        //    ValidateAllProperties();
 
-            // Check for errors
-            if (!HasErrors)
-            {
-                try
-                {
-                    _context.Exercises.Add(Mapper.MapExerciseViewModelToModel(_context, this));   // irgendwas mit ids
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException.Message}");
-                    throw;
-                }
-                await Shell.Current.GoToAsync("//MainPage");
-            }
-            else
-            {
-                ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
-                ErrorMessageSelectedMusclegroup = GetErrors(nameof(SelectedMusclegroupVM))?.FirstOrDefault()?.ToString();
-            }
-        }
+        //    // Check for errors
+        //    if (!HasErrors)
+        //    {
+        //        try
+        //        {
+        //            _context.Exercises.Add(Mapper.MapExerciseViewModelToModel(_context, this));   // irgendwas mit ids
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException.Message}");
+        //            throw;
+        //        }
+        //        await Shell.Current.GoToAsync("//MainPage");
+        //    }
+        //    else
+        //    {
+        //        ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+        //        ErrorMessageSelectedMusclegroup = GetErrors(nameof(SelectedMusclegroupVM))?.FirstOrDefault()?.ToString();
+        //    }
+        //}
 
         [RelayCommand]
         private void CheckForErrors()

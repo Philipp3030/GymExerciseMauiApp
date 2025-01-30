@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="GymExerciseMauiApp.AddExercisePage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:AddExerciseViewModel"
              Title="AddExercisePage">
     <ScrollView>
         <StackLayout Padding="20" Spacing="10">
@@ -10,60 +12,53 @@
             <Label Text="Musclegroup" />
             <Picker x:Name="MusclegroupOptions"
                     Title="Select an Option"
-                    ItemsSource="{Binding MusclegroupVM.Options}"
+                    ItemsSource="{Binding Musclegroups}"
                     ItemDisplayBinding="{Binding Name}"
-                    SelectedItem="{Binding SelectedMusclegroupVM}">
+                    SelectedItem="{Binding SelectedMusclegroup}">
             </Picker>
             <Label Text="{Binding ErrorMessageSelectedMusclegroup}" TextColor="Red" IsVisible="True"/>
-            <!-- Button to trigger popup -->
+             <!--Button to trigger popup--> 
             <Button Text="Add New Musclegroup" Clicked="ShowAddMusclegroupPopup" />
 
-            <!-- Name -->
+            <!--Name--> 
             <Label Text="Name" />
             <Entry x:Name="NameEntry" Placeholder="Enter exercise name" Text="{Binding Name}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding ErrorMessageName}" TextColor="Red" IsVisible="True"/>
             
-            <!-- IsActive -->
+             <!--IsActive--> 
             <Label Text="Is Active" />
             <Switch x:Name="IsActiveSwitch" IsToggled="True" />
 
-            <!-- MachineName -->
+             <!--MachineName--> 
             <Label Text="Machine Name" />
             <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" />
 
-            <!-- Description -->
+             <!--Description--> 
             <Label Text="Description" />
             <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />
 
-            <!-- Sets -->
+             <!--Sets--> 
             <Label Text="Sets" />
             <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Sets}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
             
-            <!-- RepsPrevious -->
+             <!--RepsPrevious--> 
             <Label Text="Reps Previous" />
             <Entry x:Name="RepsPreviousEntry" Placeholder="Enter previous reps (optional)" Keyboard="Numeric" Text="{Binding RepsPrevious}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding ErrorMessageRepsPrevious}" TextColor="Red" IsVisible="True"/>
             
-            <!-- Reps -->
+             <!--Reps--> 
             <Label Text="Reps" />
             <Entry x:Name="RepsEntry" Placeholder="Enter reps (optional)" Keyboard="Numeric" Text="{Binding Reps}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
             
-            <!-- RepsGoal -->
+             <!--RepsGoal--> 
             <Label Text="Reps Goal" />
             <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
             
-            <!-- Optional: Button to Submit -->
+             <!--Optional: Button to Submit--> 
             <Button Text="Submit" Command="{Binding SaveNewExerciseCommand}" />
-
-            <Editor
-                x:Name="ResultEditor"
-                WidthRequest="200"
-                HeightRequest="300"
-                HorizontalOptions="Center" 
-            />
         </StackLayout>
     </ScrollView>
 </ContentPage>

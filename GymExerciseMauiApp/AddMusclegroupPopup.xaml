@@ -2,7 +2,9 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="GymExerciseMauiApp.AddMusclegroupPopup">
+               x:Class="GymExerciseMauiApp.AddMusclegroupPopup"
+               xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+               x:DataType="viewmodel:AddMusclegroupViewModel">
 
     <VerticalStackLayout Padding="20" WidthRequest="300" HeightRequest="200">
         <Label Text="Add a New Musclegroup"
@@ -14,7 +16,7 @@
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Add"
-                    Command="{Binding AddMusclegroupCommand}"
+                    Command="{Binding SaveNewMusclegroupCommand}"
                     Clicked="OnCancelClicked"/>
             <Button Text="Cancel"
                     BackgroundColor="LightGray"

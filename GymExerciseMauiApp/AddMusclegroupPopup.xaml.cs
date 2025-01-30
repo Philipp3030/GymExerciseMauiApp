@@ -8,17 +8,22 @@ namespace GymExerciseMauiApp;
 
 public partial class AddMusclegroupPopup : Popup
 {
+    private readonly ApplicationDbContext _context;
+    private readonly AddExerciseViewModel _addExerciseViewModel;
 
     public AddMusclegroupPopup() {  }
 
-    public AddMusclegroupPopup(ApplicationDbContext context, ExerciseViewModel exerciseVM)
+    public AddMusclegroupPopup(ApplicationDbContext context, AddExerciseViewModel addExerciseViewModel)
 	{
 		InitializeComponent();
-        BindingContext = exerciseVM.MusclegroupVM;
+        _context = context;
+        _addExerciseViewModel = addExerciseViewModel;
+        BindingContext = new AddMusclegroupViewModel(_context);
     }
 
     private void OnCancelClicked(object sender, EventArgs e)
     {
+        _addExerciseViewModel.CallLoadMusclegroupsFromDb();
         Close(); // Close the popup
     }
 }
