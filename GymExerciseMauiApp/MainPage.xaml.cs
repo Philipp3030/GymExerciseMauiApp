@@ -23,7 +23,7 @@ namespace GymExerciseMauiApp
 
             if (selectedTraining != null)
             {
-                await Navigation.PushAsync(new ExercisesOfTrainingPage(selectedTraining));
+                await Navigation.PushAsync(new ExercisesOfTrainingPage(new ExercisesOfTrainingViewModel(selectedTraining)));
             }
         }
 

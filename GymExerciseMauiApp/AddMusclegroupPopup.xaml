@@ -12,12 +12,13 @@
                HorizontalOptions="Center" />
 
         <Entry Placeholder="Enter new Musclegroup name" 
-               Text="{Binding Name}"/>
+               Text="{Binding Musclegroup.Name}"/>
+        <Label Text="{Binding Musclegroup.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Add"
                     Command="{Binding SaveNewMusclegroupCommand}"
-                    Clicked="OnCancelClicked"/>
+                    Clicked="OnAddClicked"/>
             <Button Text="Cancel"
                     BackgroundColor="LightGray"
                     Clicked="OnCancelClicked" />

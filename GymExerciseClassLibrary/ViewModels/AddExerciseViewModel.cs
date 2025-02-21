@@ -20,55 +20,10 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         [ObservableProperty]
+        private ExerciseViewModel _exercise = new();
+        [ObservableProperty]
         private ObservableCollection<MusclegroupViewModel> _musclegroups = new();
 
-        // exercise properties
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "This field is required.")]
-        private string _name;
-        [ObservableProperty]
-        private bool _isActive;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "This field is required.")]
-        private MusclegroupViewModel _selectedMusclegroup = new();
-        [ObservableProperty]
-        private string? _machineName;
-        [ObservableProperty]
-        private string? _description;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _sets;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _repsPrevious;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _reps;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _repsGoal;
-
-        // errormessages
-        [ObservableProperty]
-        private string? _errorMessageName;
-        [ObservableProperty]
-        private string? _errorMessageSets;
-        [ObservableProperty]
-        private string? _errorMessageRepsPrevious;
-        [ObservableProperty]
-        private string? _errorMessageReps;
-        [ObservableProperty]
-        private string? _errorMessageRepsGoal;
-        [ObservableProperty]
-        private string? _errorMessageSelectedMusclegroup;
-
-        public AddExerciseViewModel() { }
         public AddExerciseViewModel(ApplicationDbContext context)
         {
             _context = context;
@@ -94,25 +49,23 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task SaveNewExercise()
         {
-            ValidateAllProperties();
+            //ValidateAllProperties();
+
+            bool hasErrors = Exercise.Validate();
 
             // Check for errors
-            if (!HasErrors)
+            if (!hasErrors)
             {
                 try
                 {
-                    _context.Exercises.Add(Mapper.MapExerciseViewModelToModel(_context, new ExerciseViewModel()
+                    for (int i = 0; i < Convert.ToInt32(Exercise.Sets); i++)
                     {
-                        Name = this.Name,
-                        IsActive = this.IsActive,
-                        Musclegroup = this.SelectedMusclegroup,
-                        MachineName = this.MachineName,
-                        Description = this.Description,
-                        Sets = this.Sets,
-                        RepsPrevious = this.RepsPrevious,
-                        Reps = this.Reps,
-                        RepsGoal = this.RepsGoal
-                    }));   // irgendwas mit ids
+                        Exercise.Reps.Add(new RepetitionViewModel()
+                        {
+                            Set = i + 1
+                        });
+                    }
+                    _context.Exercises.Add(await Mapper.MapExerciseViewModelToModel(_context, Exercise)); 
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -124,20 +77,8 @@ namespace GymExerciseClassLibrary.ViewModels
             }
             else
             {
-                ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
-                ErrorMessageSelectedMusclegroup = GetErrors(nameof(SelectedMusclegroup))?.FirstOrDefault()?.ToString();
+                Exercise.CheckForErrorsOnSaveCommand.Execute(null);
             }
-        }
-
-        [RelayCommand]
-        private void CheckForErrors()
-        {
-            ValidateAllProperties();
-
-            ErrorMessageSets = GetErrors(nameof(Sets))?.FirstOrDefault()?.ToString();
-            ErrorMessageRepsPrevious = GetErrors(nameof(RepsPrevious))?.FirstOrDefault()?.ToString();
-            ErrorMessageReps = GetErrors(nameof(Reps))?.FirstOrDefault()?.ToString();
-            ErrorMessageRepsGoal = GetErrors(nameof(RepsGoal))?.FirstOrDefault()?.ToString();
         }
     }
 }

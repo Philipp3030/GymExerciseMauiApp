@@ -24,7 +24,7 @@ public partial class AddExercisePage : ContentPage
 
     private void TriggerCheckForErrorsCommand(object sender, EventArgs e)
     {
-        _addExerciseViewModel.CheckForErrorsCommand?.Execute(null);
+        _addExerciseViewModel.Exercise.CheckForErrorsCommand?.Execute(null);
     }
 
     private void ShowAddMusclegroupPopup(object sender, EventArgs e)

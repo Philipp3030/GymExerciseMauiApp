@@ -10,11 +10,11 @@
 
             <!-- Name -->
             <Label Text="Name" />
-            <Entry x:Name="NameEntry" Placeholder="Enter training name" Text="{Binding Name}" />
-            <Label Text="{Binding ErrorMessageForName}" TextColor="Red" IsVisible="True"/>
+            <Entry x:Name="NameEntry" Placeholder="Enter training name" Text="{Binding Training.Name}" />
+            <Label Text="{Binding Training.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
             <!-- Description -->
             <Label Text="Description" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" Text="{Binding Description}" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" Text="{Binding Training.Description}" />
 
             <!-- Exercises Header -->
             <Label Text="Exercises" FontAttributes="Bold" FontSize="16" />

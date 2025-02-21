@@ -23,21 +23,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exercisesToChooseFrom = new();
         [ObservableProperty]
-        private bool _isSelected;
-
-        // training properties
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "This field is required.")]
-        private string _name;
-        [ObservableProperty]
-        private string? _description;
-        [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _selectedExercises = new();
-
-        // error message
-        [ObservableProperty]
-        private string? _errorMessageForName;
+        private TrainingViewModel _training = new();
 
         public AddTrainingViewModel(ApplicationDbContext context)
         {
@@ -51,6 +37,7 @@ namespace GymExerciseClassLibrary.ViewModels
 
             var exercisesFromDb = await _context.Exercises
                 .Include(e => e.Musclegroup)
+                .Include(e => e.Reps)
                 .ToListAsync();
             foreach (var exercise in exercisesFromDb)
             {
@@ -63,43 +50,28 @@ namespace GymExerciseClassLibrary.ViewModels
             if (exercise.IsSelected)
             {
                 // Add the exercise to the selected list if it's selected
-                if (!SelectedExercises.Contains(exercise))
-                    SelectedExercises.Add(exercise);
+                if (!Training.ExercisesOfTraining.Contains(exercise))
+                    Training.ExercisesOfTraining.Add(exercise);
             }
             else
             {
                 // Remove the exercise from the selected list if it's deselected
-                if (SelectedExercises.Contains(exercise))
-                    SelectedExercises.Remove(exercise);
+                if (Training.ExercisesOfTraining.Contains(exercise))
+                    Training.ExercisesOfTraining.Remove(exercise);
             }
         }
 
         [RelayCommand]
         private async Task SaveNewTraining()
         {
-            ValidateAllProperties();
+            bool hasErrors = Training.Validate();
 
             // Check if "Name" is empty
-            if (!HasErrors)
+            if (!hasErrors)
             {
-                // Create list of exercises for new Training entity to save to database
-                List<Exercise> exercisesOfTraining = new List<Exercise>();
-                foreach (var exerciseVM in SelectedExercises)
-                {
-                    exercisesOfTraining.Add(Mapper.MapExerciseViewModelToModel(_context, exerciseVM));
-                }
-
-                // Create "Training" entity and save to database
-                Training newTraining = Mapper.MapTrainingViewModelToModel(_context, new TrainingViewModel
-                {
-                    Name = this.Name,
-                    Description = this.Description
-                });
-                newTraining.Exercises = exercisesOfTraining;
-
                 try
                 {
-                    _context.Trainings.Add(newTraining);
+                    _context.Trainings.Add(await Mapper.MapTrainingViewModelToModelAsync(_context, Training));
                     await _context.SaveChangesAsync();
 
                 }
@@ -112,7 +84,7 @@ namespace GymExerciseClassLibrary.ViewModels
             }
             else
             {
-                ErrorMessageForName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+                Training.CheckForErrorsCommand.Execute(null);
             }
         }
     }

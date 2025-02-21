@@ -15,6 +15,11 @@ namespace GymExerciseClassLibrary.Mappings
     {
         public static ExerciseViewModel MapExerciseToViewModel(Exercise exercise)
         {
+            var reps = new ObservableCollection<RepetitionViewModel>();
+            foreach (var rep in exercise.Reps)
+            {
+                reps.Add(MapRepetitionToViewModel(rep));
+            }
             ExerciseViewModel newExerciseVM = new ExerciseViewModel
             {
                 Id = exercise.Id,
@@ -24,16 +29,21 @@ namespace GymExerciseClassLibrary.Mappings
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
                 Sets = exercise.Sets.ToString(),
-                RepsPrevious = exercise.RepsPrevious.ToString(),
-                Reps = exercise.Reps.ToString(),
+                //RepsPrevious = exercise.RepsPrevious.ToString(),
+                Reps = reps,
                 RepsGoal = exercise.RepsGoal.ToString()
             };
             return newExerciseVM;
         }
 
-        public static Exercise MapExerciseViewModelToModel(ApplicationDbContext context, ExerciseViewModel exerciseVM)
+        public static async Task<Exercise> MapExerciseViewModelToModel(ApplicationDbContext context, ExerciseViewModel exercise)
         {
-            var existingEntity = context.Exercises.FirstOrDefault(e => e.Id == exerciseVM.Id && exerciseVM.Id != 0);
+            var reps = new List<Repetition>();
+            foreach (var rep in exercise.Reps)
+            {
+                reps.Add(await MapRepetitionViewModelToModel(context, rep));
+            }
+            var existingEntity = await context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id && exercise.Id != 0);
             if (existingEntity != null)
             {
                 return existingEntity;
@@ -42,15 +52,15 @@ namespace GymExerciseClassLibrary.Mappings
             {
                 return new Exercise
                 {
-                    Name = exerciseVM.Name,
-                    IsActive = exerciseVM.IsActive,
-                    Musclegroup = MapMusclegroupViewModelToModel(context, exerciseVM.Musclegroup),
-                    MachineName = exerciseVM.MachineName,
-                    Description = exerciseVM.Description,
-                    Sets = Convert.ToInt32(exerciseVM.Sets),
-                    RepsPrevious = Convert.ToInt32(exerciseVM.RepsPrevious),
-                    Reps = Convert.ToInt32(exerciseVM.Reps),
-                    RepsGoal = Convert.ToInt32(exerciseVM.RepsGoal)
+                    Name = exercise.Name,
+                    IsActive = exercise.IsActive,
+                    Musclegroup = await MapMusclegroupViewModelToModel(context, exercise.Musclegroup),
+                    MachineName = exercise.MachineName,
+                    Description = exercise.Description,
+                    Sets = Convert.ToInt32(exercise.Sets),
+                    //RepsPrevious = Convert.ToInt32(exerciseVM.RepsPrevious),
+                    Reps = reps,
+                    RepsGoal = Convert.ToInt32(exercise.RepsGoal)
                 };
             }
         }
@@ -72,20 +82,33 @@ namespace GymExerciseClassLibrary.Mappings
             return newTrainingVM;
         }
 
-        public static Training MapTrainingViewModelToModel(ApplicationDbContext context, TrainingViewModel trainingVM)
+        public static async Task<Training> MapTrainingViewModelToModelAsync(ApplicationDbContext context, TrainingViewModel trainingVM)
         {
-            var existingEntity = context.Trainings.FirstOrDefault(e => e.Id == trainingVM.Id && trainingVM.Id != 0);
+            var existingEntity = await context.Trainings.FirstOrDefaultAsync(e => e.Id == trainingVM.Id && trainingVM.Id != 0);
             if (existingEntity != null)
             {
                 return existingEntity;
             }
             else
             {
-                return new Training
+                Training trainingToSaveToDb = new Training
                 {
                     Name = trainingVM.Name,
                     Description = trainingVM.Description
                 };
+
+                foreach (var exercise in trainingVM.ExercisesOfTraining)
+                {
+                    trainingToSaveToDb.Exercises.Add(await MapExerciseViewModelToModel(context, exercise));
+                }
+
+                return trainingToSaveToDb;
+
+                //return new Training
+                //{
+                //    Name = trainingVM.Name,
+                //    Description = trainingVM.Description
+                //};
             }
         }
 
@@ -99,9 +122,9 @@ namespace GymExerciseClassLibrary.Mappings
             return newMusclegroupVM;
         }
 
-        public static Musclegroup MapMusclegroupViewModelToModel(ApplicationDbContext context, MusclegroupViewModel musclegroupVM)
+        public static async Task<Musclegroup> MapMusclegroupViewModelToModel(ApplicationDbContext context, MusclegroupViewModel musclegroupVM)
         {
-            var existingEntity = context.Musclegroups.FirstOrDefault(e => e.Id == musclegroupVM.Id && musclegroupVM.Id != 0);
+            var existingEntity = await context.Musclegroups.FirstOrDefaultAsync(e => e.Id == musclegroupVM.Id && musclegroupVM.Id != 0);
             if (existingEntity != null)
             {
                 return existingEntity;
@@ -111,6 +134,34 @@ namespace GymExerciseClassLibrary.Mappings
                 return new Musclegroup
                 {
                     Name = musclegroupVM.Name
+                };
+            }
+        }
+
+        public static RepetitionViewModel MapRepetitionToViewModel(Repetition repetition)
+        {
+            RepetitionViewModel newRepetition = new RepetitionViewModel
+            {
+                Id = repetition.Id,
+                Set = repetition.Set,
+                Count = repetition.Count.ToString()
+            };
+            return newRepetition;
+        }
+
+        public static async Task<Repetition> MapRepetitionViewModelToModel(ApplicationDbContext context, RepetitionViewModel repetition)
+        {
+            var existingEntity = await context.Repetitions.FirstOrDefaultAsync(e => e.Id == repetition.Id && repetition.Id != 0);
+            if (existingEntity != null)
+            {
+                return existingEntity;
+            }
+            else
+            {
+                return new Repetition
+                {
+                    Set = repetition.Set,
+                    Count = Convert.ToInt32(repetition.Count)
                 };
             }
         }

@@ -14,16 +14,16 @@
                     Title="Select an Option"
                     ItemsSource="{Binding Musclegroups}"
                     ItemDisplayBinding="{Binding Name}"
-                    SelectedItem="{Binding SelectedMusclegroup}">
+                    SelectedItem="{Binding Exercise.Musclegroup}">
             </Picker>
-            <Label Text="{Binding ErrorMessageSelectedMusclegroup}" TextColor="Red" IsVisible="True"/>
+            <Label Text="{Binding Exercise.ErrorMessageMusclegroup}" TextColor="Red" IsVisible="True"/>
              <!--Button to trigger popup--> 
             <Button Text="Add New Musclegroup" Clicked="ShowAddMusclegroupPopup" />
 
             <!--Name--> 
             <Label Text="Name" />
-            <Entry x:Name="NameEntry" Placeholder="Enter exercise name" Text="{Binding Name}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding ErrorMessageName}" TextColor="Red" IsVisible="True"/>
+            <Entry x:Name="NameEntry" Placeholder="Enter exercise name" Text="{Binding Exercise.Name}" TextChanged="TriggerCheckForErrorsCommand" />
+            <Label Text="{Binding Exercise.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
             
              <!--IsActive--> 
             <Label Text="Is Active" />
@@ -39,23 +39,13 @@
 
              <!--Sets--> 
             <Label Text="Sets" />
-            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Sets}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
-            
-             <!--RepsPrevious--> 
-            <Label Text="Reps Previous" />
-            <Entry x:Name="RepsPreviousEntry" Placeholder="Enter previous reps (optional)" Keyboard="Numeric" Text="{Binding RepsPrevious}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding ErrorMessageRepsPrevious}" TextColor="Red" IsVisible="True"/>
-            
-             <!--Reps--> 
-            <Label Text="Reps" />
-            <Entry x:Name="RepsEntry" Placeholder="Enter reps (optional)" Keyboard="Numeric" Text="{Binding Reps}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
-            
-             <!--RepsGoal--> 
+            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.Sets}" TextChanged="TriggerCheckForErrorsCommand" />
+            <Label Text="{Binding Exercise.ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
+
+            <!--RepsGoal--> 
             <Label Text="Reps Goal" />
-            <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
+            <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding Exercise.RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
+            <Label Text="{Binding Exercise.ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
             
              <!--Optional: Button to Submit--> 
             <Button Text="Submit" Command="{Binding SaveNewExerciseCommand}" />

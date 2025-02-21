@@ -28,13 +28,13 @@
         <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:TrainingViewModel">
-                    <Frame BorderColor="LightGray" Margin="5" Padding="10" BackgroundColor="Black">
+                    <Frame BorderColor="LightGray" Margin="5" Padding="10" BackgroundColor="Black" HeightRequest="60">
                         <Frame.Behaviors>
                             <toolkit:TouchBehavior DefaultAnimationDuration="150" DefaultBackgroundColor="Black" HoveredBackgroundColor="{StaticResource Gray900}" TouchGestureCompleted="OnLabelTapped" />
                         </Frame.Behaviors>
                         <VerticalStackLayout>
-                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
-                            <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="AntiqueWhite" />
+                            <Label Text="{Binding Description}" FontSize="14" TextColor="AntiqueWhite" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

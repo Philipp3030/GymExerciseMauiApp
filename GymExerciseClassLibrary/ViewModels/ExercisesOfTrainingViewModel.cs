@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using Microsoft.EntityFrameworkCore;
@@ -14,36 +15,39 @@ namespace GymExerciseClassLibrary.ViewModels
 {
     public partial class ExercisesOfTrainingViewModel : ObservableValidator
     {
-        private readonly ApplicationDbContext _context;
-
         [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _exerciseVMsOfTraining = new();
-        [ObservableProperty]
-        private int _id;
-        [ObservableProperty]
-        private string _name;
-        [ObservableProperty]
-        private string? _description;
-        [ObservableProperty]
-        private TrainingViewModel? _selectedTrainingVM;
-        [ObservableProperty]
-        private string? _errorMessage;
+        private TrainingViewModel _training;
 
         public ExercisesOfTrainingViewModel() { }
-        public ExercisesOfTrainingViewModel(ApplicationDbContext context)
+        public ExercisesOfTrainingViewModel(TrainingViewModel training)
         {
-            _context = context;
-            LoadExercisesOfTraining();
+            _training = training;
         }
 
-
-        private async void LoadExercisesOfTraining()
+        [RelayCommand]
+        private static void ToggleAdvancedOptions(ExerciseViewModel exercise)
         {
-            var training = await _context.Trainings.FirstOrDefaultAsync(t => t.Id == this.Id);
-            foreach (var exercise in training.Exercises)
+            exercise.IsAdvancedOptionsClicked = !exercise.IsAdvancedOptionsClicked;
+        }
+
+        [RelayCommand]
+        private void ToggleExpand(ExerciseViewModel exercise)
+        {
+            // test: only 1 exercise can be expanded
+            var expandedExercise = Training.ExercisesOfTraining.FirstOrDefault(e => e.IsExpanded == true);
+            if (expandedExercise != null && expandedExercise != exercise)
             {
-                ExerciseVMsOfTraining.Add(Mapper.MapExerciseToViewModel(exercise));
+                expandedExercise.IsExpanded = false; // !expandedExercise.IsExpanded;
+                exercise.IsExpanded = true;
+                expandedExercise.IsAdvancedOptionsClicked = false;
             }
+            else
+            {
+                exercise.IsExpanded = !exercise.IsExpanded;
+                exercise.IsAdvancedOptionsClicked = false;
+            }
+            // default: all exercises can be expanded at once
+            //exercise.IsExpanded = !exercise.IsExpanded;
         }
     }
 }

@@ -16,18 +16,9 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class AddMusclegroupViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
-
-        // musclegroup property
         [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "This field is empty.")]
-        private string _name;
+        private MusclegroupViewModel _musclegroup = new();
 
-        // errormessage
-        [ObservableProperty]
-        private string? _errorMessageName;
-
-        public AddMusclegroupViewModel() { }
         public AddMusclegroupViewModel(ApplicationDbContext context)
         {
             _context = context;
@@ -36,23 +27,25 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task SaveNewMusclegroup()
         {
-            try
+            bool hasErrors = Musclegroup.Validate();
+
+            if (!hasErrors)
             {
-                // Check if "Name" is empty
-                if (!string.IsNullOrWhiteSpace(Name))
+                try
                 {
-                    // Save new musclegroup to database
-                    _context.Musclegroups.Add(Mapper.MapMusclegroupViewModelToModel(_context, new MusclegroupViewModel
-                    {
-                        Name = this.Name
-                    }));
-                    await _context.SaveChangesAsync();
+                        // Save new musclegroup to database
+                        _context.Musclegroups.Add(await Mapper.MapMusclegroupViewModelToModel(_context, Musclegroup));
+                        await _context.SaveChangesAsync();
                 }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"Message: {e.Message}");
+                    throw;
+                } 
             }
-            catch (Exception e)
+            else
             {
-                Debug.WriteLine($"Message: {e.Message}");
-                throw;
+                Musclegroup.CheckForErrorsCommand.Execute(null);
             }
         }
     }

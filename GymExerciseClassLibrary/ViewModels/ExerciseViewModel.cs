@@ -17,24 +17,6 @@ namespace GymExerciseClassLibrary.ViewModels
 {
     public partial class ExerciseViewModel : ObservableValidator
     {
-        private readonly ApplicationDbContext _context;
-        [ObservableProperty]
-        private ObservableCollection<ExerciseViewModel> _exerciseVMs = new();
-        [ObservableProperty]
-        private bool _isSelected;
-        [ObservableProperty]
-        private string? _errorMessageName;
-        [ObservableProperty]
-        private string? _errorMessageSets;
-        [ObservableProperty]
-        private string? _errorMessageRepsPrevious;
-        [ObservableProperty]
-        private string? _errorMessageReps;
-        [ObservableProperty]
-        private string? _errorMessageRepsGoal;
-        [ObservableProperty]
-        private string? _errorMessageSelectedMusclegroup;
-
         // model properties
         [ObservableProperty]
         private int _id;
@@ -47,7 +29,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
-        private MusclegroupViewModel _musclegroup = new();
+        private MusclegroupViewModel _musclegroup;// = new();
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -57,74 +39,52 @@ namespace GymExerciseClassLibrary.ViewModels
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _sets;
         [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _repsPrevious;
-        [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _reps;
+        private ObservableCollection<RepetitionViewModel> _reps = new();
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _repsGoal;
-        
-        
-        public ExerciseViewModel() { }  
-        //public ExerciseViewModel(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //    MusclegroupVM = new MusclegroupViewModel(_context);
-        //    LoadExercises();
-        //}
 
-        //private async void LoadExercises()
-        //{ 
-        //    var exercises = await _context.Exercises
-        //    .Include
-        //    .ToListAsync();
-        //    foreach (var exercise in exercises)
-        //    {
-        //        ExerciseVMs.Add(Mapper.MapExerciseToViewModel(exercise));
-        //    }
-        //}
+        // additional properties
+        [ObservableProperty]
+        private bool _isSelected;
+        [ObservableProperty]
+        private bool _isExpanded = false;
+        [ObservableProperty]
+        private bool _isAdvancedOptionsClicked = false;
 
-        //[RelayCommand]
-        //private async Task SaveNewExercise()
-        //{
-        //    ValidateAllProperties();
+        // error messages
+        [ObservableProperty]
+        private string? _errorMessageName;
+        [ObservableProperty]
+        private string? _errorMessageMusclegroup;
+        [ObservableProperty]
+        private string? _errorMessageSets;
+        [ObservableProperty]
+        private string? _errorMessageRepsGoal;
 
-        //    // Check for errors
-        //    if (!HasErrors)
-        //    {
-        //        try
-        //        {
-        //            _context.Exercises.Add(Mapper.MapExerciseViewModelToModel(_context, this));   // irgendwas mit ids
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException.Message}");
-        //            throw;
-        //        }
-        //        await Shell.Current.GoToAsync("//MainPage");
-        //    }
-        //    else
-        //    {
-        //        ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
-        //        ErrorMessageSelectedMusclegroup = GetErrors(nameof(SelectedMusclegroupVM))?.FirstOrDefault()?.ToString();
-        //    }
-        //}
+        public bool Validate()
+        {
+            ValidateAllProperties();
+            return HasErrors;
+        }
 
         [RelayCommand]
         private void CheckForErrors()
         {
             ValidateAllProperties();
-            
+
             ErrorMessageSets = GetErrors(nameof(Sets))?.FirstOrDefault()?.ToString();
-            ErrorMessageRepsPrevious = GetErrors(nameof(RepsPrevious))?.FirstOrDefault()?.ToString();
-            ErrorMessageReps = GetErrors(nameof(Reps))?.FirstOrDefault()?.ToString();
             ErrorMessageRepsGoal = GetErrors(nameof(RepsGoal))?.FirstOrDefault()?.ToString();
+        }
+
+        [RelayCommand]
+        private void CheckForErrorsOnSave()
+        {
+            ValidateAllProperties();
+
+            ErrorMessageName = GetErrors(nameof(Name))?.FirstOrDefault()?.ToString();
+            ErrorMessageMusclegroup = GetErrors(nameof(Musclegroup))?.FirstOrDefault()?.ToString();
         }
     }
 }

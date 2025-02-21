@@ -1,18 +1,92 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="GymExerciseMauiApp.ExercisesOfTrainingPage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:ExercisesOfTrainingViewModel"
              Title="ExercisesOfTraining">
-    <CollectionView ItemsSource="{Binding ExerciseVMsOfTraining}" x:Name="ExerciseCollectionView">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame BorderColor="LightGray" Margin="5" Padding="10">
-                    <VerticalStackLayout>
-                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="AntiqueWhite" />
-                        <!--<Label Text="{Binding MusclegroupVM.Name}" FontSize="14" TextColor="Gray" />-->
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <VerticalStackLayout Spacing="10" Padding="10">
+        <CollectionView ItemsSource="{Binding Training.ExercisesOfTraining}" x:Name="ExerciseCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodel:ExerciseViewModel">
+                    <Frame BorderColor="LightGray" BackgroundColor="Black" Padding="10" Margin="5">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleExpandCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                            <!-- !Exercise.IsExpanded -->
+                        </Frame.GestureRecognizers>
+
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Main Label -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" 
+                                   FontAttributes="Bold" FontSize="16" TextColor="AntiqueWhite"/>
+                            <!--<Label IsVisible="True" Grid.Row="1" Text="" FontSize="14" TextColor="Gray"/>-->
+                            <!-- Extra Labels, only visible when expanded -->
+                            <Button Grid.Column="1" Grid.Row="0" IsVisible="{Binding IsExpanded}" Text="Advanced Options" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleAdvancedOptionsCommand}"
+                                    CommandParameter="{Binding .}">
+                            </Button>
+
+                            <HorizontalStackLayout Grid.Column="0" Grid.Row="1" IsVisible="{Binding IsExpanded}" Margin="0,10,0,0">
+
+                                <Label VerticalOptions="Center" Text="Sätze: " FontSize="14" 
+                                       TextColor="White" Margin="0,0,10,0"/>
+
+                                <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
+                                       HorizontalTextAlignment="Center" Placeholder="Sets" 
+                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Sets}" 
+                                       TextChanged="TriggerCheckForErrorsExerciseCommand">
+                                </Entry>
+
+                                <Label Text="{Binding ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
+
+                            </HorizontalStackLayout>
+
+                            <VerticalStackLayout Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="2" 
+                                                 IsVisible="{Binding IsExpanded}" Margin="0,10,0,0">
+                                <!--Reps-->
+                                <CollectionView ItemsSource="{Binding Reps}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="viewmodel:RepetitionViewModel">
+                                            <HorizontalStackLayout>
+                                                
+                                                <Label VerticalOptions="Center" Text="{Binding Set, StringFormat='Satz {0}:'}" 
+                                                       TextColor="White" Margin="0, 0, 10, 0">
+                                                </Label>
+                                                
+                                                <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
+                                                       HorizontalTextAlignment="Center" Placeholder="Reps" 
+                                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Count}" 
+                                                       TextChanged="TriggerCheckForErrorsRepCommand">
+                                                </Entry>
+                                                
+                                                <!--TextChanged="TriggerCheckForErrorsRepCommand" />-->
+                                                <Label Text="{Binding ErrorMessageCount}" TextColor="Red" IsVisible="True"/>
+                                            </HorizontalStackLayout>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="3" IsVisible="{Binding IsAdvancedOptionsClicked}" Margin="0,10,0,0">
+                                <Label Text="Maschine:" FontSize="14" TextColor="Gray" Margin="0,0,10,0"/>
+                                <Entry Text="{Binding MachineName}" FontSize="14" TextColor="Gray" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
 </ContentPage>
