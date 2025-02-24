@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,12 +43,24 @@ namespace GymExerciseClassLibrary.ViewModels
         private async Task UpdateExercise()
         {
             bool hasErrors = Exercise.Validate();
+
             if (!hasErrors)
             {
-                // to be implemented
+                try
+                {
+                    _context.Exercises.Update(await Mapper.MapExerciseViewModelToModel(_context, Exercise));
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException?.Message}");
+                    throw;
+                }
             }
-            _context.Exercises.Update(await Mapper.MapExerciseViewModelToModel(_context, Exercise));
-            await _context.SaveChangesAsync();
+            else
+            {
+                Exercise.CheckForErrorsOnSaveCommand.Execute(null);
+            }
         }
     }
 }
