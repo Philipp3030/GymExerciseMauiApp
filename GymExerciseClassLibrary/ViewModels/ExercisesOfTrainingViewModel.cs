@@ -18,7 +18,6 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private TrainingViewModel _training;
 
-        public ExercisesOfTrainingViewModel() { }
         public ExercisesOfTrainingViewModel(TrainingViewModel training)
         {
             _training = training;

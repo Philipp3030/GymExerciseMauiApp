@@ -36,9 +36,9 @@ namespace GymExerciseClassLibrary.ViewModels
             ExercisesToChooseFrom.Clear();
 
             var exercisesFromDb = await _context.Exercises
-                .Include(e => e.Musclegroup)
-                .Include(e => e.Reps)
-                .ToListAsync();
+                                    .Include(e => e.Musclegroup)
+                                    .Include(e => e.Reps)
+                                    .ToListAsync();
             foreach (var exercise in exercisesFromDb)
             {
                 ExercisesToChooseFrom.Add(Mapper.MapExerciseToViewModel(exercise));

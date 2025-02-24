@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GymExerciseMauiApp.SavedExercisesPage"
              xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:SavedExercisesViewModel"
              Title="SavedExercises">
-             <!--x:DataType="viewmodel:ExerciseViewModel"-->
-             
-    <!--<CollectionView ItemsSource="{Binding ExerciseVMs}" x:Name="ExerciseCollectionView">
+    <CollectionView ItemsSource="{Binding Exercises}" x:Name="ExerciseCollectionView">
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Frame BorderColor="LightGray" Margin="5" Padding="10">
-                    <VerticalStackLayout>
+                    <VerticalStackLayout x:DataType="viewmodel:ExerciseViewModel">
                         <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
-                        <Label Text="{Binding MusclegroupVM.Name}" FontSize="14" TextColor="Gray" />
+                        <Label Text="{Binding Musclegroup.Name}" FontSize="14" TextColor="Gray" />
+                        <Button Text="Update Exercise" Clicked="NavigateToUpdateExercise"/>
                     </VerticalStackLayout>
                 </Frame>
             </DataTemplate>
         </CollectionView.ItemTemplate>
-    </CollectionView>-->
+    </CollectionView>
 
 </ContentPage>

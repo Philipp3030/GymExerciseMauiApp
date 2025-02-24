@@ -78,9 +78,6 @@
 	  <Compile Update="SavedExercisesPage.xaml.cs">
 	    <DependentUpon>SavedExercisesPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="SavedTrainingsPage.xaml.cs">
-	    <DependentUpon>SavedTrainingsPage.xaml</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,10 +93,10 @@
 	  <MauiXaml Update="ExercisesOfTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedExercisesPage.xaml">
+	  <MauiXaml Update="ExerciseUpdatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedTrainingsPage.xaml">
+	  <MauiXaml Update="SavedExercisesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

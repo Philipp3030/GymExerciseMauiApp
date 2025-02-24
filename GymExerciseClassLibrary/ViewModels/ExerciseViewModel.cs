@@ -29,7 +29,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
-        private MusclegroupViewModel _musclegroup;// = new();
+        private MusclegroupViewModel _musclegroup;
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -47,7 +47,7 @@ namespace GymExerciseClassLibrary.ViewModels
 
         // additional properties
         [ObservableProperty]
-        private bool _isSelected;
+        private bool _isSelected = false;
         [ObservableProperty]
         private bool _isExpanded = false;
         [ObservableProperty]
