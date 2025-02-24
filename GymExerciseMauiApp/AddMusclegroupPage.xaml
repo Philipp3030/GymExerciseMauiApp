@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GymExerciseMauiApp.AddMusclegroupPage"
+             Title="AddMusclegroupPage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:AddMusclegroupViewModel">
+
+    <VerticalStackLayout Padding="20" WidthRequest="300" HeightRequest="200">
+        <Label Text="Add a New Musclegroup"
+           FontSize="18"
+           HorizontalOptions="Center" />
+
+        <Entry Placeholder="Enter new Musclegroup name" 
+           Text="{Binding Musclegroup.Name}"/>
+        <Label Text="{Binding Musclegroup.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Add"
+                Command="{Binding SaveNewMusclegroupCommand}">
+            </Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

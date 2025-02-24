@@ -57,6 +57,11 @@ namespace GymExerciseMauiApp
         {
             await Navigation.PushAsync(new AddExercisePage(_context));
         }
+        
+        private async void NavigateToAddMusclegroup(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddMusclegroupPage(_context));
+        }
     }
 
 }
