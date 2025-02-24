@@ -33,9 +33,14 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 try
                 {
-                        // Save new musclegroup to database
-                        _context.Musclegroups.Add(await Mapper.MapMusclegroupViewModelToModel(_context, Musclegroup));
-                        await _context.SaveChangesAsync();
+                    // Save new musclegroup to database
+                    _context.Musclegroups.Add(await Mapper.MapMusclegroupViewModelToModel(_context, Musclegroup));
+                    await _context.SaveChangesAsync();
+
+                    if (Shell.Current.CurrentState.Location.OriginalString.Contains("//MainPage/D_FAULT_AddMusclegroupPage"))
+                    {
+                        await Shell.Current.GoToAsync("//MainPage");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -47,6 +52,7 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 Musclegroup.CheckForErrorsCommand.Execute(null);
             }
+
         }
     }
 }

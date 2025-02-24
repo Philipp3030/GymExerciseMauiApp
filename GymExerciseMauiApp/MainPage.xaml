@@ -24,6 +24,11 @@
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
+            <Button Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup">
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
         </HorizontalStackLayout>
         <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" >
             <CollectionView.ItemTemplate>

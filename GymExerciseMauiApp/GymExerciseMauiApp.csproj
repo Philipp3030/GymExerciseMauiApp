@@ -84,6 +84,9 @@
 	  <MauiXaml Update="AddExercisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="AddMusclegroupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="AddMusclegroupPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
