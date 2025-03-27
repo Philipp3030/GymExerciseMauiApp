@@ -20,12 +20,18 @@ namespace GymExerciseClassLibrary.ViewModels
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _count;
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Only numbers are allowed.")]
+        private string? _weight;
 
         // error messages
         [ObservableProperty]
         private string? _errorMessageSet;
         [ObservableProperty]
         private string? _errorMessageCount;
+        [ObservableProperty]
+        private string? _errorMessageWeight;
 
         [RelayCommand]
         private void CheckForErrors()
@@ -33,6 +39,7 @@ namespace GymExerciseClassLibrary.ViewModels
             ValidateAllProperties();
 
             ErrorMessageCount = GetErrors(nameof(Count))?.FirstOrDefault()?.ToString();
+            ErrorMessageWeight = GetErrors(nameof(Weight))?.FirstOrDefault()?.ToString();
         }
     }
 }
