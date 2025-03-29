@@ -28,7 +28,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasIndex("TrainingsId");
 
-                    b.ToTable("ExerciseTraining");
+                    b.ToTable("ExerciseTraining", (string)null);
                 });
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Exercise", b =>
@@ -63,7 +63,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasIndex("MusclegroupId");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("Exercises", (string)null);
                 });
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Musclegroup", b =>
@@ -78,7 +78,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Musclegroups");
+                    b.ToTable("Musclegroups", (string)null);
                 });
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Repetition", b =>
@@ -100,7 +100,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasIndex("ExerciseId");
 
-                    b.ToTable("Repetitions");
+                    b.ToTable("Repetitions", (string)null);
                 });
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Training", b =>
@@ -118,7 +118,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainings");
+                    b.ToTable("Trainings", (string)null);
                 });
 
             modelBuilder.Entity("ExerciseTraining", b =>

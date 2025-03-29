@@ -16,7 +16,7 @@ namespace GymExerciseClassLibrary.Models
         public int MusclegroupId { get; set; }
         public Musclegroup Musclegroup { get; set; }
         public string? MachineName { get; set; }
-        public string? Description { get; set; }
+        public string? Description { get; set; }  
         public int? Sets { get; set; }
         //public int? Reps { get; set; }
         public List<Repetition> Reps { get; set; } = new List<Repetition>();

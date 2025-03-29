@@ -8,28 +8,41 @@
              Title="Main">
 
     <VerticalStackLayout Spacing="10" Padding="10">
-        <HorizontalStackLayout Spacing="10" Padding="10">
-            <Button Text="Add Training" Clicked="NavigateToAddTraining">
+        <!--<HorizontalStackLayout Spacing="10" Padding="10">-->
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Text="Add Training" Clicked="NavigateToAddTraining" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-            <Button Text="Add Exercise" Clicked="NavigateToAddExercise">
-            <Button.Behaviors>
-                <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
-            </Button.Behaviors>
-            </Button>
-            <Button Text="Show Exercises" Clicked="NavigateToSavedExercises">
+            <Button Grid.Column="1" Text="Add Exercise" Clicked="NavigateToAddExercise" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-            <Button Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup">
+            <Button Grid.Column="2" Text="Show Exercises" Clicked="NavigateToSavedExercises" LineBreakMode="WordWrap" WidthRequest="90" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-        </HorizontalStackLayout>
+            <Button Grid.Column="3" Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup" LineBreakMode="WordWrap" WidthRequest="115" Margin="0, 0, 5, 0">
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
+        </Grid>
+        <!--</HorizontalStackLayout>-->
         <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:TrainingViewModel">
