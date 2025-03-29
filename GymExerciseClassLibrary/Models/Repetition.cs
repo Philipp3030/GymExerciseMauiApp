@@ -11,5 +11,6 @@ namespace GymExerciseClassLibrary.Models
         public int Id { get; set; }
         public int Set { get; set; }
         public int Count { get; set; }
+        public float Weight { get; set; }
     }
 }
