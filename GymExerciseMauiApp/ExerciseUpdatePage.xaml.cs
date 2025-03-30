@@ -16,4 +16,16 @@ public partial class ExerciseUpdatePage : ContentPage
     {
         _exerciseUpdateViewModel.Exercise.CheckForErrorsCommand?.Execute(null);
     }
+
+    private void TriggerCheckForErrorsRepCommand(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry && entry.BindingContext is RepetitionViewModel rep)
+        {
+            // Call the command manually
+            if (rep.CheckForErrorsCommand.CanExecute(null))
+            {
+                rep.CheckForErrorsCommand.Execute(null);
+            }
+        }
+    }
 }

@@ -33,10 +33,6 @@
             <Label Text="Machine Name" />
             <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" />
 
-            <!--Weight-->
-            <Label Text="Weight" />
-            <Entry x:Name="WeightEntry" Placeholder="Enter description (optional)" />
-
             <!--Description--> 
             <Label Text="Description" />
             <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />

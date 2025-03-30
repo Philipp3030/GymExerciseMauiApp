@@ -47,6 +47,28 @@
             <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding Exercise.RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding Exercise.ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
 
+            <!--Reps-->
+            <CollectionView ItemsSource="{Binding Exercise.Reps}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:RepetitionViewModel">
+                        <HorizontalStackLayout>
+
+                            <Label VerticalOptions="Center" Text="{Binding Set, StringFormat='Satz {0}:'}" 
+                                   TextColor="White" Margin="0, 0, 10, 0">
+                            </Label>
+
+                            <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
+                                   HorizontalTextAlignment="Center" Placeholder="Reps" 
+                                   Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
+                                   TextChanged="TriggerCheckForErrorsRepCommand">
+                            </Entry>
+
+                            <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
             <!--Optional: Button to Submit-->
             <Button Text="Submit" Command="{Binding UpdateExerciseCommand}" />
         </StackLayout>

@@ -29,7 +29,6 @@ namespace GymExerciseClassLibrary.Mappings
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
                 Sets = exercise.Sets.ToString(),
-                //RepsPrevious = exercise.RepsPrevious.ToString(),
                 Reps = reps,
                 RepsGoal = exercise.RepsGoal.ToString()
             };
@@ -58,7 +57,6 @@ namespace GymExerciseClassLibrary.Mappings
                     MachineName = exercise.MachineName,
                     Description = exercise.Description,
                     Sets = Convert.ToInt32(exercise.Sets),
-                    //RepsPrevious = Convert.ToInt32(exerciseVM.RepsPrevious),
                     Reps = reps,
                     RepsGoal = Convert.ToInt32(exercise.RepsGoal)
                 };
@@ -103,12 +101,6 @@ namespace GymExerciseClassLibrary.Mappings
                 }
 
                 return trainingToSaveToDb;
-
-                //return new Training
-                //{
-                //    Name = trainingVM.Name,
-                //    Description = trainingVM.Description
-                //};
             }
         }
 
@@ -144,7 +136,8 @@ namespace GymExerciseClassLibrary.Mappings
             {
                 Id = repetition.Id,
                 Set = repetition.Set,
-                Count = repetition.Count.ToString()
+                Reps = repetition.Reps.ToString(),
+                Weight = repetition.Weight.ToString()
             };
             return newRepetition;
         }
@@ -161,7 +154,8 @@ namespace GymExerciseClassLibrary.Mappings
                 return new Repetition
                 {
                     Set = repetition.Set,
-                    Count = Convert.ToInt32(repetition.Count)
+                    Reps = Convert.ToInt32(repetition.Reps),
+                    Weight = Convert.ToSingle(repetition.Weight)
                 };
             }
         }
