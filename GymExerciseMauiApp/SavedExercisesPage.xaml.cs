@@ -26,11 +26,11 @@ public partial class SavedExercisesPage : ContentPage
     //    }
     //}
 
-    private async void NavigateToUpdateExercise(object sender, EventArgs e)
+    private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
     {
-        var button = sender as Button;
-        var selectedExercise = button?.BindingContext as ExerciseViewModel;
-
+        var image = sender as Image;
+        var selectedExercise = image?.BindingContext as ExerciseViewModel;
+        
         if (selectedExercise != null)
         {
             await Navigation.PushAsync(new ExerciseUpdatePage(new ExerciseUpdateViewModel(_context, selectedExercise))); 

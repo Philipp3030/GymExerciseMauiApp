@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Maui.Views;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.Maui.Controls.Internals;

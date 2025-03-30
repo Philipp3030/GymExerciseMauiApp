@@ -3,13 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
@@ -24,8 +19,9 @@ namespace GymExerciseClassLibrary.ViewModels
         public ExerciseUpdateViewModel(ApplicationDbContext context, ExerciseViewModel exercise)
         {
             _context = context;
-            _exercise = exercise;
+            Exercise = exercise;
             LoadMusclegroupsFromDb();
+            Exercise.Musclegroup = Musclegroups.FirstOrDefault(m => m.Id == Exercise.Musclegroup.Id); // set value for picker to find entity
         }
 
         private async void LoadMusclegroupsFromDb()

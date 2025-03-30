@@ -3,3 +3,4 @@
 Dokumentation:
 
 27.03.	Repetition Model um "Weight" ergänzt -> in Mapper und weiteren Klassen waren folglich Änderungen nötig
+30.03.	Repetition in ExerciseUpdatePage implementiert

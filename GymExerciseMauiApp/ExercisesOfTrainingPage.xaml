@@ -67,12 +67,12 @@
                                                 
                                                 <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
                                                        HorizontalTextAlignment="Center" Placeholder="Reps" 
-                                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Count}" 
+                                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
                                                        TextChanged="TriggerCheckForErrorsRepCommand">
                                                 </Entry>
                                                 
                                                 <!--TextChanged="TriggerCheckForErrorsRepCommand" />-->
-                                                <Label Text="{Binding ErrorMessageCount}" TextColor="Red" IsVisible="True"/>
+                                                <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
                                             </HorizontalStackLayout>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>

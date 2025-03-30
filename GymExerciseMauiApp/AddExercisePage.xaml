@@ -33,7 +33,7 @@
             <Label Text="Machine Name" />
             <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" />
 
-             <!--Description--> 
+            <!--Description--> 
             <Label Text="Description" />
             <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />
 
