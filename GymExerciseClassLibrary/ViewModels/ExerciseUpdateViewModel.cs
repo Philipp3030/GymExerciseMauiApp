@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
+using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -20,18 +21,23 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             Exercise = exercise;
-            LoadMusclegroupsFromDb();
-            Exercise.Musclegroup = Musclegroups.FirstOrDefault(m => m.Id == Exercise.Musclegroup.Id); // set value for picker to find entity
         }
 
-        private async void LoadMusclegroupsFromDb()
+        public async Task InitializeAsync()
+        {
+            int musclegroupId = Exercise.Musclegroup.Id;
+            await LoadMusclegroupsFromDbAsync();
+            Exercise.Musclegroup = Musclegroups.FirstOrDefault(m => m.Id == musclegroupId); // set value for picker to find entity
+        }
+
+        private async Task LoadMusclegroupsFromDbAsync()
         {
             Musclegroups.Clear();
 
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
-                Musclegroups.Add(Mapper.MapMusclegroupToViewModel(musclegroup));
+                Musclegroups.Add(Mapper.Map(musclegroup));
             }
         }
 
@@ -44,7 +50,7 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 try
                 {
-                    _context.Exercises.Update(await Mapper.MapExerciseViewModelToModel(_context, Exercise));
+                    _context.Exercises.Update(await Mapper.Map(_context, Exercise));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)

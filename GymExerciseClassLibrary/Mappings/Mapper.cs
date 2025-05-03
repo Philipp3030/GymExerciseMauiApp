@@ -2,162 +2,206 @@
 using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.Mappings
 {
     public static class Mapper
     {
-        public static ExerciseViewModel MapExerciseToViewModel(Exercise exercise)
+        #region Musclegroup
+        // To Model
+        public static async Task<Musclegroup> Map(ApplicationDbContext context, MusclegroupViewModel musclegroupViewModel)
         {
-            var reps = new ObservableCollection<RepetitionViewModel>();
-            foreach (var rep in exercise.Reps)
-            {
-                reps.Add(MapRepetitionToViewModel(rep));
-            }
-            ExerciseViewModel newExerciseVM = new ExerciseViewModel
-            {
-                Id = exercise.Id,
-                Name = exercise.Name,
-                IsActive = exercise.IsActive,
-                Musclegroup = MapMusclegroupToViewModel(exercise.Musclegroup),
-                MachineName = exercise.MachineName,
-                Description = exercise.Description,
-                Sets = exercise.Sets.ToString(),
-                Reps = reps,
-                RepsGoal = exercise.RepsGoal.ToString()
-            };
-            return newExerciseVM;
-        }
+            // get existing entity
+            var existingEntity = await context.Musclegroups.FirstOrDefaultAsync(e => e.Id == musclegroupViewModel.Id && musclegroupViewModel.Id != 0);
 
-        public static async Task<Exercise> MapExerciseViewModelToModel(ApplicationDbContext context, ExerciseViewModel exercise)
-        {
-            var reps = new List<Repetition>();
-            foreach (var rep in exercise.Reps)
+            // if no entity exists, create a new instance
+            if (existingEntity == null)
             {
-                reps.Add(await MapRepetitionViewModelToModel(context, rep));
-            }
-            var existingEntity = await context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id && exercise.Id != 0);
-            if (existingEntity != null)
-            {
-                return existingEntity;
-            }
-            else
-            {
-                return new Exercise
+                return new Musclegroup
                 {
-                    Name = exercise.Name,
-                    IsActive = exercise.IsActive,
-                    Musclegroup = await MapMusclegroupViewModelToModel(context, exercise.Musclegroup),
-                    MachineName = exercise.MachineName,
-                    Description = exercise.Description,
-                    Sets = Convert.ToInt32(exercise.Sets),
-                    Reps = reps,
-                    RepsGoal = Convert.ToInt32(exercise.RepsGoal)
+                    Name = musclegroupViewModel.Name
                 };
             }
-        }
-
-        public static TrainingViewModel MapTrainingToViewModel(Training training)
-        {
-            var exercises = new ObservableCollection<ExerciseViewModel>();
-            foreach (var exercise in training.Exercises)
-            {
-                exercises.Add(MapExerciseToViewModel(exercise));
-            }
-            TrainingViewModel newTrainingVM = new TrainingViewModel
-            {
-                Id = training.Id,
-                Name = training.Name,
-                Description = training.Description,
-                ExercisesOfTraining = exercises
-            };
-            return newTrainingVM;
-        }
-
-        public static async Task<Training> MapTrainingViewModelToModelAsync(ApplicationDbContext context, TrainingViewModel trainingVM)
-        {
-            var existingEntity = await context.Trainings.FirstOrDefaultAsync(e => e.Id == trainingVM.Id && trainingVM.Id != 0);
-            if (existingEntity != null)
-            {
-                return existingEntity;
-            }
+            // if entity exists, update properties of existing entity
             else
             {
-                Training trainingToSaveToDb = new Training
-                {
-                    Name = trainingVM.Name,
-                    Description = trainingVM.Description
-                };
-
-                foreach (var exercise in trainingVM.ExercisesOfTraining)
-                {
-                    trainingToSaveToDb.Exercises.Add(await MapExerciseViewModelToModel(context, exercise));
-                }
-
-                return trainingToSaveToDb;
+                existingEntity.Name = musclegroupViewModel.Name;
+                return existingEntity;
             }
         }
 
-        public static MusclegroupViewModel MapMusclegroupToViewModel(Musclegroup musclegroup)
+        // To ViewModel
+        public static MusclegroupViewModel Map(Musclegroup musclegroup)
         {
-            MusclegroupViewModel newMusclegroupVM = new MusclegroupViewModel
+            return new MusclegroupViewModel
             {
                 Id = musclegroup.Id,
                 Name = musclegroup.Name
             };
-            return newMusclegroupVM;
         }
+        #endregion
 
-        public static async Task<Musclegroup> MapMusclegroupViewModelToModel(ApplicationDbContext context, MusclegroupViewModel musclegroupVM)
+        #region Repetition
+        // To Model
+        public static async Task<Repetition> Map(ApplicationDbContext context, RepetitionViewModel repetitionViewModel)
         {
-            var existingEntity = await context.Musclegroups.FirstOrDefaultAsync(e => e.Id == musclegroupVM.Id && musclegroupVM.Id != 0);
-            if (existingEntity != null)
+            // get existing entity
+            var existingEntity = await context.Repetitions.FirstOrDefaultAsync(e => e.Id == repetitionViewModel.Id && repetitionViewModel.Id != 0);
+
+            // if no entity exists, create a new instance
+            if (existingEntity == null)
             {
-                return existingEntity;
-            }
-            else
-            {
-                return new Musclegroup
+                return new Repetition
                 {
-                    Name = musclegroupVM.Name
+                    Set = repetitionViewModel.Set,
+                    Reps = Convert.ToInt32(repetitionViewModel.Reps),
+                    Weight = Convert.ToSingle(repetitionViewModel.Reps)
                 };
             }
+            // if entity exists, update properties of existing entity
+            else
+            {
+                existingEntity.Set = repetitionViewModel.Set;
+                existingEntity.Reps = Convert.ToInt32(repetitionViewModel.Reps);
+                existingEntity.Weight = Convert.ToSingle(repetitionViewModel.Reps);
+                return existingEntity;
+            }
         }
 
-        public static RepetitionViewModel MapRepetitionToViewModel(Repetition repetition)
+        // To ViewModel
+        public static RepetitionViewModel Map(Repetition repetition)
         {
-            RepetitionViewModel newRepetition = new RepetitionViewModel
+            return new RepetitionViewModel
             {
                 Id = repetition.Id,
                 Set = repetition.Set,
                 Reps = repetition.Reps.ToString(),
                 Weight = repetition.Weight.ToString()
             };
-            return newRepetition;
         }
+        #endregion
 
-        public static async Task<Repetition> MapRepetitionViewModelToModel(ApplicationDbContext context, RepetitionViewModel repetition)
+        #region Exercise
+        // To Model
+        public static async Task<Exercise> Map(ApplicationDbContext context, ExerciseViewModel exerciseViewModel)
         {
-            var existingEntity = await context.Repetitions.FirstOrDefaultAsync(e => e.Id == repetition.Id && repetition.Id != 0);
-            if (existingEntity != null)
+            // get existing entity
+            var existingEntity = await context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseViewModel.Id && exerciseViewModel.Id != 0);
+
+            // map reps
+            var reps = new List<Repetition>();
+            foreach (var rep in exerciseViewModel.Reps)
             {
-                return existingEntity;
+                reps.Add(await Map(context, rep));
             }
-            else
+
+            // if no entity exists, create a new instance
+            if (existingEntity == null)
             {
-                return new Repetition
+
+                return new Exercise
                 {
-                    Set = repetition.Set,
-                    Reps = Convert.ToInt32(repetition.Reps),
-                    Weight = Convert.ToSingle(repetition.Weight)
+                    Name = exerciseViewModel.Name,
+                    IsActive = exerciseViewModel.IsActive,
+                    Musclegroup = await Map(context, exerciseViewModel.Musclegroup),
+                    MachineName = exerciseViewModel.MachineName,
+                    Description = exerciseViewModel.Description,
+                    Sets = Convert.ToInt32(exerciseViewModel.Sets),
+                    Reps = reps,
+                    RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal)
                 };
             }
+            // if entity exists, update properties of existing entity
+            else
+            {
+                existingEntity.Name = exerciseViewModel.Name;
+                existingEntity.IsActive = exerciseViewModel.IsActive;
+                existingEntity.Musclegroup = await Map(context, exerciseViewModel.Musclegroup);
+                existingEntity.MachineName = exerciseViewModel.MachineName;
+                existingEntity.Description = exerciseViewModel.Description;
+                existingEntity.Sets = Convert.ToInt32(exerciseViewModel.Sets);
+                existingEntity.Reps = reps;
+                existingEntity.RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal);
+                return existingEntity;
+            }
         }
+
+        // To ViewModel
+        public static ExerciseViewModel Map(Exercise exercise)
+        {
+            var reps = new ObservableCollection<RepetitionViewModel>();
+            foreach (var rep in exercise.Reps)
+            {
+                reps.Add(Map(rep));
+            }
+            return new ExerciseViewModel
+            {
+                Id = exercise.Id,
+                Name = exercise.Name,
+                IsActive = exercise.IsActive,
+                Musclegroup = Map(exercise.Musclegroup),
+                MachineName = exercise.MachineName,
+                Description = exercise.Description,
+                Sets = exercise.Sets.ToString(),
+                Reps = reps,
+                RepsGoal = exercise.RepsGoal.ToString()
+            };
+        }
+        #endregion
+
+        #region Training
+        // To Training
+        public static async Task<Training> Map(ApplicationDbContext context, TrainingViewModel trainingViewModel)
+        {
+            // get existing entity
+            var existingEntity = await context.Trainings.FirstOrDefaultAsync(e => e.Id == trainingViewModel.Id && trainingViewModel.Id != 0);
+
+            // map exercises
+            var exercises = new List<Exercise>();
+            foreach (var exercise in trainingViewModel.ExercisesOfTraining)
+            {
+                exercises.Add(await Map(context, exercise));
+            }
+
+            // if no entity exists, create a new instance
+            if (existingEntity == null)
+            {
+
+                return new Training
+                {
+                    Name = trainingViewModel.Name,
+                    Description = trainingViewModel.Description,
+                    Exercises = exercises
+
+                };
+            }
+            // if entity exists, update properties of existing entity
+            else
+            {
+                existingEntity.Name = trainingViewModel.Name;
+                existingEntity.Description = trainingViewModel.Description;
+                existingEntity.Exercises = exercises;
+                return existingEntity;
+            }
+        }
+
+        // To ViewModel
+        public static TrainingViewModel Map(Training training)
+        {
+            var exercises = new ObservableCollection<ExerciseViewModel>();
+            foreach (var exercise in training.Exercises)
+            {
+                exercises.Add(Map(exercise));
+            }
+            return new TrainingViewModel
+            {
+                Id = training.Id,
+                Name = training.Name,
+                Description = training.Description,
+                ExercisesOfTraining = exercises
+            };
+        }
+        #endregion
     }
 }
