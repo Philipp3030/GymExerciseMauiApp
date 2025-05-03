@@ -28,4 +28,11 @@ public partial class ExerciseUpdatePage : ContentPage
             }
         }
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _exerciseUpdateViewModel.InitializeAsync();
+    }
+
 }

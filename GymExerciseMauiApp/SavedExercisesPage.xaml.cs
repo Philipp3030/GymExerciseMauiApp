@@ -7,12 +7,14 @@ namespace GymExerciseMauiApp;
 public partial class SavedExercisesPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
+    private readonly SavedExercisesViewModel _savedExercisesViewModel;
 
     public SavedExercisesPage(ApplicationDbContext context)
 	{
         InitializeComponent();
 		_context = context;
-        BindingContext = new SavedExercisesViewModel(_context);
+        _savedExercisesViewModel = new SavedExercisesViewModel(_context);
+        BindingContext = _savedExercisesViewModel;
     }
 
     //private async void OnLabelTapped(object sender, EventArgs e)
@@ -35,5 +37,11 @@ public partial class SavedExercisesPage : ContentPage
         {
             await Navigation.PushAsync(new ExerciseUpdatePage(new ExerciseUpdateViewModel(_context, selectedExercise))); 
         }
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _savedExercisesViewModel.InitializeAsync();
     }
 }

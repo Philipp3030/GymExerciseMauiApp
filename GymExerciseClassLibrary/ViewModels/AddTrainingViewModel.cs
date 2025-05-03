@@ -41,7 +41,7 @@ namespace GymExerciseClassLibrary.ViewModels
                                     .ToListAsync();
             foreach (var exercise in exercisesFromDb)
             {
-                ExercisesToChooseFrom.Add(Mapper.MapExerciseToViewModel(exercise));
+                ExercisesToChooseFrom.Add(Mapper.Map(exercise));
             }
         }
 
@@ -71,7 +71,7 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 try
                 {
-                    _context.Trainings.Add(await Mapper.MapTrainingViewModelToModelAsync(_context, Training));
+                    _context.Trainings.Add(await Mapper.Map(_context, Training));
                     await _context.SaveChangesAsync();
 
                 }

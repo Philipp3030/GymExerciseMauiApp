@@ -37,7 +37,7 @@ namespace GymExerciseClassLibrary.ViewModels
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
-                Musclegroups.Add(Mapper.MapMusclegroupToViewModel(musclegroup));
+                Musclegroups.Add(Mapper.Map(musclegroup));
             }
         }
 
@@ -65,7 +65,7 @@ namespace GymExerciseClassLibrary.ViewModels
                             Set = i + 1
                         });
                     }
-                    _context.Exercises.Add(await Mapper.MapExerciseViewModelToModel(_context, Exercise)); 
+                    _context.Exercises.Add(await Mapper.Map(_context, Exercise)); 
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)

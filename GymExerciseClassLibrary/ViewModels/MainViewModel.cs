@@ -30,7 +30,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 .ToListAsync();
             foreach (var training in trainingsFromDb)
             {
-                SavedTrainings.Add(Mapper.MapTrainingToViewModel(training));
+                SavedTrainings.Add(Mapper.Map(training));
             }
         }
 

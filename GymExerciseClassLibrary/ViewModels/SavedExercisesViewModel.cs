@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
+using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,16 @@ namespace GymExerciseClassLibrary.ViewModels
         public SavedExercisesViewModel(ApplicationDbContext context)
         {
             _context = context;
-            LoadExercisesFromDb();
         }
 
-        private async void LoadExercisesFromDb()
+        // executes onAppearing; constructor does NOT
+        // maybe implement on all ViewModels?
+        public async Task InitializeAsync()
+        {
+            await LoadExercisesFromDb();
+        }
+
+        private async Task LoadExercisesFromDb()
         {
             Exercises.Clear();
 
@@ -34,7 +41,7 @@ namespace GymExerciseClassLibrary.ViewModels
 
             foreach (var exercise in exercisesFromDb)
             {
-                Exercises.Add(Mapper.MapExerciseToViewModel(exercise));
+                Exercises.Add(Mapper.Map(exercise));
             }
         }
     }

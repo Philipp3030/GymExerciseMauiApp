@@ -4,3 +4,5 @@ Dokumentation:
 
 27.03.	Repetition Model um "Weight" ergänzt -> in Mapper und weiteren Klassen waren folglich Änderungen nötig
 30.03.	Repetition in ExerciseUpdatePage implementiert
+04.05.	- Mapper grundlegend geändert: das Model, das returned wird, beinhaltet jetzt auch die changes (wichtig für update)
+		- Bug gefixed: wenn man den Zurück-Button benutzt, wird der Konstruktor der Page nicht nochmal aufgerufen. Das hat Initialisierungsproblemen geführt
