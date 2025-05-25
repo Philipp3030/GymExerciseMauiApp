@@ -56,103 +56,67 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task IncreaseSets(ExerciseViewModel exercise)
         {
-            // increase exercise.Sets by 1
-            int temp = Convert.ToInt32(exercise.Sets);
-            temp += 1;
-            exercise.Sets = temp.ToString();
+            var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
 
-            // create new Repetition
-            exercise.Reps.Add(new RepetitionViewModel()
-            {
-                Set = temp,
-                Reps = "0",
-                Weight = "0"
-            });
-
-            await UpdateExercise(exercise, null);
-        }
-
-        [RelayCommand]
-        private async Task DecreaseSets(ExerciseViewModel exercise)
-        {
-            // TODO
-            // popup: sicher dass du den letzten Satz löschen willst?
-            if (exercise.Sets != null && exercise.Sets == "0")
+            if (exerciseDb == null)
             {
                 return;
             }
+            // increase exerciseDb.Sets by 1 and save to db
+            int temp = exerciseDb.Sets;
+            temp += 1;
+            exerciseDb.Sets = temp;
 
-            // remove last Repetition
-            // vielleicht erst in db löschen und dann view updaten? weniger raum für fehler?
-            var repToRemove = exercise.Reps.FirstOrDefault(r => r.Set.ToString() == exercise.Sets);
-            if (repToRemove != null)
+            exerciseDb.Reps.Add(new Repetition
             {
-                exercise.Reps.Remove(repToRemove);
-            }
+                Set = temp,
+                Reps = 0,
+                Weight = 0
+            });
+            await _context.SaveChangesAsync();
 
-            // decrease exercise.Sets by 1
-            int temp = Convert.ToInt32(exercise.Sets);
-            temp -= 1;
-            exercise.Sets = temp.ToString();
-
-            await UpdateExercise(exercise, repToRemove);
-        }
-
-        private async Task ReloadRepetitions(ExerciseViewModel exercise)
-        {
+            // updating view
             exercise.Reps.Clear();
-
-            var repsFromModifiedExercise = await _context.Repetitions.Where(r => r.Exercise.Id == exercise.Id).ToListAsync();
-
-            foreach (var rep in repsFromModifiedExercise)
+            foreach (var rep in exerciseDb.Reps)
             {
                 exercise.Reps.Add(Mapper.Map(rep));
             }
         }
 
-        private async Task UpdateExercise(ExerciseViewModel exercise, RepetitionViewModel? repToRemove)
+
+        [RelayCommand]
+        private async Task RemoveRep(RepetitionViewModel rep)
         {
-            if (exercise == null)
+            var repDb = await _context.Repetitions.FirstOrDefaultAsync(r => r.Id == rep.Id);
+            if (repDb == null)
             {
-                Debug.WriteLine("No exercise found");
                 return;
             }
+            _context.Repetitions.Remove(repDb);
+            await _context.SaveChangesAsync();
 
-            bool hasErrors = exercise.Validate();
-            foreach (var rep in exercise.Reps)
+            // updating view
+            if (rep.ExerciseId != null)
             {
-                if (hasErrors)
-                {
-                    // return if there are errors
-                    return;
-                }
-                hasErrors = rep.Validate();
+                return;
             }
-
-            if (!hasErrors)
+            var exercise = Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == rep.ExerciseId);
+            if (exercise == null)
             {
-                try
+                return;
+            }
+            exercise.Reps.Remove(rep);
+
+            // TODO:
+            // - popup: sicher dass du den letzten Satz löschen willst?
+            // - rep.Set muss dann angepasst werden, wenn eine repetition gelöscht wird
+            
+            foreach (var repetition in exercise.Reps)
+            {
+                if (repetition.Set > rep.Set)
                 {
-                    if (repToRemove != null)
-                    {
-                        // remove Repetition
-                        var repModelToRemove = _context.Repetitions.FirstOrDefault(r => r.Id == repToRemove.Id);
 
-                        if (repModelToRemove != null)
-                        {
-                            _context.Repetitions.Remove(repModelToRemove); 
-                        }
-                    }
-
-                    _context.Exercises.Update(await Mapper.Map(_context, exercise));
-                    await _context.SaveChangesAsync();
-                    await ReloadRepetitions(exercise);
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"{ex.Message} {ex.StackTrace}");
-                    throw;
-                } 
             }
         }
     }

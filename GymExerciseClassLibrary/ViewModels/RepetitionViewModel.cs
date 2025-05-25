@@ -24,6 +24,8 @@ namespace GymExerciseClassLibrary.ViewModels
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Weight must be in format \"15.25\" or \"15\"")]
         private string? _weight;
+        [ObservableProperty]
+        private int? exerciseId;
 
         // error messages
         [ObservableProperty]

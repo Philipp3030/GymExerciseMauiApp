@@ -77,7 +77,8 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = repetition.Id,
                 Set = repetition.Set,
                 Reps = repetition.Reps.ToString(),
-                Weight = repetition.Weight.ToString()
+                Weight = repetition.Weight.ToString(),
+                ExerciseId = repetition.Exercise.Id
             };
         }
         #endregion

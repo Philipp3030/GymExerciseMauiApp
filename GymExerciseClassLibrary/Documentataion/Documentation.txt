@@ -7,7 +7,7 @@ Dokumentation:
 30.03.	Repetition in ExerciseUpdatePage implementiert
 
 04.05.	- Mapper grundlegend geändert: das Model, das returned wird, beinhaltet jetzt auch die changes (wichtig für update)
-		- Bug gefixed: wenn man den Zurück-Button benutzt, wird der Konstruktor der Page nicht nochmal aufgerufen. Das hat Initialisierungsproblemen geführt
+		- Bug gefixed: wenn man den Zurück-Button benutzt, wird der Konstruktor der Page nicht nochmal aufgerufen. Das hat zu Initialisierungsproblemen geführt
 
 05.05.	- Buttons auf ExercisesOfTrainingPage hinzugefügt, zum adden/removen von Repetitions
 		- angefangen: automatisches Speichern, onClick der Buttons
