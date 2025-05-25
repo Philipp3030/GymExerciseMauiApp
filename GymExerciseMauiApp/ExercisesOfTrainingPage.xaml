@@ -44,7 +44,7 @@
                                        TextColor="White" Margin="0,0,10,0"/>
 
                                 <Label VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
-                                       HorizontalTextAlignment="Center" Text="{Binding Sets}" >
+                                       HorizontalTextAlignment="Center" Text="{Binding AmountOfSets}" >
                                 </Label>
 
                                 <Button Text="+" 
@@ -61,17 +61,17 @@
 
                             <VerticalStackLayout Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="2" 
                                                  IsVisible="{Binding IsExpanded}" Margin="0,10,0,0">
-                                <!--Reps-->
-                                <CollectionView ItemsSource="{Binding Reps}">
+                                <!--Sets-->
+                                <CollectionView ItemsSource="{Binding Sets}">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="viewmodel:RepetitionViewModel">
+                                        <DataTemplate x:DataType="viewmodel:SetViewModel">
                                             <HorizontalStackLayout>
                                                 <Button Text="-" 
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=RemoveRepCommand}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=RemoveSetCommand}"
                                                     CommandParameter="{Binding .}">
                                                 </Button>
 
-                                                <Label VerticalOptions="Center" Text="{Binding Set, StringFormat='Reps (Set {0}):'}" 
+                                                <Label VerticalOptions="Center" Text="{Binding Index, StringFormat='Reps (Set {0}):'}" 
                                                        TextColor="White" Margin="0, 0, 10, 0">
                                                 </Label>
 
@@ -79,7 +79,7 @@
                                                     <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
                                                            HorizontalTextAlignment="Center" Placeholder="Reps" 
                                                            Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
-                                                           TextChanged="TriggerCheckForErrorsRepCommand">
+                                                           TextChanged="TriggerCheckForErrorsSetCommand">
                                                     </Entry>
                                                 
                                                     <Label  Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
@@ -93,7 +93,7 @@
                                                     <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="100" 
                                                        HorizontalTextAlignment="Center" Placeholder="Weight" 
                                                        Keyboard="Numeric" MaxLength="6" Text="{Binding Weight}" 
-                                                       TextChanged="TriggerCheckForErrorsRepCommand">
+                                                       TextChanged="TriggerCheckForErrorsSetCommand">
                                                     </Entry>
 
                                                     <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True"/>

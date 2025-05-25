@@ -42,43 +42,43 @@ namespace GymExerciseClassLibrary.Mappings
         }
         #endregion
 
-        #region Repetition
+        #region Set
         // To Model
-        public static async Task<Repetition> Map(ApplicationDbContext context, RepetitionViewModel repetitionViewModel)
+        public static async Task<Set> Map(ApplicationDbContext context, SetViewModel setViewModel)
         {
             // get existing entity
-            var existingEntity = await context.Repetitions.FirstOrDefaultAsync(e => e.Id == repetitionViewModel.Id && repetitionViewModel.Id != 0);
+            var existingEntity = await context.Sets.FirstOrDefaultAsync(e => e.Id == setViewModel.Id && setViewModel.Id != 0);
 
             // if no entity exists, create a new instance
             if (existingEntity == null)
             {
-                return new Repetition
+                return new Set
                 {
-                    Set = repetitionViewModel.Set,
-                    Reps = Convert.ToInt32(repetitionViewModel.Reps),
-                    Weight = Convert.ToSingle(repetitionViewModel.Reps)
+                    Index = setViewModel.Index,
+                    Reps = Convert.ToInt32(setViewModel.Reps),
+                    Weight = Convert.ToSingle(setViewModel.Reps)
                 };
             }
             // if entity exists, update properties of existing entity
             else
             {
-                existingEntity.Set = repetitionViewModel.Set;
-                existingEntity.Reps = Convert.ToInt32(repetitionViewModel.Reps);
-                existingEntity.Weight = Convert.ToSingle(repetitionViewModel.Reps);
+                existingEntity.Index = setViewModel.Index;
+                existingEntity.Reps = Convert.ToInt32(setViewModel.Reps);
+                existingEntity.Weight = Convert.ToSingle(setViewModel.Reps);
                 return existingEntity;
             }
         }
 
         // To ViewModel
-        public static RepetitionViewModel Map(Repetition repetition)
+        public static SetViewModel Map(Set set)
         {
-            return new RepetitionViewModel
+            return new SetViewModel
             {
-                Id = repetition.Id,
-                Set = repetition.Set,
-                Reps = repetition.Reps.ToString(),
-                Weight = repetition.Weight.ToString(),
-                ExerciseId = repetition.Exercise.Id
+                Id = set.Id,
+                Index = set.Index,
+                Reps = set.Reps.ToString(),
+                Weight = set.Weight.ToString(),
+                ExerciseId = set.Exercise.Id
             };
         }
         #endregion
@@ -90,11 +90,11 @@ namespace GymExerciseClassLibrary.Mappings
             // get existing entity
             var existingEntity = await context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseViewModel.Id && exerciseViewModel.Id != 0);
 
-            // map reps
-            var reps = new List<Repetition>();
-            foreach (var rep in exerciseViewModel.Reps)
+            // map sets
+            var sets = new List<Set>();
+            foreach (var set in exerciseViewModel.Sets)
             {
-                reps.Add(await Map(context, rep));
+                sets.Add(await Map(context, set));
             }
 
             // if no entity exists, create a new instance
@@ -108,8 +108,8 @@ namespace GymExerciseClassLibrary.Mappings
                     Musclegroup = await Map(context, exerciseViewModel.Musclegroup),
                     MachineName = exerciseViewModel.MachineName,
                     Description = exerciseViewModel.Description,
-                    Sets = Convert.ToInt32(exerciseViewModel.Sets),
-                    Reps = reps,
+                    AmountOfSets = Convert.ToInt32(exerciseViewModel.AmountOfSets),
+                    Sets = sets,
                     RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal)
                 };
             }
@@ -121,8 +121,8 @@ namespace GymExerciseClassLibrary.Mappings
                 existingEntity.Musclegroup = await Map(context, exerciseViewModel.Musclegroup);
                 existingEntity.MachineName = exerciseViewModel.MachineName;
                 existingEntity.Description = exerciseViewModel.Description;
-                existingEntity.Sets = Convert.ToInt32(exerciseViewModel.Sets);
-                existingEntity.Reps = reps;
+                existingEntity.AmountOfSets = Convert.ToInt32(exerciseViewModel.AmountOfSets);
+                existingEntity.Sets = sets;
                 existingEntity.RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal);
                 return existingEntity;
             }
@@ -131,10 +131,10 @@ namespace GymExerciseClassLibrary.Mappings
         // To ViewModel
         public static ExerciseViewModel Map(Exercise exercise)
         {
-            var reps = new ObservableCollection<RepetitionViewModel>();
-            foreach (var rep in exercise.Reps)
+            var sets = new ObservableCollection<SetViewModel>();
+            foreach (var set in exercise.Sets)
             {
-                reps.Add(Map(rep));
+                sets.Add(Map(set));
             }
             return new ExerciseViewModel
             {
@@ -144,8 +144,8 @@ namespace GymExerciseClassLibrary.Mappings
                 Musclegroup = Map(exercise.Musclegroup),
                 MachineName = exercise.MachineName,
                 Description = exercise.Description,
-                Sets = exercise.Sets.ToString(),
-                Reps = reps,
+                AmountOfSets = exercise.AmountOfSets.ToString(),
+                Sets = sets,
                 RepsGoal = exercise.RepsGoal.ToString()
             };
         }

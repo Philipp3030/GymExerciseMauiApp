@@ -39,8 +39,8 @@
 
              <!--Sets--> 
             <Label Text="Sets" />
-            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.Sets}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding Exercise.ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
+            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.AmountOfSets}" TextChanged="TriggerCheckForErrorsCommand" />
+            <Label Text="{Binding Exercise.ErrorMessageAmountOfSets}" TextColor="Red" IsVisible="True"/>
 
             <!--RepsGoal--> 
             <Label Text="Reps Goal" />

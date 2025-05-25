@@ -63,59 +63,60 @@ namespace GymExerciseClassLibrary.ViewModels
                 return;
             }
             // increase exerciseDb.Sets by 1 and save to db
-            int temp = exerciseDb.Sets;
+            int temp = exerciseDb.AmountOfSets;
             temp += 1;
-            exerciseDb.Sets = temp;
+            exerciseDb.AmountOfSets = temp;
 
-            exerciseDb.Reps.Add(new Repetition
+            exerciseDb.Sets.Add(new Set
             {
-                Set = temp,
+                Index = temp,
                 Reps = 0,
                 Weight = 0
             });
             await _context.SaveChangesAsync();
 
             // updating view
-            exercise.Reps.Clear();
-            foreach (var rep in exerciseDb.Reps)
+            exercise.Sets.Clear();
+            foreach (var set in exerciseDb.Sets)
             {
-                exercise.Reps.Add(Mapper.Map(rep));
+                exercise.Sets.Add(Mapper.Map(set));
             }
         }
 
 
         [RelayCommand]
-        private async Task RemoveRep(RepetitionViewModel rep)
+        private async Task RemoveSet(SetViewModel setToRemove)
         {
-            var repDb = await _context.Repetitions.FirstOrDefaultAsync(r => r.Id == rep.Id);
-            if (repDb == null)
+            var setDb = await _context.Sets.FirstOrDefaultAsync(r => r.Id == setToRemove.Id);
+            if (setDb == null)
             {
                 return;
             }
-            _context.Repetitions.Remove(repDb);
+            _context.Sets.Remove(setDb);
             await _context.SaveChangesAsync();
 
             // updating view
-            if (rep.ExerciseId != null)
+            if (setToRemove.ExerciseId == null)
             {
                 return;
             }
-            var exercise = Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == rep.ExerciseId);
+            var exercise = Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == setToRemove.ExerciseId);
             if (exercise == null)
             {
                 return;
             }
-            exercise.Reps.Remove(rep);
+            exercise.Sets.Remove(setToRemove);
 
             // TODO:
             // - popup: sicher dass du den letzten Satz löschen willst?
-            // - rep.Set muss dann angepasst werden, wenn eine repetition gelöscht wird
+            // - set.Index muss dann angepasst werden, wenn ein set gelöscht wird
             
-            foreach (var repetition in exercise.Reps)
+            foreach (var set in exercise.Sets)
             {
-                if (repetition.Set > rep.Set)
+                if (set.Index > setToRemove.Index)
                 {
-
+                    set.Index--;
+                    // noch für db anpassen
                 }
             }
         }

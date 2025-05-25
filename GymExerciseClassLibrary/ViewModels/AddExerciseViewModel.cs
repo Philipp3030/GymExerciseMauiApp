@@ -58,11 +58,11 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 try
                 {
-                    for (int i = 0; i < Convert.ToInt32(Exercise.Sets); i++)
+                    for (int i = 0; i < Convert.ToInt32(Exercise.AmountOfSets); i++)
                     {
-                        Exercise.Reps.Add(new RepetitionViewModel()
+                        Exercise.Sets.Add(new SetViewModel()
                         {
-                            Set = i + 1
+                            Index = i + 1
                         });
                     }
                     _context.Exercises.Add(await Mapper.Map(_context, Exercise)); 

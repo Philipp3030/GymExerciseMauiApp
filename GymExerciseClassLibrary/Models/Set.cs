@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.Models
 {
-    public class Repetition
+    public class Set
     {
-
-        // die Klasse sollte Set heißen, oder?
         public int Id { get; set; }
-        public int Set { get; set; }    // sollte evtl. index oder so heißen
+        public int Index { get; set; }    // sollte evtl. index oder so heißen
         public int Reps { get; set; }
         public float Weight { get; set; }
         public Exercise Exercise { get; set; }

@@ -3,7 +3,7 @@
   <Class Name="GymExerciseClassLibrary.Models.Exercise">
     <Position X="4.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAQgAAAAEAAACAQAEBAAAAgAAAACAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAQgAAAAEAAACAQAEBAAAAgAAAACAAIAAAA=</HashCode>
       <FileName>Models\Exercise.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -14,18 +14,18 @@
       <FileName>Models\Musclegroup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GymExerciseClassLibrary.Models.Repetition">
-    <Position X="1.75" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Repetition.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="GymExerciseClassLibrary.Models.Training">
     <Position X="6.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAgAAAAAAEAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Training.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GymExerciseClassLibrary.Models.Set">
+    <Position X="1" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAEAAAAAADAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Set.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

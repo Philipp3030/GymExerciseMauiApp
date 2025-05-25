@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class RepetitionViewModel : ObservableValidator
+    public partial class SetViewModel : ObservableValidator
     {
         // model properties
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
-        private int _set;
+        private int _index;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
@@ -29,7 +29,7 @@ namespace GymExerciseClassLibrary.ViewModels
 
         // error messages
         [ObservableProperty]
-        private string? _errorMessageSet;
+        private string? _errorMessageIndex;
         [ObservableProperty]
         private string? _errorMessageReps;
         [ObservableProperty]

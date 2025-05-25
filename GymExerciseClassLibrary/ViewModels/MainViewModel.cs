@@ -26,7 +26,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 .Include(t => t.Exercises)
                     .ThenInclude(e => e.Musclegroup)
                 .Include(t => t.Exercises)
-                    .ThenInclude(e => e.Reps)
+                    .ThenInclude(e => e.Sets)
                 .ToListAsync();
             foreach (var training in trainingsFromDb)
             {

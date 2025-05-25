@@ -11,14 +11,14 @@ public partial class ExercisesOfTrainingPage : ContentPage
         _exercisesOfTrainingViewModel = exercisesOfTrainingViewModel;
 		BindingContext = _exercisesOfTrainingViewModel;
 	}
-    private void TriggerCheckForErrorsRepCommand(object sender, TextChangedEventArgs e)
+    private void TriggerCheckForErrorsSetCommand(object sender, TextChangedEventArgs e)
     {
-        if (sender is Entry entry && entry.BindingContext is RepetitionViewModel rep)
+        if (sender is Entry entry && entry.BindingContext is SetViewModel set)
         {
             // Call the command manually
-            if (rep.CheckForErrorsCommand.CanExecute(null))
+            if (set.CheckForErrorsCommand.CanExecute(null))
             {
-                rep.CheckForErrorsCommand.Execute(null);
+                set.CheckForErrorsCommand.Execute(null);
             }
         }
     }
