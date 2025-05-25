@@ -2,6 +2,7 @@
 using GymExerciseClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymExerciseClassLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250518190551_SetsAreNotNullableAnymore")]
+    partial class SetsAreNotNullableAnymore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -37,9 +40,6 @@ namespace GymExerciseClassLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AmountOfSets")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -57,6 +57,9 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("RepsGoal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Sets")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -81,7 +84,7 @@ namespace GymExerciseClassLibrary.Migrations
                     b.ToTable("Musclegroups");
                 });
 
-            modelBuilder.Entity("GymExerciseClassLibrary.Models.Set", b =>
+            modelBuilder.Entity("GymExerciseClassLibrary.Models.Repetition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,10 +93,10 @@ namespace GymExerciseClassLibrary.Migrations
                     b.Property<int>("ExerciseId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Index")
+                    b.Property<int>("Reps")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Reps")
+                    b.Property<int>("Set")
                         .HasColumnType("INTEGER");
 
                     b.Property<float>("Weight")
@@ -103,7 +106,7 @@ namespace GymExerciseClassLibrary.Migrations
 
                     b.HasIndex("ExerciseId");
 
-                    b.ToTable("Sets");
+                    b.ToTable("Repetitions");
                 });
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Training", b =>
@@ -150,10 +153,10 @@ namespace GymExerciseClassLibrary.Migrations
                     b.Navigation("Musclegroup");
                 });
 
-            modelBuilder.Entity("GymExerciseClassLibrary.Models.Set", b =>
+            modelBuilder.Entity("GymExerciseClassLibrary.Models.Repetition", b =>
                 {
                     b.HasOne("GymExerciseClassLibrary.Models.Exercise", "Exercise")
-                        .WithMany("Sets")
+                        .WithMany("Reps")
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -163,7 +166,7 @@ namespace GymExerciseClassLibrary.Migrations
 
             modelBuilder.Entity("GymExerciseClassLibrary.Models.Exercise", b =>
                 {
-                    b.Navigation("Sets");
+                    b.Navigation("Reps");
                 });
 #pragma warning restore 612, 618
         }

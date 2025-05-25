@@ -27,9 +27,9 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
-        private string? _sets;
+        private string? _amountOfSets;
         [ObservableProperty]
-        private ObservableCollection<RepetitionViewModel> _reps = new();
+        private ObservableCollection<SetViewModel> _sets = new();
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
@@ -49,7 +49,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private string? _errorMessageMusclegroup;
         [ObservableProperty]
-        private string? _errorMessageSets;
+        private string? _errorMessageAmountOfSets;
         [ObservableProperty]
         private string? _errorMessageRepsGoal;
 
@@ -64,7 +64,7 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             ValidateAllProperties();
 
-            ErrorMessageSets = GetErrors(nameof(Sets))?.FirstOrDefault()?.ToString();
+            ErrorMessageAmountOfSets = GetErrors(nameof(AmountOfSets))?.FirstOrDefault()?.ToString();
             ErrorMessageRepsGoal = GetErrors(nameof(RepsGoal))?.FirstOrDefault()?.ToString();
         }
 

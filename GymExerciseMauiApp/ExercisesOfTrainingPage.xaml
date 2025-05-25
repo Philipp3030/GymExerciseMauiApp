@@ -43,36 +43,61 @@
                                 <Label VerticalOptions="Center" Text="Sätze: " FontSize="14" 
                                        TextColor="White" Margin="0,0,10,0"/>
 
-                                <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
-                                       HorizontalTextAlignment="Center" Placeholder="Sets" 
-                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Sets}" 
-                                       TextChanged="TriggerCheckForErrorsExerciseCommand">
-                                </Entry>
+                                <Label VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
+                                       HorizontalTextAlignment="Center" Text="{Binding AmountOfSets}" >
+                                </Label>
 
-                                <Label Text="{Binding ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
+                                <Button Text="+" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=IncreaseSetsCommand}"
+                                    CommandParameter="{Binding .}">
+                                </Button>
+
+                                <Button Text="-" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=DecreaseSetsCommand}"
+                                    CommandParameter="{Binding .}">
+                                </Button>
 
                             </HorizontalStackLayout>
 
                             <VerticalStackLayout Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="2" 
                                                  IsVisible="{Binding IsExpanded}" Margin="0,10,0,0">
-                                <!--Reps-->
-                                <CollectionView ItemsSource="{Binding Reps}">
+                                <!--Sets-->
+                                <CollectionView ItemsSource="{Binding Sets}">
                                     <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="viewmodel:RepetitionViewModel">
+                                        <DataTemplate x:DataType="viewmodel:SetViewModel">
                                             <HorizontalStackLayout>
-                                                
-                                                <Label VerticalOptions="Center" Text="{Binding Set, StringFormat='Satz {0}:'}" 
+                                                <Button Text="-" 
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=RemoveSetCommand}"
+                                                    CommandParameter="{Binding .}">
+                                                </Button>
+
+                                                <Label VerticalOptions="Center" Text="{Binding Index, StringFormat='Reps (Set {0}):'}" 
                                                        TextColor="White" Margin="0, 0, 10, 0">
                                                 </Label>
+
+                                                <VerticalStackLayout>
+                                                    <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
+                                                           HorizontalTextAlignment="Center" Placeholder="Reps" 
+                                                           Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
+                                                           TextChanged="TriggerCheckForErrorsSetCommand">
+                                                    </Entry>
                                                 
-                                                <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
-                                                       HorizontalTextAlignment="Center" Placeholder="Reps" 
-                                                       Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
-                                                       TextChanged="TriggerCheckForErrorsRepCommand">
-                                                </Entry>
+                                                    <Label  Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
+                                                </VerticalStackLayout>
                                                 
-                                                <!--TextChanged="TriggerCheckForErrorsRepCommand" />-->
-                                                <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
+                                                <Label VerticalOptions="Center" Text="{Binding Weight, StringFormat='Weight:'}" 
+                                                       TextColor="White" Margin="10, 0, 10, 0">
+                                                </Label>
+
+                                                <VerticalStackLayout>
+                                                    <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="100" 
+                                                       HorizontalTextAlignment="Center" Placeholder="Weight" 
+                                                       Keyboard="Numeric" MaxLength="6" Text="{Binding Weight}" 
+                                                       TextChanged="TriggerCheckForErrorsSetCommand">
+                                                    </Entry>
+
+                                                    <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True"/>
+                                                </VerticalStackLayout>
                                             </HorizontalStackLayout>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>

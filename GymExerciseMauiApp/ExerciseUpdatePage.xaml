@@ -37,30 +37,30 @@
             <Label Text="Description" />
             <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />
 
-            <!--Sets-->
+            <!--AmountOfSets-->
             <Label Text="Sets" />
-            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.Sets}" TextChanged="TriggerCheckForErrorsCommand" />
-            <Label Text="{Binding Exercise.ErrorMessageSets}" TextColor="Red" IsVisible="True"/>
+            <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.AmountOfSets}" TextChanged="TriggerCheckForErrorsCommand" />
+            <Label Text="{Binding Exercise.ErrorMessageAmountOfSets}" TextColor="Red" IsVisible="True"/>
 
             <!--RepsGoal-->
             <Label Text="Reps Goal" />
             <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding Exercise.RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding Exercise.ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
 
-            <!--Reps-->
-            <CollectionView ItemsSource="{Binding Exercise.Reps}">
+            <!--Sets-->
+            <CollectionView ItemsSource="{Binding Exercise.Sets}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodel:RepetitionViewModel">
+                    <DataTemplate x:DataType="viewmodel:SetViewModel">
                         <HorizontalStackLayout>
 
-                            <Label VerticalOptions="Center" Text="{Binding Set, StringFormat='Satz {0}:'}" 
+                            <Label VerticalOptions="Center" Text="{Binding Index, StringFormat='Satz {0}:'}" 
                                    TextColor="White" Margin="0, 0, 10, 0">
                             </Label>
 
                             <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
                                    HorizontalTextAlignment="Center" Placeholder="Reps" 
                                    Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
-                                   TextChanged="TriggerCheckForErrorsRepCommand">
+                                   TextChanged="TriggerCheckForErrorsSetCommand">
                             </Entry>
 
                             <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True" />

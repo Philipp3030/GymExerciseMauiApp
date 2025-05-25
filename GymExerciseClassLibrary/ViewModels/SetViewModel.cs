@@ -9,25 +9,27 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class RepetitionViewModel : ObservableValidator
+    public partial class SetViewModel : ObservableValidator
     {
         // model properties
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
-        private int _set;
+        private int _index;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _reps;
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Only numbers & decimal dots are allowed.")]
+        [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Weight must be in format \"15.25\" or \"15\"")]
         private string? _weight;
+        [ObservableProperty]
+        private int? exerciseId;
 
         // error messages
         [ObservableProperty]
-        private string? _errorMessageSet;
+        private string? _errorMessageIndex;
         [ObservableProperty]
         private string? _errorMessageReps;
         [ObservableProperty]
