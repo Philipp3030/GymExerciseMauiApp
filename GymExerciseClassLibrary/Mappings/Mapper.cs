@@ -56,7 +56,7 @@ namespace GymExerciseClassLibrary.Mappings
                 {
                     Index = setViewModel.Index,
                     Reps = Convert.ToInt32(setViewModel.Reps),
-                    Weight = Convert.ToSingle(setViewModel.Reps)
+                    Weight = Convert.ToSingle(setViewModel.Weight)
                 };
             }
             // if entity exists, update properties of existing entity
@@ -64,7 +64,7 @@ namespace GymExerciseClassLibrary.Mappings
             {
                 existingEntity.Index = setViewModel.Index;
                 existingEntity.Reps = Convert.ToInt32(setViewModel.Reps);
-                existingEntity.Weight = Convert.ToSingle(setViewModel.Reps);
+                existingEntity.Weight = Convert.ToSingle(setViewModel.Weight);
                 return existingEntity;
             }
         }
@@ -100,7 +100,6 @@ namespace GymExerciseClassLibrary.Mappings
             // if no entity exists, create a new instance
             if (existingEntity == null)
             {
-
                 return new Exercise
                 {
                     Name = exerciseViewModel.Name,

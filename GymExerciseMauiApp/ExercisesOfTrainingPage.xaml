@@ -10,7 +10,8 @@
         <CollectionView ItemsSource="{Binding Training.ExercisesOfTraining}" x:Name="ExerciseCollectionView">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:ExerciseViewModel">
-                    <Frame BorderColor="LightGray" BackgroundColor="Black" Padding="10" Margin="5">
+                    <Frame BorderColor="LightGray" BackgroundColor="Black" Padding="10" Margin="5"> <!--//standardframe benutzen (mit aufklappen); onclick: popup mit exercise öffnet sich; 
+                                                                                                                                                    wenn man neben das popup klickt: popup schließt sich-->
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleExpandCommand}"
                                                   CommandParameter="{Binding .}"/>
@@ -48,15 +49,9 @@
                                 </Label>
 
                                 <Button Text="+" 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=IncreaseSetsCommand}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=AddSetCommand}"
                                     CommandParameter="{Binding .}">
                                 </Button>
-
-                                <Button Text="-" 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=DecreaseSetsCommand}"
-                                    CommandParameter="{Binding .}">
-                                </Button>
-
                             </HorizontalStackLayout>
 
                             <VerticalStackLayout Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="2" 
@@ -79,7 +74,7 @@
                                                     <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
                                                            HorizontalTextAlignment="Center" Placeholder="Reps" 
                                                            Keyboard="Numeric" MaxLength="2" Text="{Binding Reps}" 
-                                                           TextChanged="TriggerCheckForErrorsSetCommand">
+                                                           TextChanged="TriggerOnTextChanged">
                                                     </Entry>
                                                 
                                                     <Label  Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True"/>
@@ -93,7 +88,7 @@
                                                     <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="100" 
                                                        HorizontalTextAlignment="Center" Placeholder="Weight" 
                                                        Keyboard="Numeric" MaxLength="6" Text="{Binding Weight}" 
-                                                       TextChanged="TriggerCheckForErrorsSetCommand">
+                                                       TextChanged="TriggerOnTextChanged">
                                                     </Entry>
 
                                                     <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True"/>

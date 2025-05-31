@@ -15,3 +15,10 @@ Dokumentation:
 06.05.	- automatisches Speichern der Reps weitergeführt
 		- TODO: - Werte (Reps, Weight) automatisch speichern
 				- erst in db speichern und dann view updaten (weniger fehleranfällig)
+
+28.05.	- Repetition zu Set umbenannt
+		- automatisches Speichern der Sets fertiggestellt
+
+29.05.	- Logik für automatisches Speichern von ganzen Exercises implementiert
+
+31.05.	-

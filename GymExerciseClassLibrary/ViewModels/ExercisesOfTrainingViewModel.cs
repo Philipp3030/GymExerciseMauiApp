@@ -54,7 +54,7 @@ namespace GymExerciseClassLibrary.ViewModels
         }
 
         [RelayCommand]
-        private async Task IncreaseSets(ExerciseViewModel exercise)
+        private async Task AddSet(ExerciseViewModel exercise)
         {
             var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
 
@@ -81,18 +81,35 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 exercise.Sets.Add(Mapper.Map(set));
             }
+            exercise.AmountOfSets = exerciseDb.AmountOfSets.ToString();
         }
-
 
         [RelayCommand]
         private async Task RemoveSet(SetViewModel setToRemove)
         {
-            var setDb = await _context.Sets.FirstOrDefaultAsync(r => r.Id == setToRemove.Id);
+            // remove setToRemove from db
+            var setDb = await _context.Sets.FirstOrDefaultAsync(s => s.Id == setToRemove.Id);
             if (setDb == null)
             {
                 return;
             }
             _context.Sets.Remove(setDb);
+            
+            // decrease AmountOfSets by 1 and readjust Index
+            Exercise exerciseOfSet = setDb.Exercise;
+            if (exerciseOfSet == null)
+            {
+                return;
+            }
+            foreach (var set in exerciseOfSet.Sets)
+            {
+                if (set.Index > setToRemove.Index)
+                {
+                    set.Index--;
+                }
+            }
+            exerciseOfSet.AmountOfSets--;
+            _context.Exercises.Update(exerciseOfSet);
             await _context.SaveChangesAsync();
 
             // updating view
@@ -106,18 +123,36 @@ namespace GymExerciseClassLibrary.ViewModels
                 return;
             }
             exercise.Sets.Remove(setToRemove);
+            exercise.AmountOfSets = exerciseOfSet.AmountOfSets.ToString();
 
-            // TODO:
-            // - popup: sicher dass du den letzten Satz löschen willst?
-            // - set.Index muss dann angepasst werden, wenn ein set gelöscht wird
-            
-            foreach (var set in exercise.Sets)
+            foreach (var set in exerciseOfSet.Sets)
             {
-                if (set.Index > setToRemove.Index)
+                var currentSet = exercise.Sets.FirstOrDefault(s => s.Id == set.Id);
+                if (currentSet != null)
                 {
-                    set.Index--;
-                    // noch für db anpassen
+                    currentSet.Index = set.Index;
                 }
+            }
+            // TODO:
+            // - popup: sicher dass du den Satz löschen willst?
+        }
+
+        public async Task UpdateExercise(ExerciseViewModel exerciseToUpdate)
+        {
+            //Exercise? exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseToUpdate.Id);
+
+            try
+            {
+                Exercise? exercise = await Mapper.Map(_context, exerciseToUpdate);
+                if (exercise != null)
+                {
+                    _context.Exercises.Update(exercise);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
+using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 
@@ -31,12 +32,25 @@ namespace GymExerciseClassLibrary.ViewModels
             foreach (var training in trainingsFromDb)
             {
                 SavedTrainings.Add(Mapper.Map(training));
+                CheckAmountOfSets(training);
             }
         }
 
         public void ReloadData()
         {
             LoadAllTrainingsFromDb();
+        }
+
+        // for safety
+        private void CheckAmountOfSets(Training training)
+        {
+            foreach (var exercise in training.Exercises)
+            {
+                if (exercise.AmountOfSets != exercise.Sets.Count)
+                {
+                    exercise.AmountOfSets = exercise.Sets.Count;
+                }
+            }
         }
     }
 }
