@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GymExerciseMauiApp.TestPage"
+             Title="TestPage">
+    <VerticalStackLayout Padding="20">
+
+        <!--<Frame HasShadow="True" Padding="0" CornerRadius="10" Margin="10" BackgroundColor="Blue">-->
+        <Border>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <StackLayout>
+
+                 <!--Header (Always visible)--> 
+                <Grid BackgroundColor="#E0E0E0" Padding="15">
+                    <Label Text="Tap to Expand"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnToggleTapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                 <!--Expandable Content--> 
+                <StackLayout x:Name="ExpandableArea" 
+                             BackgroundColor="#F7F7F7"
+                             IsVisible="False"
+                             Padding="15"
+                             Spacing="10">
+                    <Label Text="Expanded content line 1." />
+                    <Label Text="Expanded content line 2." />
+                </StackLayout>
+
+            </StackLayout>
+        </Border>
+        <!--</Frame>-->
+    </VerticalStackLayout>
+</ContentPage>

@@ -13,12 +13,30 @@ Dokumentation:
 		- angefangen: automatisches Speichern, onClick der Buttons
 
 06.05.	- automatisches Speichern der Reps weitergeführt
-		- TODO: - Werte (Reps, Weight) automatisch speichern
-				- erst in db speichern und dann view updaten (weniger fehleranfällig)
+		- TODO: - Werte (Reps, Weight) automatisch speichern								DONE
+				- erst in db speichern und dann view updaten (weniger fehleranfällig)		DONE
 
 28.05.	- Repetition zu Set umbenannt
 		- automatisches Speichern der Sets fertiggestellt
 
 29.05.	- Logik für automatisches Speichern von ganzen Exercises implementiert
 
-31.05.	-
+31.05.	- UI changes
+
+01.06.	- UI
+			- Unfocus/hide keyboard															DONE
+		TODO: - check out "Scrolled event"													DONE
+
+02.06.	- Unfocus / hide keyboard funktioniert jetzt
+		- TODO: Keyboard hides parts of collection view										SOLVED
+
+07.06.	- Keyboardfunktionen gefixed; funktionieren jetzt auf 
+		ExercisesOfTrainingPage
+		- "Save on unfocus, not on change" umgesetzt
+
+
+TODOS:	- UpdateTraining (Exercises rausnehmen/hinzufügen)
+		- Icons
+		- Swipeview
+		- Save on unfocus, not on change						DONE
+		- MainPage frames

@@ -42,6 +42,12 @@ namespace GymExerciseClassLibrary.ViewModels
         private bool _isExpanded = false;
         [ObservableProperty]
         private bool _isAdvancedOptionsClicked = false;
+        [ObservableProperty]
+        private bool _nameEntryIsReadOnly = true;
+        [ObservableProperty]
+        private bool _nameEntryInputTransparent = true;
+        [ObservableProperty]
+        private Rect _rect = new Rect(4, 10, 192, 24);
 
         // error messages
         [ObservableProperty]

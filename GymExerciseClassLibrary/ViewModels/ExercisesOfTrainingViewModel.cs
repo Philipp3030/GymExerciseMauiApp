@@ -28,6 +28,13 @@ namespace GymExerciseClassLibrary.ViewModels
         }
 
         [RelayCommand]
+        private void SetNameEntryToEditable(ExerciseViewModel exercise)
+        {
+            exercise.NameEntryInputTransparent = !exercise.NameEntryInputTransparent;
+            exercise.NameEntryIsReadOnly = !exercise.NameEntryIsReadOnly;
+        }
+
+        [RelayCommand]
         private static void ToggleAdvancedOptions(ExerciseViewModel exercise)
         {
             exercise.IsAdvancedOptionsClicked = !exercise.IsAdvancedOptionsClicked;
@@ -73,6 +80,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 Reps = 0,
                 Weight = 0
             });
+            //_context.Exercises.Update(exerciseDb); // not needed because the exerciseDb object is being tracked.
             await _context.SaveChangesAsync();
 
             // updating view
@@ -139,8 +147,6 @@ namespace GymExerciseClassLibrary.ViewModels
 
         public async Task UpdateExercise(ExerciseViewModel exerciseToUpdate)
         {
-            //Exercise? exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exerciseToUpdate.Id);
-
             try
             {
                 Exercise? exercise = await Mapper.Map(_context, exerciseToUpdate);

@@ -1,6 +1,9 @@
-using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.ViewModels;
-using System.Threading.Tasks;
+using Microsoft.Maui.Controls.Shapes;
+using System.Collections.ObjectModel;
+#if ANDROID
+using GymExerciseMauiApp.Custom;
+#endif
 
 namespace GymExerciseMauiApp;
 
@@ -13,9 +16,90 @@ public partial class ExercisesOfTrainingPage : ContentPage
 		InitializeComponent();
         _exercisesOfTrainingViewModel = exercisesOfTrainingViewModel;
         BindingContext = _exercisesOfTrainingViewModel;
-	}
+    }
 
-    private async void TriggerOnTextChanged(object sender, TextChangedEventArgs e)
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+#if ANDROID
+        ExerciseCollectionView.HandlerChanged += (s, e) =>
+        {
+            if (ExerciseCollectionView.Handler?.PlatformView is AndroidX.RecyclerView.Widget.RecyclerView recyclerView)
+            {
+                recyclerView.AddOnScrollListener(new CustomScrollListener(FocusStealer));
+            }
+        };
+#endif
+    }
+
+    private async void HideKeyboardAndUnfocus(object sender, TappedEventArgs e)
+    {
+#if ANDROID
+        var current = Platform.CurrentActivity?.CurrentFocus;
+        current?.ClearFocus();
+#endif
+        await FocusStealer.HideSoftInputAsync(CancellationToken.None);
+    }
+
+    private void OnChangeClipClicked(object sender, FocusEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            // Traverse up the visual tree to find the parent (template root)
+            var parent = entry.Parent;
+
+            while (parent != null && !(parent is Grid))
+                parent = parent.Parent;
+
+            if (parent is Grid grid)
+            {
+                var nameClip = grid.FindByName<RectangleGeometry>("NameEntryClip");
+                var nameEntry = grid.FindByName<Entry>("NameEntry");
+                var machineEntry = grid.FindByName<Entry>("MachineEntry");
+                var machineClip = grid.FindByName<RectangleGeometry>("MachineEntryClip");
+
+                //if (nameEntry != null)
+                //{
+                //    nameEntry.CursorPosition = 0;
+                //}
+                if (machineEntry != null)
+                {
+                    machineEntry.BackgroundColor = Colors.Aqua;
+                    machineEntry.CursorPosition = machineEntry.Text?.Length ?? 0;
+                }
+
+                //if (nameClip != null)
+                //{
+                //    nameClip.Rect = new Rect(4, 10, 150, 50); // New clip
+                //}
+                //if (machineClip != null)
+                //{
+                //    machineClip.Rect = new Rect(4, 10, 80, 50); // New clip
+                //}
+            }
+        }
+    }
+
+    private async void Entry_Focused(object sender, FocusEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            await Task.Delay(100);
+            // Unsubscribe to prevent triggering TextChanged
+            //entry.TextChanged -= TriggerOnTextChanged;
+
+            // Set new text on focus
+            string temp = entry.Text;
+            entry.Text = entry.Text + 999;
+            entry.Text = temp;
+
+            // Re-subscribe after change
+            //entry.TextChanged += TriggerOnTextChanged;
+        }
+    }
+
+    private async void TriggerOnUnfocused(object sender, FocusEventArgs e)
     {
         if (sender is Entry setEntry && setEntry.BindingContext is SetViewModel set)
         {

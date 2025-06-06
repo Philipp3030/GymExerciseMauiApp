@@ -15,6 +15,7 @@ namespace GymExerciseMauiApp
             InitializeComponent();
             _context = context;
             BindingContext = new MainViewModel(_context);
+            Application.Current.UserAppTheme = AppTheme.Light;
         }
 
         private async void OnLabelTapped(object sender, EventArgs e)
@@ -62,6 +63,11 @@ namespace GymExerciseMauiApp
         private async void NavigateToAddMusclegroup(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddMusclegroupPage(_context));
+        }
+
+        private async void NavigateToTestPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TestPage());
         }
     }
 
