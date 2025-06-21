@@ -3,39 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="GymExerciseMauiApp.TestPage"
-             Title="TestPage">
-    <VerticalStackLayout Padding="20">
+             Title="TestPage"
+             Shell.NavBarIsVisible="False">
 
-        <!--<Frame HasShadow="True" Padding="0" CornerRadius="10" Margin="10" BackgroundColor="Blue">-->
-        <Border>
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="10" />
-            </Border.StrokeShape>
-            <StackLayout>
+    <AbsoluteLayout>
 
-                 <!--Header (Always visible)--> 
-                <Grid BackgroundColor="#E0E0E0" Padding="15">
-                    <Label Text="Tap to Expand"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
+        <!-- Deine Hauptinhalte hier (z. B. Grid, StackLayout, etc.) -->
+        <Label Text="Inhalt hier" HorizontalOptions="Center" VerticalOptions="Center" />
 
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnToggleTapped" />
-                    </Grid.GestureRecognizers>
-                </Grid>
+        <!-- Runder + Button -->
+        <Button Text="＋"
+            FontSize="24"
+            BackgroundColor="#5F42FF"
+            TextColor="White"
+            WidthRequest="60"
+            HeightRequest="60"
+            CornerRadius="30"
+            AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Shadow="5"
+            Padding="0"
+            Margin="0,0,20,20"
+            HorizontalOptions="End"
+            VerticalOptions="End" />
+    </AbsoluteLayout>
 
-                 <!--Expandable Content--> 
-                <StackLayout x:Name="ExpandableArea" 
-                             BackgroundColor="#F7F7F7"
-                             IsVisible="False"
-                             Padding="15"
-                             Spacing="10">
-                    <Label Text="Expanded content line 1." />
-                    <Label Text="Expanded content line 2." />
-                </StackLayout>
 
-            </StackLayout>
-        </Border>
-        <!--</Frame>-->
-    </VerticalStackLayout>
 </ContentPage>

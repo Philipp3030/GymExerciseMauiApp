@@ -9,24 +9,15 @@ namespace GymExerciseMauiApp
     public partial class MainPage : ContentPage
     {
         private readonly ApplicationDbContext _context;
+        private readonly NavigationDataService _navigationDataService;
 
-        public MainPage(ApplicationDbContext context)
+        public MainPage(ApplicationDbContext context, NavigationDataService navigationDataService)
         {
             InitializeComponent();
             _context = context;
+            _navigationDataService = navigationDataService;
             BindingContext = new MainViewModel(_context);
             Application.Current.UserAppTheme = AppTheme.Light;
-        }
-
-        private async void OnLabelTapped(object sender, EventArgs e)
-        {
-            var frame = sender as Frame;
-            var selectedTraining = frame?.BindingContext as TrainingViewModel;
-
-            if (selectedTraining != null)
-            {
-                await Navigation.PushAsync(new ExercisesOfTrainingPage(new ExercisesOfTrainingViewModel(_context, selectedTraining)));
-            }
         }
 
         protected override void OnAppearing()
@@ -45,29 +36,60 @@ namespace GymExerciseMauiApp
             (BindingContext as MainViewModel)?.ReloadData();
         }
 
+        private async void NavigateToExercisesOfTrainingPage(object sender, TappedEventArgs e)
+        {
+            var grid = sender as Grid;
+            var selectedTraining = grid?.BindingContext as TrainingViewModel;
+
+            if (selectedTraining != null)
+            {
+                _navigationDataService.Training = selectedTraining;
+                if (_navigationDataService.Training != null)
+                {
+                    await Shell.Current.GoToAsync(nameof(ExercisesOfTrainingPage));
+                }
+                //await Navigation.PushAsync(new ExercisesOfTrainingPage(_context, new ExercisesOfTrainingViewModel(_context, selectedTraining)));
+            }
+        }
+
+        private async void NavigateToTrainingUpdatePage(object sender, TappedEventArgs e)
+        {
+            var image = sender as Image;
+            var selectedTraining = image?.BindingContext as TrainingViewModel;
+
+            if (selectedTraining != null)
+            {
+                _navigationDataService.Training = selectedTraining;
+                if (_navigationDataService.Training != null)
+                {
+                    await Shell.Current.GoToAsync(nameof(TrainingUpdatePage)); 
+                }
+            }
+        }
+
         private async void NavigateToSavedExercises(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SavedExercisesPage(_context));
+            await Shell.Current.GoToAsync(nameof(SavedExercisesPage));
         }
 
         private async void NavigateToAddTraining(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddTrainingPage(_context));
+            await Shell.Current.GoToAsync(nameof(AddTrainingPage));
         }
 
         private async void NavigateToAddExercise(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddExercisePage(_context));
+            await Shell.Current.GoToAsync(nameof(AddExercisePage));
         }
         
         private async void NavigateToAddMusclegroup(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddMusclegroupPage(_context));
+            await Shell.Current.GoToAsync(nameof(AddMusclegroupPage));
         }
 
         private async void NavigateToTestPage(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new TestPage());
+            await Shell.Current.GoToAsync(nameof(TestPage));
         }
     }
 

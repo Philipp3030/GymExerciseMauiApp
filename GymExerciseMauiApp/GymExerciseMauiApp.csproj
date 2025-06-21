@@ -81,6 +81,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiCss Update="Resources\styles.css">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </MauiCss>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="AddExercisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -103,6 +109,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="TestPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TrainingUpdatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

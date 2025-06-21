@@ -23,6 +23,8 @@ namespace GymExerciseClassLibrary.ViewModels
         private string? _description;
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exercisesOfTraining = new();
+        [ObservableProperty]
+        private ObservableCollection<int> _exerciseIds = new();
 
         // additional properties
         [ObservableProperty]

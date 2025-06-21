@@ -2,6 +2,8 @@
 using GymExerciseClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Platform;
+using Microsoft.Maui.Handlers;
 
 namespace GymExerciseMauiApp
 {
@@ -25,6 +27,17 @@ namespace GymExerciseMauiApp
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlite($"Filename={GetDatabasePath()}", x => x.MigrationsAssembly(nameof(GymExerciseClassLibrary))));
+            
+            builder.Services.AddSingleton<NavigationDataService>();
+
+
+            //#if ANDROID
+            //            EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
+            //            {
+            //                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+            //            });
+            //#endif
+
 
             return builder.Build();
         }
@@ -49,7 +62,6 @@ namespace GymExerciseMauiApp
             }
 
             return databasePath;
-
         }
     }
 }

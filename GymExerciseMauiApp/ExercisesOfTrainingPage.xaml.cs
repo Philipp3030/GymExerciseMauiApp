@@ -1,6 +1,10 @@
+using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
+using System.Drawing;
+
 #if ANDROID
 using GymExerciseMauiApp.Custom;
 #endif
@@ -9,12 +13,17 @@ namespace GymExerciseMauiApp;
 
 public partial class ExercisesOfTrainingPage : ContentPage
 {
-	private readonly ExercisesOfTrainingViewModel _exercisesOfTrainingViewModel;
+    private readonly ApplicationDbContext _context;
+    private readonly ExercisesOfTrainingViewModel _exercisesOfTrainingViewModel;
+    private readonly NavigationDataService _navigationDataService;
 
-    public ExercisesOfTrainingPage(ExercisesOfTrainingViewModel exercisesOfTrainingViewModel)
+    // Updated for DI
+    public ExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
 		InitializeComponent();
-        _exercisesOfTrainingViewModel = exercisesOfTrainingViewModel;
+        _context = context;
+        _navigationDataService = navigationDataService;
+        _exercisesOfTrainingViewModel = new ExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
         BindingContext = _exercisesOfTrainingViewModel;
     }
 
@@ -42,60 +51,38 @@ public partial class ExercisesOfTrainingPage : ContentPage
         await FocusStealer.HideSoftInputAsync(CancellationToken.None);
     }
 
-    private void OnChangeClipClicked(object sender, FocusEventArgs e)
+    private async void OnEntryFocused(object sender, FocusEventArgs e)
     {
         if (sender is Entry entry)
         {
-            // Traverse up the visual tree to find the parent (template root)
-            var parent = entry.Parent;
-
-            while (parent != null && !(parent is Grid))
-                parent = parent.Parent;
-
-            if (parent is Grid grid)
+            if (entry != null)
             {
-                var nameClip = grid.FindByName<RectangleGeometry>("NameEntryClip");
-                var nameEntry = grid.FindByName<Entry>("NameEntry");
-                var machineEntry = grid.FindByName<Entry>("MachineEntry");
-                var machineClip = grid.FindByName<RectangleGeometry>("MachineEntryClip");
+                await Task.Delay(100);
 
-                //if (nameEntry != null)
-                //{
-                //    nameEntry.CursorPosition = 0;
-                //}
-                if (machineEntry != null)
-                {
-                    machineEntry.BackgroundColor = Colors.Aqua;
-                    machineEntry.CursorPosition = machineEntry.Text?.Length ?? 0;
-                }
-
-                //if (nameClip != null)
-                //{
-                //    nameClip.Rect = new Rect(4, 10, 150, 50); // New clip
-                //}
-                //if (machineClip != null)
-                //{
-                //    machineClip.Rect = new Rect(4, 10, 80, 50); // New clip
-                //}
+                // Change text to show keyboard, set cursor or something
+                string temp = entry.Text;
+                entry.Text = entry.Text + 999;
+                entry.Text = temp; 
             }
         }
     }
 
-    private async void Entry_Focused(object sender, FocusEventArgs e)
+    private async void OnIconClicked(object sender, TappedEventArgs e)
     {
-        if (sender is Entry entry)
+        if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
+            image.Parent is Grid grid && grid.Parent is Grid grid2 && grid2.Parent is Border border &&
+            border.Parent is VerticalStackLayout layout && layout.Parent is CollectionView view &&
+            view.BindingContext is ExercisesOfTrainingViewModel exercisesOfTraining)
         {
-            await Task.Delay(100);
-            // Unsubscribe to prevent triggering TextChanged
-            //entry.TextChanged -= TriggerOnTextChanged;
-
-            // Set new text on focus
-            string temp = entry.Text;
-            entry.Text = entry.Text + 999;
-            entry.Text = temp;
-
-            // Re-subscribe after change
-            //entry.TextChanged += TriggerOnTextChanged;
+            _navigationDataService.Exercise = exercise;
+            _navigationDataService.Training = exercisesOfTraining.Training;
+            if (_navigationDataService.Exercise != null && _navigationDataService.Training != null)
+            {
+                _navigationDataService.PreviousPageRoute = nameof(ExercisesOfTrainingPage);
+                await Shell.Current.GoToAsync(nameof(ExerciseUpdatePage));
+            }
+            //await Navigation.PushAsync(new ExerciseUpdatePage(
+            //    new ExerciseUpdateViewModel(_context, exercise, SourcePage.ExercisesOfTrainingPage, exercisesOfTraining.Training), _context));
         }
     }
 

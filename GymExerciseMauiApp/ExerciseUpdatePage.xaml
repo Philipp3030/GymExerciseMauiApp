@@ -8,7 +8,7 @@
     <ScrollView>
         <StackLayout Padding="20" Spacing="10">
             <!-- Musclegroup -->
-            <Label Text="Musclegroup" />
+            <Label Text="Musclegroup" FontAttributes="Bold" />
             <Picker x:Name="MusclegroupOptions"
                 Title="Select an Option"
                 ItemsSource="{Binding Musclegroups}"
@@ -21,29 +21,29 @@
             <!--das hier geht noch nicht-->
 
             <!--Name-->
-            <Label Text="Name" />
+            <Label Text="Name" FontAttributes="Bold" />
             <Entry x:Name="NameEntry" Placeholder="Enter exercise name" Text="{Binding Exercise.Name}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding Exercise.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
 
             <!--IsActive-->
-            <Label Text="Is Active" />
+            <Label Text="Is Active" FontAttributes="Bold" />
             <Switch x:Name="IsActiveSwitch" IsToggled="True" />
 
             <!--MachineName-->
-            <Label Text="Machine Name" />
-            <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" />
+            <Label Text="Machine Name" FontAttributes="Bold" />
+            <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" Text="{Binding Exercise.MachineName}" />
 
             <!--Description-->
-            <Label Text="Description" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />
+            <Label Text="Description" FontAttributes="Bold" />
+            <Entry x:Name="DescriptionEntry" Placeholder="Enter description (optional)" Text="{Binding Exercise.Description}" />
 
             <!--AmountOfSets-->
-            <Label Text="Sets" />
+            <Label Text="Sets" FontAttributes="Bold" />
             <Entry x:Name="SetsEntry" Placeholder="Enter sets (optional)" Keyboard="Numeric" Text="{Binding Exercise.AmountOfSets}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding Exercise.ErrorMessageAmountOfSets}" TextColor="Red" IsVisible="True"/>
 
             <!--RepsGoal-->
-            <Label Text="Reps Goal" />
+            <Label Text="Reps Goal" FontAttributes="Bold" />
             <Entry x:Name="RepsGoalEntry" Placeholder="Enter goal reps (optional)" Keyboard="Numeric" Text="{Binding Exercise.RepsGoal}" TextChanged="TriggerCheckForErrorsCommand" />
             <Label Text="{Binding Exercise.ErrorMessageRepsGoal}" TextColor="Red" IsVisible="True"/>
 
@@ -54,7 +54,7 @@
                         <HorizontalStackLayout>
 
                             <Label VerticalOptions="Center" Text="{Binding Index, StringFormat='Satz {0}:'}" 
-                                   TextColor="White" Margin="0, 0, 10, 0">
+                                   Margin="0, 0, 10, 0">
                             </Label>
 
                             <Entry VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="50" 
@@ -70,7 +70,7 @@
             </CollectionView>
             
             <!--Optional: Button to Submit-->
-            <Button Text="Submit" Command="{Binding UpdateExerciseCommand}" />
+            <Button Text="Submit" Command="{Binding UpdateExerciseCommand}" Clicked="NavigateToLastPage" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

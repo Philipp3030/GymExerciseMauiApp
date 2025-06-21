@@ -28,13 +28,6 @@ namespace GymExerciseClassLibrary.ViewModels
         }
 
         [RelayCommand]
-        private void SetNameEntryToEditable(ExerciseViewModel exercise)
-        {
-            exercise.NameEntryInputTransparent = !exercise.NameEntryInputTransparent;
-            exercise.NameEntryIsReadOnly = !exercise.NameEntryIsReadOnly;
-        }
-
-        [RelayCommand]
         private static void ToggleAdvancedOptions(ExerciseViewModel exercise)
         {
             exercise.IsAdvancedOptionsClicked = !exercise.IsAdvancedOptionsClicked;
