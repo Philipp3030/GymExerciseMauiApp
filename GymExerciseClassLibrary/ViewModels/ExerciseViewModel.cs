@@ -34,6 +34,8 @@ namespace GymExerciseClassLibrary.ViewModels
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]
         private string? _repsGoal;
+        [ObservableProperty]
+        private ObservableCollection<int> _trainingIds = new();
 
         // additional properties
         [ObservableProperty]
@@ -42,12 +44,6 @@ namespace GymExerciseClassLibrary.ViewModels
         private bool _isExpanded = false;
         [ObservableProperty]
         private bool _isAdvancedOptionsClicked = false;
-        [ObservableProperty]
-        private bool _nameEntryIsReadOnly = true;
-        [ObservableProperty]
-        private bool _nameEntryInputTransparent = true;
-        [ObservableProperty]
-        private Rect _rect = new Rect(4, 10, 192, 24);
 
         // error messages
         [ObservableProperty]

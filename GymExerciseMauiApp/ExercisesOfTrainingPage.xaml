@@ -13,7 +13,7 @@
         <Entry x:Name="FocusStealer"
                 WidthRequest="100" HeightRequest="10"
                 Opacity="0"
-               BackgroundColor="red"
+                BackgroundColor="Transparent"
                 IsEnabled="True">
         </Entry>
 
@@ -37,65 +37,80 @@
                                 <!-- Header Area (Always Visible) -->
                                 <Grid BackgroundColor="#E0E0E0" Padding="15" Grid.Row="0">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer 
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleExpandCommand}"
-                                            CommandParameter="{Binding .}"/>
+                                            CommandParameter="{Binding .}"
+                                            Tapped="HideKeyboardAndUnfocus"/>
                                     </Grid.GestureRecognizers>
 
-                                    <Entry Text="{Binding Name}" 
-                                           x:Name="NameEntry"
-                                           WidthRequest="200" 
-                                           HeightRequest="44" 
-                                           Margin="0,0,0,0" 
+                                    <Label Text="{Binding Name}"
+                                           x:Name="NameLabel"
                                            FontAttributes="Bold"
-                                           FontSize="16" 
+                                           FontSize="16"
+                                           BackgroundColor="Transparent"
                                            VerticalOptions="Center"
-                                           InputTransparent="{Binding NameEntryInputTransparent}"
-                                           IsReadOnly="{Binding NameEntryIsReadOnly}"
-                                           BackgroundColor="#D0D0D0"
+                                           HorizontalOptions="Start"
                                            Grid.Row="0"
-                                           Unfocused="TriggerOnUnfocused">
-                                        <Entry.Clip>
-                                            <RectangleGeometry x:Name="NameEntryClip" Rect="4,10,150,24"/>
-                                        </Entry.Clip>
-                                    </Entry>
+                                           Grid.Column="0">
+                                    </Label>
+                                    <!--<Entry Text="{Binding Name}" 
+                                           x:Name="NameEntry" 
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           BackgroundColor="red"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           InputTransparent="{Binding EntryInputTransparent}"
+                                           IsReadOnly="{Binding EntryIsReadOnly}"
+                                           Focused="OnEntryFocused"
+                                           Unfocused="TriggerOnUnfocused"
+                                           MinimumHeightRequest="40"
+                                           IsVisible="{Binding EntryIsVisible}">
+                                    </Entry>-->
 
-                                    <Entry Text="{Binding MachineName}" 
+                                    <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnIconClicked"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+
+                                    <Label Text="{Binding MachineName}"
+                                           x:Name="MachineLabel"
+                                           FontAttributes="None"
+                                           FontSize="14"
+                                           BackgroundColor="Transparent"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start"
+                                           Grid.Row="1"
+                                           Grid.Column="0">
+                                    </Label>
+
+                                    <!--<Entry Text="{Binding MachineName}" 
                                            x:Name="MachineEntry"
                                            Placeholder="Machine"
-                                           WidthRequest="200" 
-                                           HeightRequest="44" 
                                            FontAttributes="None"
                                            FontSize="14" 
                                            VerticalOptions="Center"
-                                           InputTransparent="False"
-                                           IsReadOnly="False"
+                                           HorizontalOptions="Start"
+                                           InputTransparent="{Binding EntryInputTransparent}"
+                                           IsReadOnly="{Binding EntryIsReadOnly}"
                                            BackgroundColor="Transparent"
                                            Grid.Column="0"
                                            Grid.Row="1"
-                                           Focused="OnChangeClipClicked"
+                                           Focused="OnEntryFocused"
                                            Unfocused="TriggerOnUnfocused">
-                                        <Entry.Clip>
-                                            <RectangleGeometry x:Name="MachineEntryClip" Rect="4,10,150,24"/>
-                                        </Entry.Clip>
-                                    </Entry>
-
-                                    <!-- Stift Icon für Namen umbenennen -->
-                                    <!--<Button Text="Edit" FontSize="14" TextColor="Gray" Grid.Column="1"
-                                            VerticalOptions="Center" BackgroundColor="Transparent"
-                                            Grid.RowSpan="2"
-                                            Clicked="OnChangeClipClicked"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=SetNameEntryToEditableCommand}" 
-                                            CommandParameter="{Binding .}">
-                                    </Button>-->
+                                    </Entry>-->
                                 </Grid>
 
                                 <!-- Expandable Area -->
@@ -128,8 +143,7 @@
                                                             HeightRequest="40"
                                                             CornerRadius="20"
                                                             HorizontalOptions="Center"
-                                                            VerticalOptions="Center"
-                                                            >
+                                                            VerticalOptions="Center">
                                                     </Button>
 
                                                     <Label Text="{Binding Index, StringFormat='Reps:'}"
@@ -142,7 +156,7 @@
                                                                Keyboard="Numeric"
                                                                Text="{Binding Reps}" 
                                                                HorizontalTextAlignment="Center"
-                                                               Focused="Entry_Focused"
+                                                               Focused="OnEntryFocused"
                                                                Unfocused="TriggerOnUnfocused">
                                                         </Entry>
                                                         <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True" />
@@ -157,7 +171,7 @@
                                                                Keyboard="Numeric"
                                                                Text="{Binding Weight}" 
                                                                HorizontalTextAlignment="Center"
-                                                               Focused="Entry_Focused"
+                                                               Focused="OnEntryFocused"
                                                                Unfocused="TriggerOnUnfocused"/>
                                                         <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True" />
                                                         <!--Location => decimal dots / commas-->
@@ -175,8 +189,11 @@
 
                                     <!-- Advanced Fields -->
                                     <VerticalStackLayout IsVisible="{Binding IsAdvancedOptionsClicked}">
-                                        <Label Text="Maschine:" FontSize="14" TextColor="Gray" />
-                                        <Entry Text="{Binding MachineName}" FontSize="14" TextColor="Gray" />
+                                        <Label Text="Maschine:" FontSize="14" />
+                                        <Entry Text="{Binding MachineName}" 
+                                               FontSize="14"
+                                               Focused="OnEntryFocused"
+                                               Unfocused="TriggerOnUnfocused"/>
                                     </VerticalStackLayout>
                                 </VerticalStackLayout>
                             </Grid>

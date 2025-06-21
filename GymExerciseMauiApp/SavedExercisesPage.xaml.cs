@@ -1,4 +1,5 @@
 using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,12 +8,14 @@ namespace GymExerciseMauiApp;
 public partial class SavedExercisesPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
+    private readonly NavigationDataService _navigationDataService;
     private readonly SavedExercisesViewModel _savedExercisesViewModel;
 
-    public SavedExercisesPage(ApplicationDbContext context)
+    public SavedExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
         InitializeComponent();
 		_context = context;
+        _navigationDataService = navigationDataService;
         _savedExercisesViewModel = new SavedExercisesViewModel(_context);
         BindingContext = _savedExercisesViewModel;
     }
@@ -35,7 +38,12 @@ public partial class SavedExercisesPage : ContentPage
         
         if (selectedExercise != null)
         {
-            await Navigation.PushAsync(new ExerciseUpdatePage(new ExerciseUpdateViewModel(_context, selectedExercise))); 
+            _navigationDataService.Exercise = selectedExercise;
+            if (_navigationDataService.Exercise != null)
+            {
+                _navigationDataService.PreviousPageRoute = nameof(SavedExercisesPage);
+                await Shell.Current.GoToAsync(nameof(ExerciseUpdatePage));
+            }
         }
     }
 

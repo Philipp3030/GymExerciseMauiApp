@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GymExerciseMauiApp.TrainingUpdatePage"
+             xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
+             x:DataType="viewmodel:TrainingUpdateViewModel"
+             Title="TrainingUpdatePage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Name -->
+            <Label Text="Name" />
+            <Entry x:Name="NameEntry" Placeholder="Enter training name" Text="{Binding Training.Name}" />
+            <Label Text="{Binding Training.ErrorMessageName}" TextColor="Red" IsVisible="True"/>
+            <!-- Description -->
+            <Label Text="Description" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" Text="{Binding Training.Description}" />
+
+            <!-- Exercises Header -->
+            <Label Text="Exercises" FontAttributes="Bold" FontSize="16" />
+
+            <!-- Exercises List -->
+            <Border Margin="10" Padding="5" HeightRequest="300">
+                <CollectionView ItemsSource="{Binding ExercisesToChooseFrom}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodel:ExerciseViewModel">
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <HorizontalStackLayout Spacing="10">
+                                    <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnExerciseCheckedChanged" />
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" />
+                                        <Label Text="{Binding Musclegroup.Name}" FontSize="14" TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <!-- Save Button -->
+            <Button Text="Save" Command="{Binding UpdateTrainingCommand}" >
+                <Button.Behaviors>
+                    <toolkit:TouchBehavior DefaultAnimationDuration="250" HoveredBackgroundColor="DarkSlateBlue" />
+                </Button.Behaviors>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

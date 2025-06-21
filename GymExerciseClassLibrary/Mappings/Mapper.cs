@@ -130,6 +130,11 @@ namespace GymExerciseClassLibrary.Mappings
         // To ViewModel
         public static ExerciseViewModel Map(Exercise exercise)
         {
+            ObservableCollection<int> trainingIds = new();
+            foreach (var training in exercise.Trainings)
+            {
+                trainingIds.Add(training.Id);
+            }
             var sets = new ObservableCollection<SetViewModel>();
             foreach (var set in exercise.Sets)
             {
@@ -145,7 +150,8 @@ namespace GymExerciseClassLibrary.Mappings
                 Description = exercise.Description,
                 AmountOfSets = exercise.AmountOfSets.ToString(),
                 Sets = sets,
-                RepsGoal = exercise.RepsGoal.ToString()
+                RepsGoal = exercise.RepsGoal.ToString(),
+                TrainingIds = trainingIds
             };
         }
         #endregion
@@ -155,7 +161,9 @@ namespace GymExerciseClassLibrary.Mappings
         public static async Task<Training> Map(ApplicationDbContext context, TrainingViewModel trainingViewModel)
         {
             // get existing entity
-            var existingEntity = await context.Trainings.FirstOrDefaultAsync(e => e.Id == trainingViewModel.Id && trainingViewModel.Id != 0);
+            var existingEntity = await context.Trainings
+                .Include(t => t.Exercises)
+                .FirstOrDefaultAsync(e => e.Id == trainingViewModel.Id && trainingViewModel.Id != 0);
 
             // map exercises
             var exercises = new List<Exercise>();
@@ -173,7 +181,6 @@ namespace GymExerciseClassLibrary.Mappings
                     Name = trainingViewModel.Name,
                     Description = trainingViewModel.Description,
                     Exercises = exercises
-
                 };
             }
             // if entity exists, update properties of existing entity
@@ -189,6 +196,11 @@ namespace GymExerciseClassLibrary.Mappings
         // To ViewModel
         public static TrainingViewModel Map(Training training)
         {
+            ObservableCollection<int> exerciseIds = new();
+            foreach (var exercise in training.Exercises)
+            {
+                exerciseIds.Add(exercise.Id);
+            }
             var exercises = new ObservableCollection<ExerciseViewModel>();
             foreach (var exercise in training.Exercises)
             {
@@ -199,7 +211,8 @@ namespace GymExerciseClassLibrary.Mappings
                 Id = training.Id,
                 Name = training.Name,
                 Description = training.Description,
-                ExercisesOfTraining = exercises
+                ExercisesOfTraining = exercises,
+                ExerciseIds = exerciseIds
             };
         }
         #endregion

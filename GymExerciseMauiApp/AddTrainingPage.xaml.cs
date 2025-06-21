@@ -18,7 +18,7 @@ public partial class AddTrainingPage : ContentPage
         BindingContext = _addTrainingViewModel;
     }
 
-    private void OnExerciseCheckedChanged(object sender, EventArgs e)
+    private void OnExerciseCheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         var checkbox = (CheckBox)sender;
         var exercise = (ExerciseViewModel)checkbox.BindingContext;

@@ -34,9 +34,30 @@ Dokumentation:
 		ExercisesOfTrainingPage
 		- "Save on unfocus, not on change" umgesetzt
 
+09.06.	- UI changes
+		- Navigation handling
 
-TODOS:	- UpdateTraining (Exercises rausnehmen/hinzufügen)
+10.06.	- Recherche: NavigationService 
+		- AppShell Menüleiste getestet
+
+11.06.	- Navigation von PushAsync (alt) zu GoToAsync (neu) umgestellt
+			- NavigationService für Parameterübergabe eingerichtet
+
+21.06	- Update von Trainings - Logik implementiert
+
+
+TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext injected wird
+		- NavigationService ausprobieren						DONE
+		- AppShell Menü weiter testen
+		- UpdateTraining (Exercises rausnehmen/hinzufügen)		DONE
 		- Icons
+		- popup: Sicher, dass du den Satz löschen willst?
 		- Swipeview
 		- Save on unfocus, not on change						DONE
 		- MainPage frames
+		- OnChangeClipClicked noch fixen						DONE
+		- Timer für Satzpausen
+		- Services:
+			- zum Löschen von alten Sets
+			- entfernen von relations zwischen Training : Training.Exercises
+		- Allgemein Code, der mehrmals benutzt wird in Service packen

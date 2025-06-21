@@ -7,60 +7,121 @@
              x:DataType="viewmodel:MainViewModel"
              Title="Main">
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <!--<HorizontalStackLayout Spacing="10" Padding="10">-->
-
-        <Button Text="TestPage" Clicked="NavigateToTestPage">
-            
-        </Button>
-
-        <Grid>
+    <Grid Padding="10" BackgroundColor="Aqua">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Gray">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Button Text="TestPage" Clicked="NavigateToTestPage" Grid.Row="1">
 
-            <Button Grid.Column="0" Text="Add Training" Clicked="NavigateToAddTraining" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
+            </Button>
+            <Button Grid.Column="0" Grid.Row="0" Text="Add Training" Clicked="NavigateToAddTraining" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-            <Button Grid.Column="1" Text="Add Exercise" Clicked="NavigateToAddExercise" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
+            <Button Grid.Column="1" Grid.Row="0" Text="Add Exercise" Clicked="NavigateToAddExercise" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-            <Button Grid.Column="2" Text="Show Exercises" Clicked="NavigateToSavedExercises" LineBreakMode="WordWrap" WidthRequest="90" Margin="0, 0, 5, 0">
+            <Button Grid.Column="1" Grid.Row="1" Text="Show Exercises" Clicked="NavigateToSavedExercises" LineBreakMode="WordWrap" WidthRequest="90" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
-            <Button Grid.Column="3" Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup" LineBreakMode="WordWrap" WidthRequest="115" Margin="0, 0, 5, 0">
+            <Button Grid.Column="3" Grid.Row="0" Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup" LineBreakMode="WordWrap" WidthRequest="115" Margin="0, 0, 5, 0">
                 <Button.Behaviors>
                     <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
                 </Button.Behaviors>
             </Button>
         </Grid>
         <!--</HorizontalStackLayout>-->
-        <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" >
+
+        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" Margin="0, 10, 0, 0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:TrainingViewModel">
-                    <Frame BorderColor="LightGray" Margin="5" Padding="10" BackgroundColor="Black" HeightRequest="60">
-                        <Frame.Behaviors>
-                            <toolkit:TouchBehavior DefaultAnimationDuration="150" DefaultBackgroundColor="Black" HoveredBackgroundColor="{StaticResource Gray900}" TouchGestureCompleted="OnLabelTapped" />
-                        </Frame.Behaviors>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="AntiqueWhite" />
-                            <Label Text="{Binding Description}" FontSize="14" TextColor="AntiqueWhite" />
-                        </VerticalStackLayout>
-                    </Frame>
+                    <VerticalStackLayout Margin="0, 10, 0, 0" BackgroundColor="Transparent">
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Grid BackgroundColor="#E0E0E0" Padding="15" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="NavigateToExercisesOfTrainingPage"/>
+                                    </Grid.GestureRecognizers>
+
+                                    <Label Text="{Binding Name}" 
+                                               x:Name="NameLabel"
+                                               FontAttributes="Bold"
+                                               FontSize="16" 
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               Grid.Row="0"
+                                               Grid.Column="0">
+                                    </Label>
+                                    <Label Text="{Binding Description}" 
+                                               x:Name="DescriptionLabel"
+                                               FontAttributes="None"
+                                               FontSize="16" 
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               Grid.Row="1"
+                                               Grid.Column="0">
+                                    </Label>
+                                    <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30" BackgroundColor="red">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+        <Button Text="＋"
+            FontSize="24"
+            BackgroundColor="#5F42FF"
+            TextColor="White"
+            WidthRequest="60"
+            HeightRequest="60"
+            CornerRadius="30"
+            Padding="0"
+            Margin="0,0,20,20"
+            Grid.Row="1"
+            Grid.Column="2"
+            HorizontalOptions="Start"
+            VerticalOptions="End"/>
+    </Grid>
 </ContentPage>

@@ -24,6 +24,7 @@ namespace GymExerciseClassLibrary.ViewModels
             SavedTrainings.Clear();
 
             var trainingsFromDb = await _context.Trainings
+                .AsNoTracking()
                 .Include(t => t.Exercises)
                     .ThenInclude(e => e.Musclegroup)
                 .Include(t => t.Exercises)
