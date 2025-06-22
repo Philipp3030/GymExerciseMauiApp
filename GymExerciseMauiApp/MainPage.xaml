@@ -7,80 +7,85 @@
              x:DataType="viewmodel:MainViewModel"
              Title="Main">
 
-    <Grid Padding="10" BackgroundColor="Aqua">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" BackgroundColor="Gray">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Text="TestPage" Clicked="NavigateToTestPage" Grid.Row="1">
+    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto">
+        <!-- 4 rows, Row 2 (index 2) is the one we target -->
+        <!-- Some content in other rows -->
+        <Label Text="Meine Trainings"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Margin="0,20,0,20"
+               Grid.Row="0"
+               Grid.ColumnSpan="3"/>
 
-            </Button>
-            <Button Grid.Column="0" Grid.Row="0" Text="Add Training" Clicked="NavigateToAddTraining" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
-                <Button.Behaviors>
-                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
-                </Button.Behaviors>
-            </Button>
-            <Button Grid.Column="1" Grid.Row="0" Text="Add Exercise" Clicked="NavigateToAddExercise" LineBreakMode="WordWrap" WidthRequest="85" Margin="0, 0, 5, 0">
-                <Button.Behaviors>
-                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
-                </Button.Behaviors>
-            </Button>
-            <Button Grid.Column="1" Grid.Row="1" Text="Show Exercises" Clicked="NavigateToSavedExercises" LineBreakMode="WordWrap" WidthRequest="90" Margin="0, 0, 5, 0">
-                <Button.Behaviors>
-                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
-                </Button.Behaviors>
-            </Button>
-            <Button Grid.Column="3" Grid.Row="0" Text="Add Musclegroup" Clicked="NavigateToAddMusclegroup" LineBreakMode="WordWrap" WidthRequest="115" Margin="0, 0, 5, 0">
-                <Button.Behaviors>
-                    <toolkit:TouchBehavior DefaultAnimationDuration="150" HoveredBackgroundColor="DarkSlateBlue" />
-                </Button.Behaviors>
-            </Button>
-        </Grid>
-        <!--</HorizontalStackLayout>-->
+        <Button Text="Exercises"
+                Clicked="NavigateToSavedExercises"
+                FontSize="16"
+                BackgroundColor="#5F42FF"
+                WidthRequest="100"
+                HeightRequest="50"
+                CornerRadius="30"
+                Margin="10,0,0,0"
+                HorizontalOptions="End"
+                Grid.Row="1"
+                Grid.Column="0"/>
 
-        <CollectionView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" Margin="0, 10, 0, 0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodel:TrainingViewModel">
-                    <VerticalStackLayout Margin="0, 10, 0, 0" BackgroundColor="Transparent">
-                        <Border>
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10" />
-                            </Border.StrokeShape>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+        <Button Text="Muscle"
+                Clicked="NavigateToAddMusclegroup"
+                FontSize="16"
+                BackgroundColor="#5F42FF"
+                WidthRequest="100"
+                HeightRequest="50"
+                CornerRadius="30"
+                HorizontalOptions="Center"
+                Grid.Row="1"
+                Grid.Column="1"/>
 
-                                <Grid BackgroundColor="#E0E0E0" Padding="15" Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+        <Button Text="Add"
+                Clicked="NavigateToAddTraining"
+                FontSize="16"
+                BackgroundColor="#5F42FF"
+                WidthRequest="100"
+                HeightRequest="50"
+                CornerRadius="30"
+                Margin="0,0,10,0"
+                HorizontalOptions="End"
+                Grid.Row="1"
+                Grid.Column="2"/>         
+        <!-- Inner Grid in Row 2 -->
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="Transparent" Padding="20">
+            <!-- You can define rows/columns inside this inner grid if needed -->
+            <CollectionView ItemsSource="{Binding SavedTrainings}" x:Name="TrainingCollectionView" Margin="0, 10, 0, 10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:TrainingViewModel">
+                        <VerticalStackLayout Margin="0, 0, 0, 10" BackgroundColor="Transparent">
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="NavigateToExercisesOfTrainingPage"/>
-                                    </Grid.GestureRecognizers>
 
-                                    <Label Text="{Binding Name}" 
+                                    <Grid BackgroundColor="#E0E0E0" Padding="15" Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="NavigateToExercisesOfTrainingPage"/>
+                                        </Grid.GestureRecognizers>
+
+                                        <Label Text="{Binding Name}" 
                                                x:Name="NameLabel"
                                                FontAttributes="Bold"
                                                FontSize="16" 
@@ -88,8 +93,8 @@
                                                HorizontalOptions="Start"
                                                Grid.Row="0"
                                                Grid.Column="0">
-                                    </Label>
-                                    <Label Text="{Binding Description}" 
+                                        </Label>
+                                        <Label Text="{Binding Description}" 
                                                x:Name="DescriptionLabel"
                                                FontAttributes="None"
                                                FontSize="16" 
@@ -97,31 +102,26 @@
                                                HorizontalOptions="Start"
                                                Grid.Row="1"
                                                Grid.Column="0">
-                                    </Label>
-                                    <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30" BackgroundColor="red">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
+                                        </Label>
+                                        <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Grid.Row="0" Grid.Column="3" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="NavigateToDeleteTrainingPage"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <Button Text="＋"
-            FontSize="24"
-            BackgroundColor="#5F42FF"
-            TextColor="White"
-            WidthRequest="60"
-            HeightRequest="60"
-            CornerRadius="30"
-            Padding="0"
-            Margin="0,0,20,20"
-            Grid.Row="1"
-            Grid.Column="2"
-            HorizontalOptions="Start"
-            VerticalOptions="End"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <!--<Label Text="Row 3" Grid.Row="3" Grid.ColumnSpan="3" BackgroundColor="LightCoral" />-->
     </Grid>
 </ContentPage>

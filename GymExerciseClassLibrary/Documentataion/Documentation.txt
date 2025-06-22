@@ -48,14 +48,19 @@ Dokumentation:
 
 TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext injected wird
 		- NavigationService ausprobieren						DONE
-		- AppShell Menü weiter testen
+				- Save on unfocus, not on change				DONE
+		- MainPage frames										DONE
+		- OnChangeClipClicked noch fixen						DONE
+		- AppShell Menü weiter testen							DONE
 		- UpdateTraining (Exercises rausnehmen/hinzufügen)		DONE
+		- Training delete
+		- Exercises delete
+		- Musclegroup delete
+		- Back buttons
 		- Icons
 		- popup: Sicher, dass du den Satz löschen willst?
 		- Swipeview
-		- Save on unfocus, not on change						DONE
-		- MainPage frames
-		- OnChangeClipClicked noch fixen						DONE
+
 		- Timer für Satzpausen
 		- Services:
 			- zum Löschen von alten Sets
