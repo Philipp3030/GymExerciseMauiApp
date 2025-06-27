@@ -4,26 +4,26 @@ using GymExerciseClassLibrary.ViewModels;
 
 namespace GymExerciseMauiApp;
 
-public partial class ExerciseUpdatePage : ContentPage
+public partial class UpdateExercisePage : ContentPage
 {
     private readonly ApplicationDbContext _context;
     private readonly NavigationDataService _navigationDataService;
-    private readonly ExerciseUpdateViewModel _exerciseUpdateViewModel;
+    private readonly UpdateExerciseViewModel _exerciseUpdateViewModel;
 
 
-    public ExerciseUpdatePage(ApplicationDbContext context, NavigationDataService navigationDataService)
+    public UpdateExercisePage(ApplicationDbContext context, NavigationDataService navigationDataService)
     {
         InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
-        _exerciseUpdateViewModel = new ExerciseUpdateViewModel(_context, _navigationDataService.Exercise); 
+        _exerciseUpdateViewModel = new UpdateExerciseViewModel(_context, _navigationDataService.Exercise); 
         BindingContext = _exerciseUpdateViewModel;
     }
 
- //   public ExerciseUpdatePage(ExerciseUpdateViewModel exerciseUpdateViewModel, ApplicationDbContext context)
+ //   public UpdateExercisePage(UpdateExerciseViewModel UpdateExerciseViewModel, ApplicationDbContext context)
 	//{
 	//	InitializeComponent();
- //       _exerciseUpdateViewModel = exerciseUpdateViewModel;
+ //       _exerciseUpdateViewModel = UpdateExerciseViewModel;
  //       _context = context;
  //       BindingContext = _exerciseUpdateViewModel;
 	//}
@@ -53,17 +53,17 @@ public partial class ExerciseUpdatePage : ContentPage
 
     private async void NavigateToLastPage(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is ExerciseUpdateViewModel exerciseUpdate)
+        if (sender is Button button && button.BindingContext is UpdateExerciseViewModel exerciseUpdate)
         {
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}/{_navigationDataService.PreviousPageRoute}");
 
-            //if (exerciseUpdate.Source == SourcePage.SavedExercisesPage)
+            //if (exerciseUpdate.Source == SourcePage.OverviewAllExercisesPage)
             //{
-            //    await Navigation.PushAsync(new SavedExercisesPage(_context));
+            //    await Navigation.PushAsync(new OverviewAllExercisesPage(_context));
             //}
-            //else if (exerciseUpdate.Source == SourcePage.ExercisesOfTrainingPage && exerciseUpdate.Training != null)
+            //else if (exerciseUpdate.Source == SourcePage.OverviewExercisesOfTrainingPage && exerciseUpdate.Training != null)
             //{
-            //    await Navigation.PushAsync(new ExercisesOfTrainingPage(_context, new ExercisesOfTrainingViewModel(_context, exerciseUpdate.Training)));
+            //    await Navigation.PushAsync(new OverviewExercisesOfTrainingPage(_context, new OverviewExercisesOfTrainingViewModel(_context, exerciseUpdate.Training)));
             //}
         }
     }

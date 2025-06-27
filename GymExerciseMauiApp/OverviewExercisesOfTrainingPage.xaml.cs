@@ -11,20 +11,20 @@ using GymExerciseMauiApp.Custom;
 
 namespace GymExerciseMauiApp;
 
-public partial class ExercisesOfTrainingPage : ContentPage
+public partial class OverviewExercisesOfTrainingPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
-    private readonly ExercisesOfTrainingViewModel _exercisesOfTrainingViewModel;
+    private readonly OverviewExercisesOfTrainingViewModel _OverviewExercisesOfTrainingViewModel;
     private readonly NavigationDataService _navigationDataService;
 
     // Updated for DI
-    public ExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
+    public OverviewExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
 		InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
-        _exercisesOfTrainingViewModel = new ExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
-        BindingContext = _exercisesOfTrainingViewModel;
+        _OverviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
+        BindingContext = _OverviewExercisesOfTrainingViewModel;
     }
 
     protected override void OnAppearing()
@@ -72,17 +72,17 @@ public partial class ExercisesOfTrainingPage : ContentPage
         if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
             image.Parent is Grid grid && grid.Parent is Grid grid2 && grid2.Parent is Border border &&
             border.Parent is VerticalStackLayout layout && layout.Parent is CollectionView view &&
-            view.BindingContext is ExercisesOfTrainingViewModel exercisesOfTraining)
+            view.BindingContext is OverviewExercisesOfTrainingViewModel exercisesOfTraining)
         {
             _navigationDataService.Exercise = exercise;
             _navigationDataService.Training = exercisesOfTraining.Training;
             if (_navigationDataService.Exercise != null && _navigationDataService.Training != null)
             {
-                _navigationDataService.PreviousPageRoute = nameof(ExercisesOfTrainingPage);
-                await Shell.Current.GoToAsync(nameof(ExerciseUpdatePage));
+                _navigationDataService.PreviousPageRoute = nameof(OverviewExercisesOfTrainingPage);
+                await Shell.Current.GoToAsync(nameof(UpdateExercisePage));
             }
-            //await Navigation.PushAsync(new ExerciseUpdatePage(
-            //    new ExerciseUpdateViewModel(_context, exercise, SourcePage.ExercisesOfTrainingPage, exercisesOfTraining.Training), _context));
+            //await Navigation.PushAsync(new UpdateExercisePage(
+            //    new UpdateExerciseViewModel(_context, exercise, SourcePage.OverviewExercisesOfTrainingPage, exercisesOfTraining.Training), _context));
         }
     }
 
@@ -90,7 +90,7 @@ public partial class ExercisesOfTrainingPage : ContentPage
     {
         if (sender is Entry setEntry && setEntry.BindingContext is SetViewModel set)
         {
-            var exerciseOfSet = _exercisesOfTrainingViewModel.Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == set.ExerciseId);
+            var exerciseOfSet = _OverviewExercisesOfTrainingViewModel.Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == set.ExerciseId);
             if (exerciseOfSet == null)
             {
                 return;
@@ -118,7 +118,7 @@ public partial class ExercisesOfTrainingPage : ContentPage
                     return;
                 }
             }
-            await _exercisesOfTrainingViewModel.UpdateExercise(exerciseOfSet);
+            await _OverviewExercisesOfTrainingViewModel.UpdateExercise(exerciseOfSet);
         }
 
         if (sender is Entry exerciseEntry && exerciseEntry.BindingContext is ExerciseViewModel exercise)
@@ -146,7 +146,7 @@ public partial class ExercisesOfTrainingPage : ContentPage
                     return;
                 }
             }
-            await _exercisesOfTrainingViewModel.UpdateExercise(exercise);
+            await _OverviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
         }
     }
 }

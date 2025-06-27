@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GymExerciseMauiApp.SavedExercisesPage"
+             x:Class="GymExerciseMauiApp.OverviewAllExercisesPage"
              xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
-             x:DataType="viewmodel:SavedExercisesViewModel"
+             x:DataType="viewmodel:OverviewAllExercisesViewModel"
              Title="SavedExercises">
     <CollectionView ItemsSource="{Binding Exercises}" x:Name="ExerciseCollectionView">
         <CollectionView.ItemTemplate>

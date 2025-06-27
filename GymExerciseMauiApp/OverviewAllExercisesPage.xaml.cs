@@ -5,18 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymExerciseMauiApp;
 
-public partial class SavedExercisesPage : ContentPage
+public partial class OverviewAllExercisesPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
     private readonly NavigationDataService _navigationDataService;
-    private readonly SavedExercisesViewModel _savedExercisesViewModel;
+    private readonly OverviewAllExercisesViewModel _savedExercisesViewModel;
 
-    public SavedExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
+    public OverviewAllExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
         InitializeComponent();
 		_context = context;
         _navigationDataService = navigationDataService;
-        _savedExercisesViewModel = new SavedExercisesViewModel(_context);
+        _savedExercisesViewModel = new OverviewAllExercisesViewModel(_context);
         BindingContext = _savedExercisesViewModel;
     }
 
@@ -27,7 +27,7 @@ public partial class SavedExercisesPage : ContentPage
 
     //    if (selectedExercise != null)
     //    {
-    //        await Navigation.PushAsync(new ExerciseUpdatePage(new ExerciseUpdateViewModel(_context, selectedExercise)));
+    //        await Navigation.PushAsync(new UpdateExercisePage(new UpdateExerciseViewModel(_context, selectedExercise)));
     //    }
     //}
 
@@ -41,8 +41,8 @@ public partial class SavedExercisesPage : ContentPage
             _navigationDataService.Exercise = selectedExercise;
             if (_navigationDataService.Exercise != null)
             {
-                _navigationDataService.PreviousPageRoute = nameof(SavedExercisesPage);
-                await Shell.Current.GoToAsync(nameof(ExerciseUpdatePage));
+                _navigationDataService.PreviousPageRoute = nameof(OverviewAllExercisesPage);
+                await Shell.Current.GoToAsync(nameof(UpdateExercisePage));
             }
         }
     }

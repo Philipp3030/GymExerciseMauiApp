@@ -15,13 +15,13 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class ExercisesOfTrainingViewModel : ObservableValidator
+    public partial class OverviewExercisesOfTrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
         [ObservableProperty]
         private TrainingViewModel _training;
 
-        public ExercisesOfTrainingViewModel(ApplicationDbContext context, TrainingViewModel training)
+        public OverviewExercisesOfTrainingViewModel(ApplicationDbContext context, TrainingViewModel training)
         {
             _context = context;
             _training = training;

@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class ExerciseUpdateViewModel : ObservableValidator
+    public partial class UpdateExerciseViewModel : ObservableValidator
     {
         private ApplicationDbContext _context;
         [ObservableProperty]
@@ -19,7 +19,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<MusclegroupViewModel> _musclegroups = new();
 
-        public ExerciseUpdateViewModel(ApplicationDbContext context, ExerciseViewModel exercise)
+        public UpdateExerciseViewModel(ApplicationDbContext context, ExerciseViewModel exercise)
         {
             _context = context;
             Exercise = exercise;

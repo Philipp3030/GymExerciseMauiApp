@@ -72,11 +72,17 @@
 	  <Compile Update="AddExercisePage.xaml.cs">
 	    <DependentUpon>AddExercisePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="ExercisesOfTrainingPage.xaml.cs">
-	    <DependentUpon>ExercisesOfTrainingPage.xaml</DependentUpon>
+	  <Compile Update="UpdateTrainingPage.xaml.cs">
+	    <DependentUpon>UpdateTrainingPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="SavedExercisesPage.xaml.cs">
-	    <DependentUpon>SavedExercisesPage.xaml</DependentUpon>
+	  <Compile Update="UpdateExercisePage.xaml.cs">
+	    <DependentUpon>UpdateExercisePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="OverviewOverviewExercisesOfTrainingPage.xaml.cs">
+	    <DependentUpon>OverviewOverviewExercisesOfTrainingPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="OverviewAllExercisesPage.xaml.cs">
+	    <DependentUpon>OverviewAllExercisesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -102,19 +108,19 @@
 	  <MauiXaml Update="DeleteTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ExercisesOfTrainingPage.xaml">
+	  <MauiXaml Update="OverviewOverviewExercisesOfTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ExerciseUpdatePage.xaml">
+	  <MauiXaml Update="UpdateExercisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="SavedExercisesPage.xaml">
+	  <MauiXaml Update="OverviewAllExercisesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="TestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="TrainingUpdatePage.xaml">
+	  <MauiXaml Update="UpdateTrainingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

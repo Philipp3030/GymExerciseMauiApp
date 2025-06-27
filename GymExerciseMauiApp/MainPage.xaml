@@ -132,7 +132,7 @@
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="NavigateToExercisesOfTrainingPage"/>
+                                            <TapGestureRecognizer Tapped="NavigateToOverviewExercisesOfTrainingPage"/>
                                         </Grid.GestureRecognizers>
 
                                         <Label Text="{Binding Name}" 
