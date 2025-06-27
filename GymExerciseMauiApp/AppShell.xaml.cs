@@ -15,7 +15,6 @@
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(OverviewAllExercisesPage), typeof(OverviewAllExercisesPage));
             Routing.RegisterRoute(nameof(UpdateTrainingPage), typeof(UpdateTrainingPage));
-            Routing.RegisterRoute(nameof(DeleteTrainingPage), typeof(DeleteTrainingPage));
             
             Routing.RegisterRoute(nameof(TestPage), typeof(TestPage));
         }
