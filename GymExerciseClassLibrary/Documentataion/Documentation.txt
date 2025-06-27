@@ -4,12 +4,12 @@ Dokumentation:
 
 27.03.	Repetition Model um "Weight" ergänzt -> in Mapper und weiteren Klassen waren folglich Änderungen nötig
 
-30.03.	Repetition in ExerciseUpdatePage implementiert
+30.03.	Repetition in UpdateExercisePage implementiert
 
 04.05.	- Mapper grundlegend geändert: das Model, das returned wird, beinhaltet jetzt auch die changes (wichtig für update)
 		- Bug gefixed: wenn man den Zurück-Button benutzt, wird der Konstruktor der Page nicht nochmal aufgerufen. Das hat zu Initialisierungsproblemen geführt
 
-05.05.	- Buttons auf ExercisesOfTrainingPage hinzugefügt, zum adden/removen von Repetitions
+05.05.	- Buttons auf OverviewExercisesOfTrainingPage hinzugefügt, zum adden/removen von Repetitions
 		- angefangen: automatisches Speichern, onClick der Buttons
 
 06.05.	- automatisches Speichern der Reps weitergeführt
@@ -31,7 +31,7 @@ Dokumentation:
 		- TODO: Keyboard hides parts of collection view										SOLVED
 
 07.06.	- Keyboardfunktionen gefixed; funktionieren jetzt auf 
-		ExercisesOfTrainingPage
+		OverviewExercisesOfTrainingPage
 		- "Save on unfocus, not on change" umgesetzt
 
 09.06.	- UI changes
@@ -58,7 +58,7 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- Training delete
 		- Exercises delete
 		- Musclegroup delete
-		- ExercisesOfTrainingPage: header soll beim scrollen 
+		- OverviewExercisesOfTrainingPage: header soll beim scrollen 
 		hochgehen und nur die buttons bleiben oben angeheftet 
 		- Back buttons
 		- Icons													DONE

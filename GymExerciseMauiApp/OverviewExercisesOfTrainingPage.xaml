@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="GymExerciseMauiApp.ExercisesOfTrainingPage"
+             x:Class="GymExerciseMauiApp.OverviewExercisesOfTrainingPage"
              xmlns:viewmodel="clr-namespace:GymExerciseClassLibrary.ViewModels;assembly=GymExerciseClassLibrary"
-             x:DataType="viewmodel:ExercisesOfTrainingViewModel"
+             x:DataType="viewmodel:OverviewExercisesOfTrainingViewModel"
              Title="ExercisesOfTraining">
 
     <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#2d8086">
@@ -135,7 +135,7 @@
                                         </Grid.RowDefinitions>
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleExpandCommand}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=ToggleExpandCommand}"
                                             CommandParameter="{Binding .}"
                                             Tapped="HideKeyboardAndUnfocus"/>
                                         </Grid.GestureRecognizers>
@@ -190,7 +190,7 @@
                                                     BorderWidth="0.5"
                                                     CornerRadius="30"
                                                     BackgroundColor="Transparent"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=AddSetCommand}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=AddSetCommand}"
                                                     CommandParameter="{Binding .}" />
 
                                         <!-- Set Collection -->
@@ -205,7 +205,7 @@
                                                                VerticalOptions="Center">
                                                             <Image.GestureRecognizers>
                                                                 <TapGestureRecognizer 
-                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=RemoveSetCommand}"
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveSetCommand}"
                                                                     CommandParameter="{Binding .}"/>
                                                             </Image.GestureRecognizers>
                                                         </Image>
@@ -252,7 +252,7 @@
                                                 BorderWidth="0.5"
                                                 CornerRadius="30"
                                                 BackgroundColor="Transparent"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ExercisesOfTrainingViewModel}}, Path=ToggleAdvancedOptionsCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=ToggleAdvancedOptionsCommand}"
                                                 CommandParameter="{Binding .}">
                                         </Button>
 

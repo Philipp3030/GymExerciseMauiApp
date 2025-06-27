@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.ViewModels
 {
-    public partial class TrainingUpdateViewModel : ObservableValidator
+    public partial class UpdateTrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
         [ObservableProperty]
@@ -22,7 +22,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private TrainingViewModel _training;
 
-        public TrainingUpdateViewModel(ApplicationDbContext context, TrainingViewModel training)
+        public UpdateTrainingViewModel(ApplicationDbContext context, TrainingViewModel training)
         {
             _context = context;
             _training = training;

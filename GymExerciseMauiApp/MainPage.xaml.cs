@@ -36,7 +36,7 @@ namespace GymExerciseMauiApp
             (BindingContext as MainViewModel)?.ReloadData();
         }
 
-        private async void NavigateToExercisesOfTrainingPage(object sender, TappedEventArgs e)
+        private async void NavigateToOverviewExercisesOfTrainingPage(object sender, TappedEventArgs e)
         {
             var grid = sender as Grid;
             var selectedTraining = grid?.BindingContext as TrainingViewModel;
@@ -46,9 +46,9 @@ namespace GymExerciseMauiApp
                 _navigationDataService.Training = selectedTraining;
                 if (_navigationDataService.Training != null)
                 {
-                    await Shell.Current.GoToAsync(nameof(ExercisesOfTrainingPage));
+                    await Shell.Current.GoToAsync(nameof(OverviewExercisesOfTrainingPage));
                 }
-                //await Navigation.PushAsync(new ExercisesOfTrainingPage(_context, new ExercisesOfTrainingViewModel(_context, selectedTraining)));
+                //await Navigation.PushAsync(new OverviewExercisesOfTrainingPage(_context, new OverviewExercisesOfTrainingViewModel(_context, selectedTraining)));
             }
         }
 
@@ -62,7 +62,7 @@ namespace GymExerciseMauiApp
                 _navigationDataService.Training = selectedTraining;
                 if (_navigationDataService.Training != null)
                 {
-                    await Shell.Current.GoToAsync(nameof(TrainingUpdatePage)); 
+                    await Shell.Current.GoToAsync(nameof(UpdateTrainingPage)); 
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace GymExerciseMauiApp
 
         private async void NavigateToSavedExercises(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(SavedExercisesPage));
+            await Shell.Current.GoToAsync(nameof(OverviewAllExercisesPage));
         }
 
         private async void NavigateToAddTraining(object sender, EventArgs e)

@@ -1,23 +1,22 @@
 using GymExerciseClassLibrary.Data;
-using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymExerciseMauiApp;
 
-public partial class SavedExercisesPage : ContentPage
+public partial class OverviewAllExercisesPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
     private readonly NavigationDataService _navigationDataService;
-    private readonly SavedExercisesViewModel _savedExercisesViewModel;
+    private readonly OverviewAllExercisesViewModel _overviewAllExercisesViewModel;
 
-    public SavedExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
+    public OverviewAllExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
         InitializeComponent();
 		_context = context;
         _navigationDataService = navigationDataService;
-        _savedExercisesViewModel = new SavedExercisesViewModel(_context);
-        BindingContext = _savedExercisesViewModel;
+        _overviewAllExercisesViewModel = new OverviewAllExercisesViewModel(_context);
+        BindingContext = _overviewAllExercisesViewModel;
     }
 
     //private async void OnLabelTapped(object sender, EventArgs e)
@@ -27,7 +26,7 @@ public partial class SavedExercisesPage : ContentPage
 
     //    if (selectedExercise != null)
     //    {
-    //        await Navigation.PushAsync(new ExerciseUpdatePage(new ExerciseUpdateViewModel(_context, selectedExercise)));
+    //        await Navigation.PushAsync(new UpdateExercisePage(new UpdateExerciseViewModel(_context, selectedExercise)));
     //    }
     //}
 
@@ -41,8 +40,8 @@ public partial class SavedExercisesPage : ContentPage
             _navigationDataService.Exercise = selectedExercise;
             if (_navigationDataService.Exercise != null)
             {
-                _navigationDataService.PreviousPageRoute = nameof(SavedExercisesPage);
-                await Shell.Current.GoToAsync(nameof(ExerciseUpdatePage));
+                _navigationDataService.PreviousPageRoute = nameof(OverviewAllExercisesPage);
+                await Shell.Current.GoToAsync(nameof(UpdateExercisePage));
             }
         }
     }
@@ -50,6 +49,6 @@ public partial class SavedExercisesPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _savedExercisesViewModel.InitializeAsync();
+        await _overviewAllExercisesViewModel.InitializeAsync();
     }
 }
