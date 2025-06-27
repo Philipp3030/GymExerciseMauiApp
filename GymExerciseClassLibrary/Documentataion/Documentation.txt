@@ -44,6 +44,7 @@ Dokumentation:
 			- NavigationService für Parameterübergabe eingerichtet
 
 21.06	- Update von Trainings - Logik implementiert
+		- Design von MainPage
 
 
 TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext injected wird
@@ -53,11 +54,14 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- OnChangeClipClicked noch fixen						DONE
 		- AppShell Menü weiter testen							DONE
 		- UpdateTraining (Exercises rausnehmen/hinzufügen)		DONE
+		- add Headers
 		- Training delete
 		- Exercises delete
 		- Musclegroup delete
+		- ExercisesOfTrainingPage: header soll beim scrollen 
+		hochgehen und nur die buttons bleiben oben angeheftet 
 		- Back buttons
-		- Icons
+		- Icons													DONE
 		- popup: Sicher, dass du den Satz löschen willst?
 		- Swipeview
 

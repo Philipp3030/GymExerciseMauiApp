@@ -56,7 +56,9 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task AddSet(ExerciseViewModel exercise)
         {
-            var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
+            var exerciseDb = await _context.Exercises
+                .Include(e => e.Sets)
+                .FirstOrDefaultAsync(e => e.Id == exercise.Id);
 
             if (exerciseDb == null)
             {
@@ -89,13 +91,15 @@ namespace GymExerciseClassLibrary.ViewModels
         private async Task RemoveSet(SetViewModel setToRemove)
         {
             // remove setToRemove from db
-            var setDb = await _context.Sets.FirstOrDefaultAsync(s => s.Id == setToRemove.Id);
+            var setDb = await _context.Sets
+                .Include(s => s.Exercise)
+                .FirstOrDefaultAsync(s => s.Id == setToRemove.Id);
             if (setDb == null)
             {
                 return;
             }
             _context.Sets.Remove(setDb);
-            
+
             // decrease AmountOfSets by 1 and readjust Index
             Exercise exerciseOfSet = setDb.Exercise;
             if (exerciseOfSet == null)
