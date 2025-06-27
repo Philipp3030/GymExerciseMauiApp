@@ -137,6 +137,7 @@
 
                                         <Label Text="{Binding Name}" 
                                                x:Name="NameLabel"
+                                               TextColor="Black"
                                                FontAttributes="Bold"
                                                FontSize="16" 
                                                VerticalOptions="Center"
@@ -160,7 +161,7 @@
                                         </Image>
                                         <Image Grid.Row="0" Grid.Column="3" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="NavigateToDeleteTrainingPage"/>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTrainingCommand}" CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                     </Grid>

@@ -73,7 +73,6 @@ namespace GymExerciseClassLibrary.ViewModels
                 {
                     _context.Trainings.Add(await Mapper.Map(_context, Training));
                     await _context.SaveChangesAsync();
-
                 }
                 catch (Exception e)
                 {

@@ -67,21 +67,6 @@ namespace GymExerciseMauiApp
             }
         }
 
-        private async void NavigateToDeleteTrainingPage(object sender, TappedEventArgs e)
-        {
-            var image = sender as Image;
-            var selectedTraining = image?.BindingContext as TrainingViewModel;
-
-            if (selectedTraining != null)
-            {
-                _navigationDataService.Training = selectedTraining;
-                if (_navigationDataService.Training != null)
-                {
-                    await Shell.Current.GoToAsync(nameof(DeleteTrainingPage));
-                }
-            }
-        }
-
         private async void NavigateToSavedExercises(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(OverviewAllExercisesPage));
