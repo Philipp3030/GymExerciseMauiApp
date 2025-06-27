@@ -1,5 +1,4 @@
 using GymExerciseClassLibrary.Data;
-using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
@@ -14,7 +13,7 @@ namespace GymExerciseMauiApp;
 public partial class OverviewExercisesOfTrainingPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
-    private readonly OverviewExercisesOfTrainingViewModel _OverviewExercisesOfTrainingViewModel;
+    private readonly OverviewExercisesOfTrainingViewModel _overviewExercisesOfTrainingViewModel;
     private readonly NavigationDataService _navigationDataService;
 
     // Updated for DI
@@ -23,8 +22,8 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
 		InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
-        _OverviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
-        BindingContext = _OverviewExercisesOfTrainingViewModel;
+        _overviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
+        BindingContext = _overviewExercisesOfTrainingViewModel;
     }
 
     protected override void OnAppearing()
@@ -90,7 +89,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     {
         if (sender is Entry setEntry && setEntry.BindingContext is SetViewModel set)
         {
-            var exerciseOfSet = _OverviewExercisesOfTrainingViewModel.Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == set.ExerciseId);
+            var exerciseOfSet = _overviewExercisesOfTrainingViewModel.Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == set.ExerciseId);
             if (exerciseOfSet == null)
             {
                 return;
@@ -118,7 +117,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
                     return;
                 }
             }
-            await _OverviewExercisesOfTrainingViewModel.UpdateExercise(exerciseOfSet);
+            await _overviewExercisesOfTrainingViewModel.UpdateExercise(exerciseOfSet);
         }
 
         if (sender is Entry exerciseEntry && exerciseEntry.BindingContext is ExerciseViewModel exercise)
@@ -146,7 +145,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
                     return;
                 }
             }
-            await _OverviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
+            await _overviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
         }
     }
 }

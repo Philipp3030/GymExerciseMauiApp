@@ -1,5 +1,4 @@
 using GymExerciseClassLibrary.Data;
-using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,15 +8,15 @@ public partial class OverviewAllExercisesPage : ContentPage
 {
     private readonly ApplicationDbContext _context;
     private readonly NavigationDataService _navigationDataService;
-    private readonly OverviewAllExercisesViewModel _savedExercisesViewModel;
+    private readonly OverviewAllExercisesViewModel _overviewAllExercisesViewModel;
 
     public OverviewAllExercisesPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
         InitializeComponent();
 		_context = context;
         _navigationDataService = navigationDataService;
-        _savedExercisesViewModel = new OverviewAllExercisesViewModel(_context);
-        BindingContext = _savedExercisesViewModel;
+        _overviewAllExercisesViewModel = new OverviewAllExercisesViewModel(_context);
+        BindingContext = _overviewAllExercisesViewModel;
     }
 
     //private async void OnLabelTapped(object sender, EventArgs e)
@@ -50,6 +49,6 @@ public partial class OverviewAllExercisesPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _savedExercisesViewModel.InitializeAsync();
+        await _overviewAllExercisesViewModel.InitializeAsync();
     }
 }

@@ -13,7 +13,7 @@ public partial class DeleteTrainingPage : ContentPage
         InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
-        //_exerciseUpdateViewModel = new UpdateExerciseViewModel(_context, _navigationDataService.Exercise);
-        //BindingContext = _exerciseUpdateViewModel;
+        //_updateExerciseViewModel = new UpdateExerciseViewModel(_context, _navigationDataService.Exercise);
+        //BindingContext = _updateExerciseViewModel;
     }
 }

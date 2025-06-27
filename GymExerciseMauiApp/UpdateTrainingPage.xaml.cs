@@ -5,7 +5,7 @@ namespace GymExerciseMauiApp;
 
 public partial class UpdateTrainingPage : ContentPage
 {
-    private readonly UpdateTrainingViewModel _trainingUpdateViewModel;
+    private readonly UpdateTrainingViewModel _updateTrainingViewModel;
     private readonly ApplicationDbContext _context;
     private readonly NavigationDataService _navigationDataService;
 
@@ -15,8 +15,8 @@ public partial class UpdateTrainingPage : ContentPage
 		InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
-        _trainingUpdateViewModel = new UpdateTrainingViewModel(_context, _navigationDataService.Training);
-        BindingContext = _trainingUpdateViewModel;
+        _updateTrainingViewModel = new UpdateTrainingViewModel(_context, _navigationDataService.Training);
+        BindingContext = _updateTrainingViewModel;
     }
 
     private void OnExerciseCheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -24,6 +24,6 @@ public partial class UpdateTrainingPage : ContentPage
         var checkbox = (CheckBox)sender;
         var exercise = (ExerciseViewModel)checkbox.BindingContext;
         // Call the ToggleSelection method to update SelectedExercises
-        _trainingUpdateViewModel.ToggleSelection(exercise);
+        _updateTrainingViewModel.ToggleSelection(exercise);
     }
 }

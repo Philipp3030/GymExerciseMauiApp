@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
-using GymExerciseClassLibrary.Enums;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
