@@ -7,52 +7,96 @@
              x:DataType="viewmodel:MainViewModel"
              Title="Main">
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto">
+    <!--StatusBarColor="Transparent" führt zu Problemen beim fokussen von Entrys-->
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior x:Name="statusBar" StatusBarColor="#333333" StatusBarStyle="LightContent"/>
+    </Page.Behaviors>
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#2d8086">
         <!-- 4 rows, Row 2 (index 2) is the one we target -->
         <!-- Some content in other rows -->
+        <!--<Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#2d8086" Offset="0.0"/>
+                <GradientStop Color="#cfdccf" Offset="0.7"/>
+            </LinearGradientBrush>
+        </Grid.Background>-->
+
         <Label Text="Meine Trainings"
-               FontSize="24"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               VerticalOptions="Start"
-               Margin="0,20,0,20"
-               Grid.Row="0"
-               Grid.ColumnSpan="3"/>
+            TextColor="Black"
+            FontSize="24"
+            FontAttributes="None"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            Margin="0,20,0,20"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"/>
 
         <Button Text="Exercises"
                 Clicked="NavigateToSavedExercises"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="#5F42FF"
+                BackgroundColor="Transparent"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 Margin="10,0,0,0"
                 HorizontalOptions="End"
                 Grid.Row="1"
-                Grid.Column="0"/>
+                Grid.Column="0">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#2d8086" Offset="0.0"/>
+                    <GradientStop Color="#cfdccf" Offset="0.7"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
         <Button Text="Muscle"
                 Clicked="NavigateToAddMusclegroup"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="#5F42FF"
+                BackgroundColor="Transparent"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 HorizontalOptions="Center"
                 Grid.Row="1"
-                Grid.Column="1"/>
+                Grid.Column="1">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#2d8086" Offset="0.0"/>
+                    <GradientStop Color="#cfdccf" Offset="0.7"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
         <Button Text="Add"
                 Clicked="NavigateToAddTraining"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="0.5"                
                 FontSize="16"
-                BackgroundColor="#5F42FF"
+                BackgroundColor="Transparent"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 Margin="0,0,10,0"
                 HorizontalOptions="End"
                 Grid.Row="1"
-                Grid.Column="2"/>         
+                Grid.Column="2">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#2d8086" Offset="0.0"/>
+                    <GradientStop Color="#cfdccf" Offset="0.7"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
         <!-- Inner Grid in Row 2 -->
         <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="Transparent" Padding="20">
             <!-- You can define rows/columns inside this inner grid if needed -->
@@ -60,17 +104,23 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:TrainingViewModel">
                         <VerticalStackLayout Margin="0, 0, 0, 10" BackgroundColor="Transparent">
-                            <Border>
+                            <Border Stroke="Black" StrokeThickness="0.5">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
                                 <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#2d8086" Offset="0.0"/>
+                                            <GradientStop Color="#cfdccf" Offset="0.7"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid BackgroundColor="#E0E0E0" Padding="15" Grid.Row="0">
+                                    <Grid BackgroundColor="Transparent" Padding="15" Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
@@ -121,7 +171,9 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
-
+        <Button Text="Test" Grid.Row="3" Clicked="NavigateToTestPage" IsVisible="False">
+            
+        </Button>
         <!--<Label Text="Row 3" Grid.Row="3" Grid.ColumnSpan="3" BackgroundColor="LightCoral" />-->
     </Grid>
 </ContentPage>
