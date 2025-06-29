@@ -153,13 +153,14 @@
 
                                         <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnIconClicked"/>
+                                                <TapGestureRecognizer Tapped="NavigateToUpdateExercise"/>
                                             </Image.GestureRecognizers>
                                         </Image>
 
                                         <Image Grid.Row="0" Grid.Column="3" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnIconClicked"/>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}" 
+                                                                      CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
 
