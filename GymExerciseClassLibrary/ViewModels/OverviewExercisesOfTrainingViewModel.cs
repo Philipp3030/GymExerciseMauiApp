@@ -158,5 +158,35 @@ namespace GymExerciseClassLibrary.ViewModels
                 Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
             }
         }
+
+        [RelayCommand]
+        private async Task RemoveExerciseFromTraining(ExerciseViewModel exercise)
+        {
+            try
+            {
+                // remove from db but only the relation to this Training
+                var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
+                var trainingDb = await _context.Trainings
+                    .Include(t => t.Exercises)
+                    .FirstOrDefaultAsync(t => t.Id == Training.Id);
+
+                if (exerciseDb == null || trainingDb == null)
+                {
+                    return;
+                }
+
+                trainingDb.Exercises.Remove(exerciseDb);
+                _context.Update(trainingDb);
+                await _context.SaveChangesAsync();
+
+                // remove from view for animation
+                Training.ExercisesOfTraining.Remove(exercise);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Message: {e.Message}");
+                throw;
+            }
+        }
     }
 }

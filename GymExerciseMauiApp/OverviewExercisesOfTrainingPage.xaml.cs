@@ -66,7 +66,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         }
     }
 
-    private async void OnIconClicked(object sender, TappedEventArgs e)
+    private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
     {
         if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
             image.Parent is Grid grid && grid.Parent is Grid grid2 && grid2.Parent is Border border &&
@@ -80,8 +80,6 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
                 _navigationDataService.PreviousPageRoute = nameof(OverviewExercisesOfTrainingPage);
                 await Shell.Current.GoToAsync(nameof(UpdateExercisePage));
             }
-            //await Navigation.PushAsync(new UpdateExercisePage(
-            //    new UpdateExerciseViewModel(_context, exercise, SourcePage.OverviewExercisesOfTrainingPage, exercisesOfTraining.Training), _context));
         }
     }
 
