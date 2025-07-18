@@ -156,6 +156,7 @@ namespace GymExerciseClassLibrary.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
+                throw;
             }
         }
 
@@ -184,7 +185,33 @@ namespace GymExerciseClassLibrary.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Message: {e.Message}");
+                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
+                throw;
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteExercise(ExerciseViewModel exercise)
+        {
+            try
+            {
+                // remove from db but only the relation to this Training
+                var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
+
+                if (exerciseDb == null)
+                {
+                    return;
+                }
+
+                _context.Exercises.Remove(exerciseDb);
+                await _context.SaveChangesAsync();
+
+                // remove from view for animation
+                Training.ExercisesOfTraining.Remove(exercise);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
                 throw;
             }
         }
