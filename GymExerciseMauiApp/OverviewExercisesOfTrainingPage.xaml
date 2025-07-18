@@ -7,7 +7,7 @@
              x:DataType="viewmodel:OverviewExercisesOfTrainingViewModel"
              Title="ExercisesOfTraining">
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#2d8086">
+    <Grid RowDefinitions="Auto, Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#262626">
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="HideKeyboardAndUnfocus"/>
         </Grid.GestureRecognizers>
@@ -24,80 +24,100 @@
                 IsEnabled="False">
         </Entry>
 
-        <Label Text="{Binding Training.Name}"
+        <Label  Text="{Binding Training.Name}"
                 LineBreakMode="WordWrap"
-                TextColor="Black"
-                FontSize="24"
+                TextColor="#cfdccf"
+                FontSize="30"
                 FontAttributes="None"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
                 Margin="0,20,0,20"
+                HorizontalOptions="Center"
                 Grid.Row="0"
                 Grid.ColumnSpan="3"/>
 
-        <Button Text="Exercises"
+        <Button x:Name="TimeLabelButton"
+                Text="00:00.00"
+                Clicked="OnStartClicked"
+                IsEnabled="False"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="0.5"
+                FontSize="20"
+                BackgroundColor="Gray"
+                WidthRequest="350"
+                HeightRequest="50"
+                CornerRadius="30"
+                Margin="10,0,10,10"
+                HorizontalOptions="Center"
+                Grid.Row="1"
+                Grid.ColumnSpan="3">
+        </Button>
+
+            <Button Text="Start"
+                Clicked="OnStartClicked"
                 TextColor="Black"
                 BorderColor="Black"
                 BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="Gray"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 Margin="10,0,0,0"
                 HorizontalOptions="End"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0">
-            <Button.Background>
+            <!--<Button.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#2d8086" Offset="0.0"/>
                     <GradientStop Color="#cfdccf" Offset="0.7"/>
                 </LinearGradientBrush>
-            </Button.Background>
+            </Button.Background>-->
         </Button>
 
-        <Button Text="Muscle"
+        <Button Text="Stop"
+                Clicked="OnStopClicked"
                 TextColor="Black"
                 BorderColor="Black"
                 BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="#808080"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 HorizontalOptions="Center"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1">
-            <Button.Background>
+            <!--<Button.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#2d8086" Offset="0.0"/>
                     <GradientStop Color="#cfdccf" Offset="0.7"/>
                 </LinearGradientBrush>
-            </Button.Background>
+            </Button.Background>-->
         </Button>
 
-        <Button Text="Add"
+        <Button Text="Reset"
+                Clicked="OnResetClicked"
                 TextColor="Black"
                 BorderColor="Black"
                 BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="#808080"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 Margin="0,0,10,0"
                 HorizontalOptions="End"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="2">
-            <Button.Background>
+            <!--<Button.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#2d8086" Offset="0.0"/>
                     <GradientStop Color="#cfdccf" Offset="0.7"/>
                 </LinearGradientBrush>
-            </Button.Background>
+            </Button.Background>-->
         </Button>
-        
-        <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="Transparent" Padding="20">
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Padding="20">
             <CollectionView ItemsSource="{Binding Training.ExercisesOfTraining}" x:Name="ExerciseCollectionView" Margin="0, 10, 0, 10">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:ExerciseViewModel">
@@ -106,13 +126,13 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10"/>
                                 </Border.StrokeShape>
-                                <Grid>
-                                    <Grid.Background>
+                                <Grid BackgroundColor="#808080">
+                                    <!--<Grid.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                             <GradientStop Color="#2d8086" Offset="0.0"/>
                                             <GradientStop Color="#cfdccf" Offset="0.7"/>
                                         </LinearGradientBrush>
-                                    </Grid.Background>
+                                    </Grid.Background>-->
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -131,6 +151,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.GestureRecognizers>
@@ -140,6 +161,13 @@
                                             Tapped="HideKeyboardAndUnfocus"/>
                                         </Grid.GestureRecognizers>
 
+                                        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="icon_remove_minus.png" WidthRequest="40" HeightRequest="30">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+
                                         <Label Text="{Binding Name}"
                                                x:Name="NameLabel"
                                                FontAttributes="Bold"
@@ -148,32 +176,41 @@
                                                VerticalOptions="Center"
                                                HorizontalOptions="Start"
                                                Grid.Row="0"
-                                               Grid.Column="0">
+                                               Grid.Column="1">
                                         </Label>
-
-                                        <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="NavigateToUpdateExercise"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
-
-                                        <Image Grid.Row="0" Grid.Column="3" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}" 
-                                                                      CommandParameter="{Binding .}"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
-
                                         <Label Text="{Binding MachineName}"
-                                           x:Name="MachineLabel"
-                                           FontAttributes="None"
-                                           FontSize="14"
-                                           BackgroundColor="Transparent"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Start"
-                                           Grid.Row="1"
-                                           Grid.Column="0">
+                                               x:Name="MachineLabel"
+                                               FontAttributes="None"
+                                               FontSize="14"
+                                               BackgroundColor="Transparent"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               Grid.Row="1"
+                                               Grid.Column="1">
                                         </Label>
+                                        
+                                        <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            
+                                            <Image Grid.Row="0" Grid.Column="0" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="NavigateToUpdateExercise"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+
+                                            <Image Grid.Row="0" Grid.Column="1" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}" 
+                                                                          CommandParameter="{Binding .}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Grid>                               
                                     </Grid>
 
                                     <!-- Expandable Area -->
@@ -185,14 +222,15 @@
                                                 Grid.Row="1">
 
                                         <!-- Sets Section -->
-                                            <Button Text="Add Set"
+                                        <Button Text="Add Set"
                                                     TextColor="Black"
                                                     BorderColor="Black"
                                                     BorderWidth="0.5"
                                                     CornerRadius="30"
                                                     BackgroundColor="Transparent"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=AddSetCommand}"
-                                                    CommandParameter="{Binding .}" />
+                                                    CommandParameter="{Binding .}">
+                                        </Button>
 
                                         <!-- Set Collection -->
                                         <CollectionView x:Name="SetsCollectionView" ItemsSource="{Binding Sets}">
@@ -247,7 +285,7 @@
                                         </CollectionView>
 
                                         <!-- Advanced Options Button -->
-                                        <Button Text="Advanced Options"
+                                        <!--<Button Text="Advanced Options"
                                                 TextColor="Black"
                                                 BorderColor="Black"
                                                 BorderWidth="0.5"
@@ -255,16 +293,48 @@
                                                 BackgroundColor="Transparent"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=ToggleAdvancedOptionsCommand}"
                                                 CommandParameter="{Binding .}">
-                                        </Button>
+                                        </Button>-->
 
                                         <!-- Advanced Fields -->
-                                        <VerticalStackLayout IsVisible="{Binding IsAdvancedOptionsClicked}">
+                                        <!--<VerticalStackLayout Padding="20" Spacing="15">
+                                            <Label x:Name="TimeLabel"
+                                                   Text="00:00"
+                                                   FontSize="36"
+                                                   HorizontalOptions="Center" />
+                                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                                                <Button Text="Start" 
+                                                        Clicked="OnStartClicked" 
+                                                        TextColor="Black"
+                                                        BorderColor="Black"
+                                                        BorderWidth="0.5"
+                                                        CornerRadius="30"
+                                                        BackgroundColor="Transparent">
+                                                </Button>
+                                                <Button Text="Stop" 
+                                                        Clicked="OnStopClicked"         
+                                                        TextColor="Black"
+                                                        BorderColor="Black"
+                                                        BorderWidth="0.5"
+                                                        CornerRadius="30"
+                                                        BackgroundColor="Transparent">
+                                                </Button>
+                                                <Button Text="Reset" 
+                                                        Clicked="OnResetClicked"         
+                                                        TextColor="Black"
+                                                        BorderColor="Black"
+                                                        BorderWidth="0.5"
+                                                        CornerRadius="30"
+                                                        BackgroundColor="Transparent">
+                                                </Button>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        --><!--<VerticalStackLayout IsVisible="{Binding IsAdvancedOptionsClicked}">
                                             <Label Text="Maschine:" FontSize="14" />
                                             <Entry Text="{Binding MachineName}" 
                                                    FontSize="14"
                                                    Focused="OnEntryFocused"
                                                    Unfocused="TriggerOnUnfocused"/>
-                                        </VerticalStackLayout>
+                                        </VerticalStackLayout>-->
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>

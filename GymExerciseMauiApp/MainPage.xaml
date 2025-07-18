@@ -9,28 +9,20 @@
 
     <!--StatusBarColor="Transparent" führt zu Problemen beim fokussen von Entrys-->
     <Page.Behaviors>
-        <toolkit:StatusBarBehavior x:Name="statusBar" StatusBarColor="#333333" StatusBarStyle="LightContent"/>
+        <toolkit:StatusBarBehavior x:Name="statusBar" StatusBarColor="#262626" StatusBarStyle="LightContent"/>
     </Page.Behaviors>
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#2d8086">
-        <!-- 4 rows, Row 2 (index 2) is the one we target -->
-        <!-- Some content in other rows -->
-        <!--<Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                <GradientStop Color="#2d8086" Offset="0.0"/>
-                <GradientStop Color="#cfdccf" Offset="0.7"/>
-            </LinearGradientBrush>
-        </Grid.Background>-->
-
-        <Label Text="Meine Trainings"
-            TextColor="Black"
-            FontSize="24"
-            FontAttributes="None"
-            HorizontalOptions="Center"
-            VerticalOptions="Start"
-            Margin="0,20,0,20"
-            Grid.Row="0"
-            Grid.ColumnSpan="3"/>
+    <Grid RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="Auto, *, Auto" BackgroundColor="#262626">
+        <Label  Text="Meine Trainings"
+                TextColor="#cfdccf"
+                FontSize="24"
+                FontAttributes="None"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                Margin="0,20,0,20"
+                Grid.Row="0"
+                Grid.ColumnSpan="3">
+        </Label>
 
         <Button Text="Exercises"
                 Clicked="NavigateToSavedExercises"
@@ -38,7 +30,7 @@
                 BorderColor="Black"
                 BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="Gray"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
@@ -46,12 +38,6 @@
                 HorizontalOptions="End"
                 Grid.Row="1"
                 Grid.Column="0">
-            <Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>
         </Button>
 
         <Button Text="Muscle"
@@ -60,19 +46,13 @@
                 BorderColor="Black"
                 BorderWidth="0.5"
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="Gray"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
                 HorizontalOptions="Center"
                 Grid.Row="1"
                 Grid.Column="1">
-            <Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>
         </Button>
 
         <Button Text="Add"
@@ -81,7 +61,7 @@
                 BorderColor="Black"
                 BorderWidth="0.5"                
                 FontSize="16"
-                BackgroundColor="Transparent"
+                BackgroundColor="Gray"
                 WidthRequest="100"
                 HeightRequest="50"
                 CornerRadius="30"
@@ -89,12 +69,6 @@
                 HorizontalOptions="End"
                 Grid.Row="1"
                 Grid.Column="2">
-            <Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>
         </Button>
 
         <!-- Inner Grid in Row 2 -->
@@ -108,13 +82,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
-                                <Grid>
-                                    <Grid.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <GradientStop Color="#2d8086" Offset="0.0"/>
-                                            <GradientStop Color="#cfdccf" Offset="0.7"/>
-                                        </LinearGradientBrush>
-                                    </Grid.Background>
+                                <Grid BackgroundColor="#808080">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -154,17 +122,27 @@
                                                Grid.Row="1"
                                                Grid.Column="0">
                                         </Label>
-                                        <Image Grid.Row="0" Grid.Column="2" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
-                                        <Image Grid.Row="0" Grid.Column="3" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTrainingCommand}" 
-                                                                      CommandParameter="{Binding .}"/>
-                                            </Image.GestureRecognizers>
-                                        </Image>
+
+                                        <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Image Grid.Row="0" Grid.Column="0" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                            <Image Grid.Row="0" Grid.Column="1" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTrainingCommand}" 
+                                                                          CommandParameter="{Binding .}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -174,8 +152,7 @@
             </CollectionView>
         </Grid>
         <Button Text="Test" Grid.Row="3" Clicked="NavigateToTestPage" IsVisible="False">
-            
+
         </Button>
-        <!--<Label Text="Row 3" Grid.Row="3" Grid.ColumnSpan="3" BackgroundColor="LightCoral" />-->
     </Grid>
 </ContentPage>

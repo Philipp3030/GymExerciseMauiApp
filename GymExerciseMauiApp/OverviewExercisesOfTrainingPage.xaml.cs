@@ -1,8 +1,11 @@
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Dispatching;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
+
 
 #if ANDROID
 using GymExerciseMauiApp.Custom;
@@ -16,6 +19,10 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     private readonly OverviewExercisesOfTrainingViewModel _overviewExercisesOfTrainingViewModel;
     private readonly NavigationDataService _navigationDataService;
 
+    // timer
+    private IDispatcherTimer _timer;
+    private Stopwatch _stopwatch = new Stopwatch();
+    
     // Updated for DI
     public OverviewExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
 	{
@@ -24,6 +31,10 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         _navigationDataService = navigationDataService;
         _overviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
         BindingContext = _overviewExercisesOfTrainingViewModel;
+
+        _timer = Application.Current.Dispatcher.CreateTimer();
+        _timer.Interval = TimeSpan.FromMilliseconds(66);
+        _timer.Tick += (s, e) => OnTimerTick();
     }
 
     protected override void OnAppearing()
@@ -69,7 +80,8 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
     {
         if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
-            image.Parent is Grid grid && grid.Parent is Grid grid2 && grid2.Parent is Border border &&
+            image.Parent is Grid grid && grid.Parent is Grid grid2 && 
+            grid2.Parent is Grid grid3 && grid3.Parent is Border border &&
             border.Parent is VerticalStackLayout layout && layout.Parent is CollectionView view &&
             view.BindingContext is OverviewExercisesOfTrainingViewModel exercisesOfTraining)
         {
@@ -145,5 +157,29 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
             }
             await _overviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
         }
+    }
+
+    private void OnStartClicked(object sender, EventArgs e)
+    {
+        _stopwatch.Start();
+        _timer.Start();
+    }
+
+    private void OnStopClicked(object sender, EventArgs e)
+    {
+        _timer.Stop();
+        _stopwatch.Stop();
+    }
+
+    private void OnResetClicked(object sender, EventArgs e)
+    {
+        _timer.Stop();
+        _stopwatch.Reset();
+        TimeLabelButton.Text = "00:00.00";
+    }
+
+    private void OnTimerTick()
+    {
+        TimeLabelButton.Text = _stopwatch.Elapsed.ToString(@"mm\:ss\.ff");
     }
 }
