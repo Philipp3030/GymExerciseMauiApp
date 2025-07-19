@@ -66,7 +66,11 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- Swipeview
 
 		- Timer für Satzpausen									DONE
+
 		- Services:
 			- zum Löschen von alten Sets
 			- entfernen von relations zwischen Training : Training.Exercises	DONE
 		- Allgemein Code, der mehrmals benutzt wird in Service packen
+
+		- Rückwärts-Navigation: await Shell.Current.GoToAsync("..");
+		- Datum hinzufügen -> Wann das letzte Mal dieses Training/Übung gemacht

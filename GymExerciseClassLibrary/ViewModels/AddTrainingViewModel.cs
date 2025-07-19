@@ -79,7 +79,7 @@ namespace GymExerciseClassLibrary.ViewModels
                     Debug.WriteLine($"Message: {e.Message}");
                     throw;
                 }
-                await Shell.Current.GoToAsync("//MainPage");
+                await Shell.Current.GoToAsync("..");
             }
             else
             {

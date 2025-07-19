@@ -46,7 +46,7 @@ public partial class UpdateExercisePage : ContentPage
     {
         if (sender is Button button && button.BindingContext is UpdateExerciseViewModel exerciseUpdate)
         {
-            await Shell.Current.GoToAsync($"//{nameof(MainPage)}/{_navigationDataService.PreviousPageRoute}");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

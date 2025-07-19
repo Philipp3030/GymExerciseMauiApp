@@ -36,11 +36,9 @@ namespace GymExerciseClassLibrary.ViewModels
                     // Save new musclegroup to database
                     _context.Musclegroups.Add(await Mapper.Map(_context, Musclegroup));
                     await _context.SaveChangesAsync();
-
-                    if (Shell.Current.CurrentState.Location.OriginalString.Contains("//MainPage/D_FAULT_AddMusclegroupPage"))
-                    {
-                        await Shell.Current.GoToAsync("//MainPage");
-                    }
+                    
+                    await Shell.Current.GoToAsync("..");    // navigiert auch zurück beim Popup
+                                                            // Navigation über tapped-Event in Codebehind regeln?
                 }
                 catch (Exception e)
                 {
@@ -52,7 +50,6 @@ namespace GymExerciseClassLibrary.ViewModels
             {
                 Musclegroup.CheckForErrorsCommand.Execute(null);
             }
-
         }
     }
 }
