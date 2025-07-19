@@ -101,7 +101,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 {
                     _context.Trainings.Update(await Mapper.Map(_context, Training));
                     await _context.SaveChangesAsync();
-                    await Shell.Current.GoToAsync("//MainPage");
+                    await Shell.Current.GoToAsync("..");
                 }
                 catch (Exception e)
                 {

@@ -20,7 +20,8 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class OverviewExercisesOfTrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
-        private readonly ExerciseService _service;
+        private readonly ExerciseService _exerciseService;
+        private readonly SetService _setService;
         private readonly ExerciseViewModelService _vmService;
         [ObservableProperty]
         private TrainingViewModel _training;
@@ -29,8 +30,9 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _training = training;
-            _service = new ExerciseService(context);
-            _vmService = new ExerciseViewModelService(context);
+            _exerciseService = new ExerciseService(context);
+            _setService = new SetService(context);
+            _vmService = new ExerciseViewModelService();
         }
 
         [RelayCommand]
@@ -62,90 +64,18 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task AddSet(ExerciseViewModel exercise)
         {
-            var exerciseDb = await _context.Exercises
-                .Include(e => e.Sets)
-                .FirstOrDefaultAsync(e => e.Id == exercise.Id);
-
-            if (exerciseDb == null)
-            {
-                return;
-            }
-            // increase exerciseDb.Sets by 1 and save to db
-            int temp = exerciseDb.AmountOfSets;
-            temp += 1;
-            exerciseDb.AmountOfSets = temp;
-
-            exerciseDb.Sets.Add(new Set
-            {
-                Index = temp,
-                Reps = 0,
-                Weight = 0
-            });
-            //_context.Exercises.Update(exerciseDb); // not needed because the exerciseDb object is being tracked.
-            await _context.SaveChangesAsync();
-
-            // updating view
-            exercise.Sets.Clear();
-            foreach (var set in exerciseDb.Sets)
-            {
-                exercise.Sets.Add(Mapper.Map(set));
-            }
-            exercise.AmountOfSets = exerciseDb.AmountOfSets.ToString();
+            await _setService.AddSet(exercise);
         }
 
         [RelayCommand]
-        private async Task RemoveSet(SetViewModel setToRemove)
+        private async Task DeleteSet(SetViewModel setToRemove)
         {
-            // remove setToRemove from db
-            var setDb = await _context.Sets
-                .Include(s => s.Exercise)
-                .FirstOrDefaultAsync(s => s.Id == setToRemove.Id);
-            if (setDb == null)
-            {
-                return;
-            }
-            _context.Sets.Remove(setDb);
+            var exerciseOfSet = Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == setToRemove.ExerciseId);
 
-            // decrease AmountOfSets by 1 and readjust Index
-            Exercise exerciseOfSet = setDb.Exercise;
-            if (exerciseOfSet == null)
+            if (exerciseOfSet != null)
             {
-                return;
+                await _setService.DeleteSet(setToRemove, exerciseOfSet); 
             }
-            foreach (var set in exerciseOfSet.Sets)
-            {
-                if (set.Index > setToRemove.Index)
-                {
-                    set.Index--;
-                }
-            }
-            exerciseOfSet.AmountOfSets--;
-            _context.Exercises.Update(exerciseOfSet);
-            await _context.SaveChangesAsync();
-
-            // updating view
-            if (setToRemove.ExerciseId == null)
-            {
-                return;
-            }
-            var exercise = Training.ExercisesOfTraining.FirstOrDefault(e => e.Id == setToRemove.ExerciseId);
-            if (exercise == null)
-            {
-                return;
-            }
-            exercise.Sets.Remove(setToRemove);
-            exercise.AmountOfSets = exerciseOfSet.AmountOfSets.ToString();
-
-            foreach (var set in exerciseOfSet.Sets)
-            {
-                var currentSet = exercise.Sets.FirstOrDefault(s => s.Id == set.Id);
-                if (currentSet != null)
-                {
-                    currentSet.Index = set.Index;
-                }
-            }
-            // TODO:
-            // - popup: sicher dass du den Satz löschen willst?
         }
 
         public async Task UpdateExercise(ExerciseViewModel exerciseToUpdate)
@@ -154,20 +84,20 @@ namespace GymExerciseClassLibrary.ViewModels
 
             if (isVerified == true)
             {
-                await _service.UpdateExercise(exerciseToUpdate);
+                await _exerciseService.UpdateExercise(exerciseToUpdate);
             }
         }
 
         [RelayCommand]
         private async Task RemoveExerciseFromTraining(ExerciseViewModel exercise)
         {
-            await _service.RemoveExerciseFromTraining(exercise, Training);
+            await _exerciseService.RemoveExerciseFromTraining(exercise, Training);
         }
 
         [RelayCommand]
         private async Task DeleteExercise(ExerciseViewModel exercise)
         {
-            await _service.DeleteExercise(exercise, Training, null);
+            await _exerciseService.DeleteExercise(exercise, Training, null);
         }
     }
 }

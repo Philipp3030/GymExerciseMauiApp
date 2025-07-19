@@ -10,10 +10,8 @@ namespace GymExerciseClassLibrary.FrontendServices
 {
     public class ExerciseViewModelService
     {
-        private readonly ApplicationDbContext _context;
-        public ExerciseViewModelService(ApplicationDbContext context)
+        public ExerciseViewModelService()
         {
-            _context = context;
         }
 
         public bool VerifyExercise(ExerciseViewModel exercise)

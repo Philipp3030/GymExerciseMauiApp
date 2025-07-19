@@ -18,7 +18,8 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class OverviewAllExercisesViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
-        private readonly ExerciseService _service;
+        private readonly ExerciseService _exerciseService;
+        private readonly SetService _setService;
         private readonly ExerciseViewModelService _vmService;
         [ObservableProperty]
         ObservableCollection<ExerciseViewModel> _exercises = new();
@@ -26,8 +27,9 @@ namespace GymExerciseClassLibrary.ViewModels
         public OverviewAllExercisesViewModel(ApplicationDbContext context)
         {
             _context = context;
-            _service = new ExerciseService(context);
-            _vmService = new ExerciseViewModelService(context);
+            _exerciseService = new ExerciseService(context);
+            _setService = new SetService(context);
+            _vmService = new ExerciseViewModelService();
         }
 
         // executes onAppearing; constructor does NOT
@@ -75,11 +77,18 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task AddSet(ExerciseViewModel exercise)
         {
+            await _setService.AddSet(exercise);
         }
 
         [RelayCommand]
-        private async Task RemoveSet(SetViewModel setToRemove)
+        private async Task DeleteSet(SetViewModel setToRemove)
         {
+            var exerciseOfSet = Exercises.FirstOrDefault(e => e.Id == setToRemove.ExerciseId);
+
+            if (exerciseOfSet != null)
+            {
+                await _setService.DeleteSet(setToRemove, exerciseOfSet);
+            }
         }
 
         public async Task UpdateExercise(ExerciseViewModel exerciseToUpdate)
@@ -88,14 +97,14 @@ namespace GymExerciseClassLibrary.ViewModels
 
             if (isVerified == true)
             {
-                await _service.UpdateExercise(exerciseToUpdate);
+                await _exerciseService.UpdateExercise(exerciseToUpdate);
             }
         }
 
         [RelayCommand]
         private async Task DeleteExercise(ExerciseViewModel exercise)
         {
-            await _service.DeleteExercise(exercise, null, Exercises);
+            await _exerciseService.DeleteExercise(exercise, null, Exercises);
         }
     }
 }
