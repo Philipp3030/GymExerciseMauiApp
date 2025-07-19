@@ -14,6 +14,11 @@ namespace GymExerciseMauiApp
 
             // Resizes the layout so keyboard doesn’t cover it
             Window.SetSoftInputMode(SoftInput.AdjustResize);
+
+            // changes color of navigation bar
+            var hexColor = "#262626";
+            var color = Android.Graphics.Color.ParseColor(hexColor);
+            Window.SetNavigationBarColor(color);
         }
     }
 }

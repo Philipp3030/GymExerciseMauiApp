@@ -40,8 +40,10 @@
                 Grid.Column="0">
         </Button>
 
-        <Button Text="Muscle"
-                Clicked="NavigateToAddMusclegroup"
+        <Button Text="Unused button"
+                Padding="0"
+                LineBreakMode="WordWrap"
+                Clicked="NavigateToAddExercise"
                 TextColor="Black"
                 BorderColor="Black"
                 BorderWidth="0.5"
@@ -109,7 +111,7 @@
                                                FontAttributes="Bold"
                                                FontSize="16" 
                                                VerticalOptions="Center"
-                                               HorizontalOptions="Start"
+                                               HorizontalOptions="Fill"
                                                Grid.Row="0"
                                                Grid.Column="0">
                                         </Label>
@@ -118,7 +120,7 @@
                                                FontAttributes="None"
                                                FontSize="16" 
                                                VerticalOptions="Center"
-                                               HorizontalOptions="Start"
+                                               HorizontalOptions="Fill"
                                                Grid.Row="1"
                                                Grid.Column="0">
                                         </Label>

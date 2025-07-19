@@ -65,8 +65,8 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- popup: Sicher, dass du den Satz löschen willst?
 		- Swipeview
 
-		- Timer für Satzpausen
+		- Timer für Satzpausen									DONE
 		- Services:
 			- zum Löschen von alten Sets
-			- entfernen von relations zwischen Training : Training.Exercises
+			- entfernen von relations zwischen Training : Training.Exercises	DONE
 		- Allgemein Code, der mehrmals benutzt wird in Service packen
