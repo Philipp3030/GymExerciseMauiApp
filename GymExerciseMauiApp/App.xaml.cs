@@ -16,7 +16,12 @@ namespace GymExerciseMauiApp
                 dbContext.SeedData();
             }
 
-            MainPage = new AppShell();
+        }
+        protected override Window CreateWindow(IActivationState activationState)
+        {
+            var shell = new AppShell();
+
+            return new Window(shell);
         }
     }
 }

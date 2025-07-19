@@ -92,5 +92,4 @@ namespace GymExerciseMauiApp
             await Shell.Current.GoToAsync(nameof(TestPage));
         }
     }
-
 }

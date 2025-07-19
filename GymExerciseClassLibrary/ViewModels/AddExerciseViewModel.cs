@@ -73,7 +73,7 @@ namespace GymExerciseClassLibrary.ViewModels
                     Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException?.Message}");
                     throw;
                 }
-                await Shell.Current.GoToAsync("//MainPage");
+                await Shell.Current.GoToAsync("MainPage");
             }
             else
             {

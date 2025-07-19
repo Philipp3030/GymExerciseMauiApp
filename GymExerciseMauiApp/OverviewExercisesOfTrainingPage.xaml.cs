@@ -95,7 +95,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         }
     }
 
-    private async void TriggerOnUnfocused(object sender, FocusEventArgs e)
+    private async void OnEntryUnfocused(object sender, FocusEventArgs e)
     {
         if (sender is Entry setEntry && setEntry.BindingContext is SetViewModel set)
         {
@@ -104,57 +104,11 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
             {
                 return;
             }
-            if (!exerciseOfSet.CheckForErrorsCommand.CanExecute(null))
-            {
-                return;
-            }
-            exerciseOfSet.CheckForErrorsCommand.Execute(null);
-            if (exerciseOfSet.HasErrors == true)
-            {
-                return;
-            }
-
-            // check all sets for errors
-            foreach (var s in exerciseOfSet.Sets)
-            {
-                if (!s.CheckForErrorsCommand.CanExecute(null))
-                {
-                    return;
-                }
-                s.CheckForErrorsCommand.Execute(null);
-                if (s.HasErrors == true)
-                {
-                    return;
-                }
-            }
             await _overviewExercisesOfTrainingViewModel.UpdateExercise(exerciseOfSet);
         }
 
         if (sender is Entry exerciseEntry && exerciseEntry.BindingContext is ExerciseViewModel exercise)
         {
-            if (!exercise.CheckForErrorsCommand.CanExecute(null))
-            {
-                return;
-            }
-            exercise.CheckForErrorsCommand.Execute(null);
-            if (exercise.HasErrors == true)
-            {
-                return;
-            }
-
-            // check all sets for errors
-            foreach (var s in exercise.Sets)
-            {
-                if (!s.CheckForErrorsCommand.CanExecute(null))
-                {
-                    return;
-                }
-                s.CheckForErrorsCommand.Execute(null);
-                if (s.HasErrors == true)
-                {
-                    return;
-                }
-            }
             await _overviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
         }
     }

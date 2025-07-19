@@ -18,7 +18,8 @@ namespace GymExerciseClassLibrary.ViewModels
         public MainViewModel(ApplicationDbContext context)
         {
             _context = context;
-            LoadAllTrainingsFromDb();
+            LoadAllTrainingsFromDb();   // stattdessen var main = new MainViewModel();
+                                        // await main. LoadAllTrainingsFromDb(); onAppearing()
         }
 
         private async void LoadAllTrainingsFromDb()

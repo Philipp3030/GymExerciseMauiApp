@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.FrontendServices;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class OverviewExercisesOfTrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
+        private readonly ExerciseService _service;
+        private readonly ExerciseViewModelService _vmService;
         [ObservableProperty]
         private TrainingViewModel _training;
 
@@ -25,6 +29,8 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _training = training;
+            _service = new ExerciseService(context);
+            _vmService = new ExerciseViewModelService(context);
         }
 
         [RelayCommand]
@@ -144,76 +150,24 @@ namespace GymExerciseClassLibrary.ViewModels
 
         public async Task UpdateExercise(ExerciseViewModel exerciseToUpdate)
         {
-            try
+            bool isVerified = _vmService.VerifyExercise(exerciseToUpdate); ;           
+
+            if (isVerified == true)
             {
-                Exercise? exercise = await Mapper.Map(_context, exerciseToUpdate);
-                if (exercise != null)
-                {
-                    _context.Exercises.Update(exercise);
-                    await _context.SaveChangesAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
-                throw;
+                await _service.UpdateExercise(exerciseToUpdate);
             }
         }
 
         [RelayCommand]
         private async Task RemoveExerciseFromTraining(ExerciseViewModel exercise)
         {
-            try
-            {
-                // remove from db but only the relation to this Training
-                var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
-                var trainingDb = await _context.Trainings
-                    .Include(t => t.Exercises)
-                    .FirstOrDefaultAsync(t => t.Id == Training.Id);
-
-                if (exerciseDb == null || trainingDb == null)
-                {
-                    return;
-                }
-
-                trainingDb.Exercises.Remove(exerciseDb);
-                _context.Update(trainingDb);
-                await _context.SaveChangesAsync();
-
-                // remove from view for animation
-                Training.ExercisesOfTraining.Remove(exercise);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
-                throw;
-            }
+            await _service.RemoveExerciseFromTraining(exercise, Training);
         }
 
         [RelayCommand]
         private async Task DeleteExercise(ExerciseViewModel exercise)
         {
-            try
-            {
-                // remove from db but only the relation to this Training
-                var exerciseDb = await _context.Exercises.FirstOrDefaultAsync(e => e.Id == exercise.Id);
-
-                if (exerciseDb == null)
-                {
-                    return;
-                }
-
-                _context.Exercises.Remove(exerciseDb);
-                await _context.SaveChangesAsync();
-
-                // remove from view for animation
-                Training.ExercisesOfTraining.Remove(exercise);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
-                throw;
-            }
+            await _service.DeleteExercise(exercise, Training, null);
         }
     }
 }
