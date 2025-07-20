@@ -48,7 +48,6 @@ namespace GymExerciseMauiApp
                 {
                     await Shell.Current.GoToAsync(nameof(OverviewExercisesOfTrainingPage));
                 }
-                //await Navigation.PushAsync(new OverviewExercisesOfTrainingPage(_context, new OverviewExercisesOfTrainingViewModel(_context, selectedTraining)));
             }
         }
 

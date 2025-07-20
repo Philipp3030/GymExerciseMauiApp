@@ -11,12 +11,7 @@
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="HideKeyboardAndUnfocus"/>
         </Grid.GestureRecognizers>
-        <!--<Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                <GradientStop Color="#2d8086" Offset="0.0"/>
-                <GradientStop Color="#cfdccf" Offset="0.7"/>
-            </LinearGradientBrush>
-        </Grid.Background>-->
+        
         <Entry x:Name="FocusStealer"
                 WidthRequest="100" HeightRequest="10"
                 Opacity="0"
@@ -52,7 +47,7 @@
                 Grid.ColumnSpan="3">
         </Button>
 
-            <Button Text="Start"
+        <Button Text="Start"
                 Clicked="OnStartClicked"
                 TextColor="Black"
                 BorderColor="Black"
@@ -66,12 +61,6 @@
                 HorizontalOptions="End"
                 Grid.Row="2"
                 Grid.Column="0">
-            <!--<Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>-->
         </Button>
 
         <Button Text="Stop"
@@ -87,12 +76,6 @@
                 HorizontalOptions="Center"
                 Grid.Row="2"
                 Grid.Column="1">
-            <!--<Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>-->
         </Button>
 
         <Button Text="Reset"
@@ -109,12 +92,6 @@
                 HorizontalOptions="End"
                 Grid.Row="2"
                 Grid.Column="2">
-            <!--<Button.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2d8086" Offset="0.0"/>
-                    <GradientStop Color="#cfdccf" Offset="0.7"/>
-                </LinearGradientBrush>
-            </Button.Background>-->
         </Button>
 
         <Grid Grid.Row="3" Grid.ColumnSpan="3" BackgroundColor="Transparent" Padding="20">
@@ -127,12 +104,6 @@
                                     <RoundRectangle CornerRadius="10"/>
                                 </Border.StrokeShape>
                                 <Grid BackgroundColor="#808080">
-                                    <!--<Grid.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <GradientStop Color="#2d8086" Offset="0.0"/>
-                                            <GradientStop Color="#cfdccf" Offset="0.7"/>
-                                        </LinearGradientBrush>
-                                    </Grid.Background>-->
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -152,7 +123,6 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer 
@@ -161,7 +131,9 @@
                                             Tapped="HideKeyboardAndUnfocus"/>
                                         </Grid.GestureRecognizers>
 
-                                        <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="icon_remove_minus.png" WidthRequest="40" HeightRequest="30">
+                                        <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
+                                               Source="icon_remove_minus.png" WidthRequest="40" HeightRequest="30"
+                                               Margin="0, 0, 15, 0">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}"
                                                                       CommandParameter="{Binding .}"/>
@@ -174,8 +146,6 @@
                                                FontAttributes="Bold"
                                                FontSize="16"
                                                BackgroundColor="Transparent"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Fill"
                                                Grid.Row="0"
                                                Grid.Column="1">
                                         </Label>
@@ -185,13 +155,11 @@
                                                FontAttributes="None"
                                                FontSize="14"
                                                BackgroundColor="Transparent"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Fill"
                                                Grid.Row="1"
                                                Grid.Column="1">
                                         </Label>
                                         
-                                        <Grid Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="Transparent">
+                                        <Grid Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" BackgroundColor="Transparent">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
