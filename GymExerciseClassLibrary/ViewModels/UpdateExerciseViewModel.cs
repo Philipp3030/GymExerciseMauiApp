@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.ObjectModel;
@@ -12,7 +13,8 @@ namespace GymExerciseClassLibrary.ViewModels
 {
     public partial class UpdateExerciseViewModel : ObservableValidator
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly ExerciseService _exerciseService;
         [ObservableProperty]
         private ExerciseViewModel _exercise;
         [ObservableProperty]
@@ -21,6 +23,7 @@ namespace GymExerciseClassLibrary.ViewModels
         public UpdateExerciseViewModel(ApplicationDbContext context, ExerciseViewModel exercise)
         {
             _context = context;
+            _exerciseService = new ExerciseService(context);
             Exercise = exercise;
         }
 
@@ -45,25 +48,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task UpdateExercise()
         {
-            bool hasErrors = Exercise.Validate();
-
-            if (!hasErrors)
-            {
-                try
-                {
-                    _context.Exercises.Update(await Mapper.Map(_context, Exercise));
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException?.Message}");
-                    throw;
-                }
-            }
-            else
-            {
-                Exercise.CheckForErrorsOnSaveCommand.Execute(null);
-            }
+            await _exerciseService.UpdateExercise(Exercise);
         }
     }
 }

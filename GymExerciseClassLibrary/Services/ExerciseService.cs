@@ -22,18 +22,56 @@ namespace GymExerciseClassLibrary.Services
             _context = context;
         }
 
+        #region Create
+        public async Task SaveNewExercise(ExerciseViewModel exercise)
+        {
+            bool hasErrors = exercise.Validate();
+
+            // Check for errors
+            if (!hasErrors)
+            {
+                try
+                {
+                    for (int i = 0; i < Convert.ToInt32(exercise.AmountOfSets); i++)
+                    {
+                        exercise.Sets.Add(new SetViewModel
+                        {
+                            Index = i + 1
+                        });
+                    }
+                    _context.Exercises.Add(await Mapper.Map(_context, exercise));
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"Message: {e.Message}\nStackTrace: {e.StackTrace}Inner Exception: {e.InnerException?.Message}");
+                    throw;
+                }
+                await Shell.Current.GoToAsync("..");    // in codebehind auslagern
+            }
+            else
+            {
+                exercise.CheckForErrorsOnSaveCommand.Execute(null);
+            }
+        }
+        #endregion
+
         #region Update
         // Update
         public async Task UpdateExercise(ExerciseViewModel exercise)
         {
+            bool hasErrors = exercise.Validate();
+
+            if (hasErrors)
+            {
+                exercise.CheckForErrorsOnSaveCommand.Execute(null);
+                return;
+            }
+
             try
             {
-                Exercise? exerciseDb = await Mapper.Map(_context, exercise);
-                if (exerciseDb != null)
-                {
-                    _context.Exercises.Update(exerciseDb);
-                    await _context.SaveChangesAsync();
-                }
+                _context.Exercises.Update(await Mapper.Map(_context, exercise));
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class AddExerciseViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
+        private readonly ExerciseService _exerciseService;
         [ObservableProperty]
         private ExerciseViewModel _exercise = new();
         [ObservableProperty]
@@ -27,6 +29,7 @@ namespace GymExerciseClassLibrary.ViewModels
         public AddExerciseViewModel(ApplicationDbContext context)
         {
             _context = context;
+            _exerciseService = new ExerciseService(context);
             LoadMusclegroupsFromDb();
         }
 
@@ -49,36 +52,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task SaveNewExercise()
         {
-            //ValidateAllProperties();
-
-            bool hasErrors = Exercise.Validate();
-
-            // Check for errors
-            if (!hasErrors)
-            {
-                try
-                {
-                    for (int i = 0; i < Convert.ToInt32(Exercise.AmountOfSets); i++)
-                    {
-                        Exercise.Sets.Add(new SetViewModel()
-                        {
-                            Index = i + 1
-                        });
-                    }
-                    _context.Exercises.Add(await Mapper.Map(_context, Exercise)); 
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine($"Message: {e.Message}\nInner Exception: {e.InnerException?.Message}");
-                    throw;
-                }
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                Exercise.CheckForErrorsOnSaveCommand.Execute(null);
-            }
+            await _exerciseService.SaveNewExercise(Exercise);
         }
     }
 }

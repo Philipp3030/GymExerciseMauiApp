@@ -13,4 +13,9 @@ public partial class AddMusclegroupPage : ContentPage
 		_context = context;
 		BindingContext = new AddMusclegroupViewModel(_context);
 	}
+
+    private async void NavigateToLastPage(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

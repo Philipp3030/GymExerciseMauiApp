@@ -26,4 +26,9 @@ public partial class UpdateTrainingPage : ContentPage
         // Call the ToggleSelection method to update SelectedExercises
         _updateTrainingViewModel.ToggleSelection(exercise);
     }
+
+    private async void NavigateToLastPage(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }
