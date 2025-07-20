@@ -17,7 +17,8 @@
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
             <Button Text="Add"
-                Command="{Binding SaveNewMusclegroupCommand}">
+                    Command="{Binding SaveNewMusclegroupCommand}" 
+                    Clicked="NavigateToLastPage">
             </Button>
         </HorizontalStackLayout>
     </VerticalStackLayout>

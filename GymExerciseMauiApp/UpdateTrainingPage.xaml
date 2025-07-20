@@ -43,10 +43,9 @@
             </Border>
 
             <!-- Save Button -->
-            <Button Text="Save" Command="{Binding UpdateTrainingCommand}" >
-                <Button.Behaviors>
-                    <toolkit:TouchBehavior DefaultAnimationDuration="250" HoveredBackgroundColor="DarkSlateBlue" />
-                </Button.Behaviors>
+            <Button Text="Save" 
+                    Command="{Binding UpdateTrainingCommand}"
+                    Clicked="NavigateToLastPage">
             </Button>
         </VerticalStackLayout>
     </ScrollView>

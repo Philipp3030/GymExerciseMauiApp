@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,12 +13,14 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class MainViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
+        private readonly TrainingService _trainingService;
         [ObservableProperty]
         ObservableCollection<TrainingViewModel> _savedTrainings = new();
 
         public MainViewModel(ApplicationDbContext context)
         {
             _context = context;
+            _trainingService = new TrainingService(context);
             LoadAllTrainingsFromDb();   // stattdessen var main = new MainViewModel();
                                         // await main. LoadAllTrainingsFromDb(); onAppearing()
         }
@@ -60,26 +63,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task DeleteTraining(TrainingViewModel training)
         {
-            try
-            {
-                // remove from db
-                var trainingDb = await _context.Trainings.FirstOrDefaultAsync(t => t.Id == training.Id);
-                if (trainingDb == null)
-                {
-                    return;
-                }
-
-                _context.Trainings.Remove(trainingDb);  
-                await _context.SaveChangesAsync();
-
-                // remove from view for animation
-                SavedTrainings.Remove(training);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Message: {e.Message}");
-                throw;
-            }
+            await _trainingService.DeleteTraining(training, SavedTrainings);
         }
     }
 }

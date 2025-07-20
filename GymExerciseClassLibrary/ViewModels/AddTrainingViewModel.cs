@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System;
@@ -20,6 +21,7 @@ namespace GymExerciseClassLibrary.ViewModels
     public partial class AddTrainingViewModel : ObservableValidator
     {
         private readonly ApplicationDbContext _context;
+        private readonly TrainingService _trainigService;
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exercisesToChooseFrom = new();
         [ObservableProperty]
@@ -28,6 +30,7 @@ namespace GymExerciseClassLibrary.ViewModels
         public AddTrainingViewModel(ApplicationDbContext context)
         {
             _context = context;
+            _trainigService = new TrainingService(context);
             LoadAllExercisesFromDb();
         }
 
@@ -64,27 +67,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [RelayCommand]
         private async Task SaveNewTraining()
         {
-            bool hasErrors = Training.Validate();
-
-            // Check if "Name" is empty
-            if (!hasErrors)
-            {
-                try
-                {
-                    _context.Trainings.Add(await Mapper.Map(_context, Training));
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine($"Message: {e.Message}");
-                    throw;
-                }
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                Training.CheckForErrorsCommand.Execute(null);
-            }
+            await _trainigService.SaveNewTraining(Training);
         }
     }
 }
