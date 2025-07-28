@@ -5,6 +5,8 @@ using Microsoft.Maui.Dispatching;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
+using GymExerciseClassLibrary.FrontendServices;
+
 
 
 #if ANDROID
@@ -21,10 +23,9 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
 
     // timer
     private IDispatcherTimer _timer;
-    private Stopwatch _stopwatch = new Stopwatch();
-
+    private Stopwatch _stopwatch;
     // Updated for DI
-    public OverviewExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
+    public OverviewExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService, TimerService timerService)
     {
         InitializeComponent();
         _context = context;
@@ -32,8 +33,8 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         _overviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
         BindingContext = _overviewExercisesOfTrainingViewModel;
 
-        _timer = Application.Current.Dispatcher.CreateTimer();
-        _timer.Interval = TimeSpan.FromMilliseconds(66);
+        _timer = timerService.Timer;
+        _stopwatch = timerService.Stopwatch;
         _timer.Tick += (s, e) => OnTimerTick();
     }
 
