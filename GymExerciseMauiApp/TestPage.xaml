@@ -6,20 +6,27 @@
              Title="TestPage"
              Shell.NavBarIsVisible="False">
 
-    <Grid HeightRequest="60">
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                <GradientStop Color="#4facfe" Offset="0.0"/>
-                <GradientStop Color="#00f2fe" Offset="1.0"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Label Text="Gradient Header"
-           TextColor="White"
-           FontSize="22"
-           FontAttributes="Bold"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
-    </Grid>
+    <SwipeView>
+        <SwipeView.RightItems >
+            <SwipeItems Mode="Execute" SwipeBehaviorOnInvoked="Close">
+                <SwipeItem 
+                Text="FullSwipe" 
+                BackgroundColor="Transparent"
+                
+                Invoked="OnFullySwiped"
+                IsVisible="True" />
+            </SwipeItems>
+        </SwipeView.RightItems>
+
+        <Grid Padding="20" BackgroundColor="LightGray">
+            <Label Text="Swipe left fully to trigger" />
+        </Grid>
+    </SwipeView>
+
+
+
+
+
 
 
 </ContentPage>

@@ -33,6 +33,23 @@ namespace GymExerciseClassLibrary.ViewModels
             _exerciseService = new ExerciseService(context);
             _setService = new SetService(context);
             _vmService = new ExerciseViewModelService();
+            SetColorOfExercises();
+        }
+
+        private void SetColorOfExercises()
+        {
+            var activeExercises = Training.ExercisesOfTraining.Where(e => e.IsActive).ToList();
+            var inactiveExercises = Training.ExercisesOfTraining.Where(e => !e.IsActive).ToList();
+
+            foreach (var exercise in activeExercises)
+            {
+                exercise.Color = "#808080";
+            }
+
+            foreach (var exercise in inactiveExercises)
+            {
+                exercise.Color = "#800418";
+            }
         }
 
         [RelayCommand]
@@ -98,6 +115,20 @@ namespace GymExerciseClassLibrary.ViewModels
         private async Task DeleteExercise(ExerciseViewModel exercise)
         {
             await _exerciseService.DeleteExercise(exercise, Training, null);
+        }
+
+        [RelayCommand]
+        private async Task ResetStatusOfAllExercisesOfTraining()
+        {
+            foreach (var exercise in Training.ExercisesOfTraining)
+            {
+                exercise.IsActive = true;
+                await _exerciseService.UpdateExercise(exercise);
+                _vmService.ResetColorOfExercise(exercise);
+                //exercise.Color = Color.FromArgb("#808080");
+                //exercise.Color = "#808080";
+                Debug.WriteLine($"Color for {exercise.Name} set to {exercise.Color}");
+            }
         }
     }
 }

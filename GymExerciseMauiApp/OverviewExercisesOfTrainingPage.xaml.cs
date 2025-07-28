@@ -22,11 +22,11 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     // timer
     private IDispatcherTimer _timer;
     private Stopwatch _stopwatch = new Stopwatch();
-    
+
     // Updated for DI
     public OverviewExercisesOfTrainingPage(ApplicationDbContext context, NavigationDataService navigationDataService)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _context = context;
         _navigationDataService = navigationDataService;
         _overviewExercisesOfTrainingViewModel = new OverviewExercisesOfTrainingViewModel(_context, _navigationDataService.Training);
@@ -72,7 +72,7 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
                 // Change text to show keyboard, set cursor or something
                 string temp = entry.Text;
                 entry.Text = entry.Text + 999;
-                entry.Text = temp; 
+                entry.Text = temp;
             }
         }
     }
@@ -80,10 +80,11 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
     {
         if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
-            image.Parent is Grid grid && grid.Parent is Grid grid2 && 
+            image.Parent is Grid grid && grid.Parent is Grid grid2 &&
             grid2.Parent is Grid grid3 && grid3.Parent is Border border &&
-            border.Parent is VerticalStackLayout layout && layout.Parent is CollectionView view &&
-            view.BindingContext is OverviewExercisesOfTrainingViewModel exercisesOfTraining)
+            border.Parent is VerticalStackLayout layout && layout.Parent is SwipeView swipeView &&
+            swipeView.Parent is CollectionView view && view.BindingContext is 
+            OverviewExercisesOfTrainingViewModel exercisesOfTraining)
         {
             _navigationDataService.Exercise = exercise;
             _navigationDataService.Training = exercisesOfTraining.Training;
@@ -119,11 +120,11 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         _timer.Start();
     }
 
-    private void OnStopClicked(object sender, EventArgs e)
-    {
-        _timer.Stop();
-        _stopwatch.Stop();
-    }
+    //private void OnStopClicked(object sender, EventArgs e)
+    //{
+    //    _timer.Stop();
+    //    _stopwatch.Stop();
+    //}
 
     private void OnResetClicked(object sender, EventArgs e)
     {
@@ -135,5 +136,30 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
     private void OnTimerTick()
     {
         TimeLabelButton.Text = _stopwatch.Elapsed.ToString(@"mm\:ss\.ff");
+    }
+
+    private async void SetStatusOfExercise(object sender, TappedEventArgs e)
+    {
+        if (sender is Image image && image.BindingContext is ExerciseViewModel exercise)
+        {
+            exercise.IsActive = !exercise.IsActive;
+            if (exercise.IsActive)
+            {
+                exercise.Color = "#808080";
+            }
+            else
+            {
+                exercise.Color = "#800418";
+            }
+            await _overviewExercisesOfTrainingViewModel.UpdateExercise(exercise);
+        }
+    }
+
+    private void OnTopSwiped(object sender, EventArgs e)
+    {
+        if (sender is SwipeItem swipeItem && swipeItem.BindingContext is ExerciseViewModel exercise)
+        {
+            _overviewExercisesOfTrainingViewModel.ToggleExpandCommand.Execute(exercise);
+        }
     }
 }
