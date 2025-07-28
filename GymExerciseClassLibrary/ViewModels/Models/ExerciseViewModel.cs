@@ -44,6 +44,10 @@ namespace GymExerciseClassLibrary.ViewModels
         private bool _isExpanded = false;
         [ObservableProperty]
         private bool _isAdvancedOptionsClicked = false;
+        [ObservableProperty]
+        private string _color = "#808080";
+        //[ObservableProperty]
+        //private Color _color = Color.FromArgb("#808080");
 
         // error messages
         [ObservableProperty]

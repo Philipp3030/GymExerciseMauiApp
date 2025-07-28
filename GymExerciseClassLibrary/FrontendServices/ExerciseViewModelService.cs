@@ -14,6 +14,7 @@ namespace GymExerciseClassLibrary.FrontendServices
         {
         }
 
+        #region VerifyExercise
         public bool VerifyExercise(ExerciseViewModel exercise)
         {           
             if (!exercise.CheckForErrorsCommand.CanExecute(null))
@@ -41,5 +42,13 @@ namespace GymExerciseClassLibrary.FrontendServices
             }
             return true;
         }
+        #endregion
+
+        #region ResetColorOfExercise
+        public void ResetColorOfExercise(ExerciseViewModel exercise)
+        {
+            exercise.Color = "#808080";
+        }
+        #endregion
     }
 }

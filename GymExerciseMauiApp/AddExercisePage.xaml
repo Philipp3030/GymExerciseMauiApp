@@ -31,11 +31,11 @@
 
              <!--MachineName--> 
             <Label Text="Machine Name" />
-            <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" />
+            <Entry x:Name="MachineNameEntry" Placeholder="Enter machine name (optional)" Text="{Binding Exercise.MachineName}" />
 
             <!--Description--> 
             <Label Text="Description" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Enter description (optional)" Text="{Binding Exercise.Description}" />
 
              <!--Sets--> 
             <Label Text="Sets" />
