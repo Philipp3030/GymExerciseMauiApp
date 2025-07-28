@@ -169,7 +169,7 @@
                                                    Grid.Row="0"
                                                    Grid.Column="1">
                                             </Label>
-                                            <Label Text="{Binding IsActive}"
+                                            <Label Text="{Binding MachineName}"
                                                    x:Name="MachineLabel"
                                                    TextColor="Black"
                                                    FontAttributes="None"
@@ -250,9 +250,14 @@
                                                             </Image>
 
                                                             <!-- Weight Input -->
-                                                            <Label Text="Weight:" 
+                                                            <!--<Label Text="Weight:" 
                                                                    TextColor="Black"
-                                                                   VerticalOptions="Center" />
+                                                                   VerticalOptions="Center" />-->
+
+                                                            <Image Source="icon_weight.png" 
+                                                                   WidthRequest="40" 
+                                                                   HeightRequest="30">
+                                                            </Image>
 
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"
@@ -267,10 +272,14 @@
                                                                 <!--Location => decimal dots / commas-->
                                                             </VerticalStackLayout>
                                                             
-                                                            <Label  Text="{Binding Index, StringFormat='Reps:'}"
+                                                            <!--<Label  Text="{Binding Index, StringFormat='Reps:'}"
                                                                     TextColor="Black"
-                                                                    VerticalOptions="Center" />
+                                                                    VerticalOptions="Center" />-->
 
+                                                            <Image Source="icon_reps.png" 
+                                                                   WidthRequest="40" 
+                                                                   HeightRequest="30">
+                                                            </Image>
                                                             <!-- Reps Input -->
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"

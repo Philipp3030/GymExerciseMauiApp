@@ -190,9 +190,29 @@
                                                             </Image.GestureRecognizers>
                                                         </Image>
 
-                                                        <Label Text="{Binding Index, StringFormat='Reps:'}"
-                                                               TextColor="Black"
-                                                               VerticalOptions="Center" />
+                                                        <!-- Weight Input -->
+                                                        <Image Source="icon_weight.png" 
+                                                               WidthRequest="40" 
+                                                               HeightRequest="30">
+                                                        </Image>
+
+                                                        <VerticalStackLayout>
+                                                            <Entry  TextColor="Black"
+                                                                    WidthRequest="75" 
+                                                                    Placeholder="Weight" 
+                                                                    Keyboard="Numeric"
+                                                                    Text="{Binding Weight}" 
+                                                                    HorizontalTextAlignment="Center"
+                                                                    Focused="OnEntryFocused"
+                                                                    Unfocused="OnEntryUnfocused"/>
+                                                            <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True" />
+                                                            <!--Location => decimal dots / commas-->
+                                                        </VerticalStackLayout>
+                                                        
+                                                        <Image Source="icon_reps.png" 
+                                                               WidthRequest="40" 
+                                                               HeightRequest="30">
+                                                        </Image>
 
                                                         <!-- Reps Input -->
                                                         <VerticalStackLayout>
@@ -206,24 +226,6 @@
                                                                     Unfocused="OnEntryUnfocused">
                                                             </Entry>
                                                             <Label Text="{Binding ErrorMessageReps}" TextColor="Red" IsVisible="True" />
-                                                        </VerticalStackLayout>
-
-                                                        <!-- Weight Input -->
-                                                        <Label Text="Weight:" 
-                                                               TextColor="Black"
-                                                               VerticalOptions="Center" />
-
-                                                        <VerticalStackLayout>
-                                                            <Entry  TextColor="Black"
-                                                                    WidthRequest="75" 
-                                                                    Placeholder="Weight" 
-                                                                    Keyboard="Numeric"
-                                                                    Text="{Binding Weight}" 
-                                                                    HorizontalTextAlignment="Center"
-                                                                    Focused="OnEntryFocused"
-                                                                    Unfocused="OnEntryUnfocused"/>
-                                                            <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True" />
-                                                            <!--Location => decimal dots / commas-->
                                                         </VerticalStackLayout>
                                                     </HorizontalStackLayout>
                                                 </DataTemplate>
