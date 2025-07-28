@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.FrontendServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Handlers;
+using System.Diagnostics;
 
 namespace GymExerciseMauiApp
 {
@@ -30,6 +32,7 @@ namespace GymExerciseMauiApp
             
             builder.Services.AddSingleton<NavigationDataService>();
 
+            builder.Services.AddSingleton<TimerService>();
 
             //#if ANDROID
             //            EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
