@@ -245,7 +245,6 @@
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"
                                                                         WidthRequest="75" 
-                                                                        Placeholder="Weight" 
                                                                         Keyboard="Numeric"
                                                                         Text="{Binding Weight}" 
                                                                         HorizontalTextAlignment="Center"
@@ -264,7 +263,6 @@
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"
                                                                         WidthRequest="50" 
-                                                                        Placeholder="Reps" 
                                                                         Keyboard="Numeric"
                                                                         Text="{Binding Reps}" 
                                                                         HorizontalTextAlignment="Center"

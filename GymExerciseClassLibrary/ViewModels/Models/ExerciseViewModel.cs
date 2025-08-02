@@ -15,7 +15,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [Required(ErrorMessage = "This field is required.")]
         private string _name;
         [ObservableProperty]
-        private bool _isActive;
+        private bool _isActive = true;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]

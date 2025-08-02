@@ -55,8 +55,8 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- AppShell Menü weiter testen							DONE
 		- UpdateTraining (Exercises rausnehmen/hinzufügen)		DONE
 		- add Headers
-		- Training delete
-		- Exercises delete
+		- Training delete										DONE
+		- Exercises delete										DONE
 		- Musclegroup delete
 		- OverviewExercisesOfTrainingPage: header soll beim scrollen 
 		hochgehen und nur die buttons bleiben oben angeheftet 
@@ -68,9 +68,9 @@ TODOS:	- onAppearing() data reloaden (.AsNoTracking()) damit aktueller dbContext
 		- Timer für Satzpausen									DONE
 
 		- Services:
-			- zum Löschen von alten Sets
+			- zum Löschen von alten Sets										DONE
 			- entfernen von relations zwischen Training : Training.Exercises	DONE
 		- Allgemein Code, der mehrmals benutzt wird in Service packen
 
-		- Rückwärts-Navigation: await Shell.Current.GoToAsync("..");
+		- Rückwärts-Navigation: await Shell.Current.GoToAsync("..");			DONE
 		- Datum hinzufügen -> Wann das letzte Mal dieses Training/Übung gemacht

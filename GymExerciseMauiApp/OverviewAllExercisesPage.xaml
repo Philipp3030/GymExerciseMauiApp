@@ -192,8 +192,6 @@
                                                         <VerticalStackLayout>
                                                             <Entry  TextColor="Black"
                                                                     WidthRequest="75" 
-                                                                    Placeholder="Weight"
-                                                                    PlaceholderColor="DarkGray"
                                                                     Keyboard="Numeric"
                                                                     Text="{Binding Weight}" 
                                                                     HorizontalTextAlignment="Center"
@@ -211,8 +209,7 @@
                                                         <!-- Reps Input -->
                                                         <VerticalStackLayout>
                                                             <Entry  TextColor="Black"
-                                                                    WidthRequest="50" 
-                                                                    Placeholder="Reps" 
+                                                                    WidthRequest="50"
                                                                     Keyboard="Numeric"
                                                                     Text="{Binding Reps}" 
                                                                     HorizontalTextAlignment="Center"

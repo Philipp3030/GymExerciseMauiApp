@@ -27,7 +27,7 @@
             
              <!--IsActive--> 
             <Label Text="Is Active" />
-            <Switch x:Name="IsActiveSwitch" IsToggled="True" />
+            <Switch x:Name="IsActiveSwitch" IsToggled="{Binding Exercise.IsActive}" />
 
              <!--MachineName--> 
             <Label Text="Machine Name" />
