@@ -1,4 +1,5 @@
 ﻿using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.Migrations;
 using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -55,16 +56,16 @@ namespace GymExerciseClassLibrary.Mappings
                 return new Set
                 {
                     Index = setViewModel.Index,
-                    Reps = Convert.ToInt32(setViewModel.Reps),
-                    Weight = Convert.ToSingle(setViewModel.Weight)
+                    Reps = setViewModel.Reps == string.Empty || setViewModel.Reps == null ? null : Convert.ToInt32(setViewModel.Reps),
+                    Weight = setViewModel.Weight == string.Empty || setViewModel.Weight == null ? null : Convert.ToInt32(setViewModel.Weight)
                 };
             }
             // if entity exists, update properties of existing entity
             else
             {
                 existingEntity.Index = setViewModel.Index;
-                existingEntity.Reps = Convert.ToInt32(setViewModel.Reps);
-                existingEntity.Weight = Convert.ToSingle(setViewModel.Weight);
+                existingEntity.Reps = setViewModel.Reps == string.Empty || setViewModel.Reps == null ? null : Convert.ToInt32(setViewModel.Reps);
+                existingEntity.Weight = setViewModel.Weight == string.Empty || setViewModel.Weight == null ? null : Convert.ToInt32(setViewModel.Weight);
                 return existingEntity;
             }
         }
@@ -107,9 +108,9 @@ namespace GymExerciseClassLibrary.Mappings
                     Musclegroup = await Map(context, exerciseViewModel.Musclegroup),
                     MachineName = exerciseViewModel.MachineName,
                     Description = exerciseViewModel.Description,
-                    AmountOfSets = Convert.ToInt32(exerciseViewModel.AmountOfSets),
+                    AmountOfSets = exerciseViewModel.AmountOfSets == string.Empty || exerciseViewModel.AmountOfSets == null ? null : Convert.ToInt32(exerciseViewModel.AmountOfSets),
                     Sets = sets,
-                    RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal)
+                    RepsGoal = exerciseViewModel.RepsGoal == string.Empty || exerciseViewModel.RepsGoal == null ? null : Convert.ToInt32(exerciseViewModel.RepsGoal)
                 };
             }
             // if entity exists, update properties of existing entity
@@ -120,9 +121,9 @@ namespace GymExerciseClassLibrary.Mappings
                 existingEntity.Musclegroup = await Map(context, exerciseViewModel.Musclegroup);
                 existingEntity.MachineName = exerciseViewModel.MachineName;
                 existingEntity.Description = exerciseViewModel.Description;
-                existingEntity.AmountOfSets = Convert.ToInt32(exerciseViewModel.AmountOfSets);
+                existingEntity.AmountOfSets = exerciseViewModel.AmountOfSets == string.Empty || exerciseViewModel.AmountOfSets == null ? null : Convert.ToInt32(exerciseViewModel.AmountOfSets);
                 existingEntity.Sets = sets;
-                existingEntity.RepsGoal = Convert.ToInt32(exerciseViewModel.RepsGoal);
+                existingEntity.RepsGoal = exerciseViewModel.RepsGoal == string.Empty || exerciseViewModel.RepsGoal == null ? null : Convert.ToInt32(exerciseViewModel.RepsGoal);
                 return existingEntity;
             }
         }

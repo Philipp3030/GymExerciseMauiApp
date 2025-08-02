@@ -51,10 +51,10 @@ namespace GymExerciseMauiApp
             }
         }
 
-        private async void NavigateToTrainingUpdatePage(object sender, TappedEventArgs e)
+        private async void NavigateToTrainingUpdatePage(object sender, EventArgs e)
         {
-            var image = sender as Image;
-            var selectedTraining = image?.BindingContext as TrainingViewModel;
+            var imageButton = sender as ImageButton;
+            var selectedTraining = imageButton?.BindingContext as TrainingViewModel;
 
             if (selectedTraining != null)
             {

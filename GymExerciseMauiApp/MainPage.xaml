@@ -133,17 +133,19 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <Image Grid.Row="0" Grid.Column="0" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="NavigateToTrainingUpdatePage"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
-                                            <Image Grid.Row="0" Grid.Column="1" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTrainingCommand}" 
-                                                                          CommandParameter="{Binding .}"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
+                                            
+                                            <ImageButton Grid.Row="0" Grid.Column="0" Source="icon_edit.png" 
+                                                         MaximumWidthRequest="40" MaximumHeightRequest="35"
+                                                         Clicked="NavigateToTrainingUpdatePage">
+        
+                                            </ImageButton>
+
+                                            <ImageButton Grid.Row="0" Grid.Column="1" Source="icon_delete.png" 
+                                                         MaximumWidthRequest="40" MaximumHeightRequest="30"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteTrainingCommand}" 
+                                                         CommandParameter="{Binding .}">
+                                            </ImageButton>
+                                            
                                         </Grid>
                                     </Grid>
                                 </Grid>

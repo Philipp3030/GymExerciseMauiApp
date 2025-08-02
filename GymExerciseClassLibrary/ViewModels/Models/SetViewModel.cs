@@ -15,7 +15,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         private int _id;
         [ObservableProperty]
-        private int _index;
+        private int? _index;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [RegularExpression(@"^\d+$", ErrorMessage = "Only numbers are allowed.")]

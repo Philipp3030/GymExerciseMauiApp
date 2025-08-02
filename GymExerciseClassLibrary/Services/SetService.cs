@@ -31,8 +31,9 @@ namespace GymExerciseClassLibrary.Services
             {
                 return;
             }
+
             // increase exerciseDb.Sets by 1 and save to db
-            int temp = exerciseDb.AmountOfSets;
+            int? temp = exerciseDb.AmountOfSets == null ? 0 : exerciseDb.AmountOfSets;
             temp += 1;
             exerciseDb.AmountOfSets = temp;
 
