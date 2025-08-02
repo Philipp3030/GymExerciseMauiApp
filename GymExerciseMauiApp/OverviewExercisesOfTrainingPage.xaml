@@ -151,14 +151,11 @@
                                                 Tapped="HideKeyboardAndUnfocus"/>
                                             </Grid.GestureRecognizers>
 
-                                            <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
-                                                   Source="icon_remove_minus.png" WidthRequest="40" HeightRequest="30"
-                                                   Margin="0, 0, 15, 0">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}"
-                                                                          CommandParameter="{Binding .}"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
+                                            <ImageButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="icon_remove_minus.png" 
+                                                         MaximumWidthRequest="40" MaximumHeightRequest="30" Margin="0, 0, 15, 0"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=RemoveExerciseFromTrainingCommand}"
+                                                         CommandParameter="{Binding .}">
+                                            </ImageButton>
 
                                             <Label Text="{Binding Name}"
                                                    x:Name="NameLabel"
@@ -189,27 +186,21 @@
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
 
-                                                <Image Grid.Row="0" Grid.Column="0" Source="icon_checkmark.png" 
-                                                       WidthRequest="40" HeightRequest="30" Background="Transparent">
-                                                    <!--Backgroundcollor change on tapped / on berührung-->
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer Tapped="SetStatusOfExercise"/>
-                                                    </Image.GestureRecognizers>
-                                                </Image>
+                                                <ImageButton Grid.Row="0" Grid.Column="0" Source="icon_checkmark.png" 
+                                                             MaximumWidthRequest="40" MaximumHeightRequest="35" Background="Transparent"
+                                                             Clicked="SetStatusOfExercise">
+                                                </ImageButton>
 
-                                                <Image Grid.Row="0" Grid.Column="1" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer Tapped="NavigateToUpdateExercise"/>
-                                                    </Image.GestureRecognizers>
-                                                </Image>
+                                                <ImageButton Grid.Row="0" Grid.Column="1" Source="icon_edit.png"
+                                                             MaximumWidthRequest="40" MaximumHeightRequest="35"
+                                                             BackgroundColor="Transparent" Clicked="NavigateToUpdateExercise">
+                                                </ImageButton>
 
-                                                <Image Grid.Row="0" Grid.Column="2" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
-                                                    <Image.GestureRecognizers>
-                                                        <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DeleteExerciseCommand}" 
-                                                                              CommandParameter="{Binding .}"/>-->
-                                                        <!--Auskommentiert, damit ich nicht ausversehen lösche-->
-                                                    </Image.GestureRecognizers>
-                                                </Image>
+                                                <ImageButton Grid.Row="0" Grid.Column="2" Source="icon_delete.png" 
+                                                             MaximumWidthRequest="40" MaximumHeightRequest="30"
+                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DeleteExerciseCommand}"
+                                                             CommandParameter="{Binding .}">
+                                                </ImageButton>
                                             </Grid>                               
                                         </Grid>
 
@@ -237,28 +228,20 @@
                                                 <CollectionView.ItemTemplate>
                                                     <DataTemplate x:DataType="viewmodel:SetViewModel">
                                                         <HorizontalStackLayout Spacing="10">
-                                                            <Image Source="icon_delete_x.png" 
-                                                                   WidthRequest="40" 
-                                                                   HeightRequest="25"
-                                                                   HorizontalOptions="Center"
-                                                                   VerticalOptions="Center">
-                                                                <Image.GestureRecognizers>
-                                                                    <TapGestureRecognizer 
-                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DeleteSetCommand}"
-                                                                        CommandParameter="{Binding .}"/>
-                                                                </Image.GestureRecognizers>
-                                                            </Image>
+                                                            <ImageButton Source="icon_delete_x.png" 
+                                                                         MaximumWidthRequest="40" 
+                                                                         MaximumHeightRequest="30"
+                                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DeleteSetCommand}"
+                                                                         CommandParameter="{Binding .}">
+                                                            </ImageButton>
 
-                                                            <!-- Weight Input -->
-                                                            <!--<Label Text="Weight:" 
-                                                                   TextColor="Black"
-                                                                   VerticalOptions="Center" />-->
-
+                                                            
                                                             <Image Source="icon_weight.png" 
                                                                    WidthRequest="40" 
                                                                    HeightRequest="30">
                                                             </Image>
-
+                                                            
+                                                            <!-- Weight Input -->
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"
                                                                         WidthRequest="75" 
@@ -271,15 +254,12 @@
                                                                 <Label Text="{Binding ErrorMessageWeight}" TextColor="Red" IsVisible="True" />
                                                                 <!--Location => decimal dots / commas-->
                                                             </VerticalStackLayout>
-                                                            
-                                                            <!--<Label  Text="{Binding Index, StringFormat='Reps:'}"
-                                                                    TextColor="Black"
-                                                                    VerticalOptions="Center" />-->
 
                                                             <Image Source="icon_reps.png" 
                                                                    WidthRequest="40" 
                                                                    HeightRequest="30">
                                                             </Image>
+                                                            
                                                             <!-- Reps Input -->
                                                             <VerticalStackLayout>
                                                                 <Entry  TextColor="Black"

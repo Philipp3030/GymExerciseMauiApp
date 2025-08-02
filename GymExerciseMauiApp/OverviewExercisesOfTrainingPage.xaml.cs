@@ -78,10 +78,10 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         }
     }
 
-    private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
+    private async void NavigateToUpdateExercise(object sender, EventArgs e)
     {
-        if (sender is Image image && image.BindingContext is ExerciseViewModel exercise &&
-            image.Parent is Grid grid && grid.Parent is Grid grid2 &&
+        if (sender is ImageButton imageButton && imageButton.BindingContext is ExerciseViewModel exercise &&
+            imageButton.Parent is Grid grid && grid.Parent is Grid grid2 &&
             grid2.Parent is Grid grid3 && grid3.Parent is Border border &&
             border.Parent is VerticalStackLayout layout && layout.Parent is SwipeView swipeView &&
             swipeView.Parent is CollectionView view && view.BindingContext is 
@@ -139,9 +139,9 @@ public partial class OverviewExercisesOfTrainingPage : ContentPage
         TimeLabelButton.Text = _stopwatch.Elapsed.ToString(@"mm\:ss\.ff");
     }
 
-    private async void SetStatusOfExercise(object sender, TappedEventArgs e)
+    private async void SetStatusOfExercise(object sender, EventArgs e)
     {
-        if (sender is Image image && image.BindingContext is ExerciseViewModel exercise)
+        if (sender is ImageButton imageButton && imageButton.BindingContext is ExerciseViewModel exercise)
         {
             exercise.IsActive = !exercise.IsActive;
             if (exercise.IsActive)

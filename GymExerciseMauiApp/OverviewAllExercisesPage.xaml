@@ -139,18 +139,16 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
 
-                                            <Image Grid.Row="0" Grid.Column="0" Source="icon_edit.png" WidthRequest="40" HeightRequest="30">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="NavigateToUpdateExercise"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
+                                            <ImageButton Grid.Row="0" Grid.Column="0" Source="icon_edit.png"
+                                                         MaximumWidthRequest="40" MaximumHeightRequest="35"
+                                                         BackgroundColor="Transparent" Clicked="NavigateToUpdateExercise">
+                                            </ImageButton>
 
-                                            <Image Grid.Row="0" Grid.Column="1" Source="icon_delete.png" WidthRequest="40" HeightRequest="30">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewAllExercisesViewModel}}, Path=DeleteExerciseCommand}" 
-                                                                      CommandParameter="{Binding .}"/>
-                                                </Image.GestureRecognizers>
-                                            </Image>
+                                            <ImageButton Grid.Row="0" Grid.Column="1" Source="icon_delete.png" 
+                                                         MaximumWidthRequest="40" MaximumHeightRequest="30"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewAllExercisesViewModel}}, Path=DeleteExerciseCommand}" 
+                                                         CommandParameter="{Binding .}">
+                                            </ImageButton>
                                         </Grid>
                                     </Grid>
 
@@ -178,28 +176,24 @@
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate x:DataType="viewmodel:SetViewModel">
                                                     <HorizontalStackLayout Spacing="10">
-                                                        <Image Source="icon_delete_x.png" 
-                                                           WidthRequest="40" 
-                                                           HeightRequest="25"
-                                                           HorizontalOptions="Center"
-                                                           VerticalOptions="Center">
-                                                            <Image.GestureRecognizers>
-                                                                <TapGestureRecognizer 
-                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewAllExercisesViewModel}}, Path=DeleteSetCommand}"
-                                                                CommandParameter="{Binding .}"/>
-                                                            </Image.GestureRecognizers>
-                                                        </Image>
-
-                                                        <!-- Weight Input -->
+                                                        <ImageButton Source="icon_delete_x.png" 
+                                                                     MaximumWidthRequest="40" 
+                                                                     MaximumHeightRequest="30"
+                                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewAllExercisesViewModel}}, Path=DeleteSetCommand}"
+                                                                     CommandParameter="{Binding .}">
+                                                        </ImageButton>
+                                                        
                                                         <Image Source="icon_weight.png" 
                                                                WidthRequest="40" 
                                                                HeightRequest="30">
                                                         </Image>
 
+                                                        <!-- Weight Input -->
                                                         <VerticalStackLayout>
                                                             <Entry  TextColor="Black"
                                                                     WidthRequest="75" 
-                                                                    Placeholder="Weight" 
+                                                                    Placeholder="Weight"
+                                                                    PlaceholderColor="DarkGray"
                                                                     Keyboard="Numeric"
                                                                     Text="{Binding Weight}" 
                                                                     HorizontalTextAlignment="Center"

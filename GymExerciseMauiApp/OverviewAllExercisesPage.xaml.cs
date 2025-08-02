@@ -23,9 +23,9 @@ public partial class OverviewAllExercisesPage : ContentPage
         BindingContext = _overviewAllExercisesViewModel;
     }
 
-    private async void NavigateToUpdateExercise(object sender, TappedEventArgs e)
+    private async void NavigateToUpdateExercise(object sender, EventArgs e)
     {
-        if (sender is Image image && image.BindingContext is ExerciseViewModel exercise)
+        if (sender is ImageButton imageButton && imageButton.BindingContext is ExerciseViewModel exercise)
         {
             _navigationDataService.Exercise = exercise;
             if (_navigationDataService.Exercise != null)
