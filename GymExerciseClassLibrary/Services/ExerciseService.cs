@@ -39,7 +39,7 @@ namespace GymExerciseClassLibrary.Services
                             Index = i + 1
                         });
                     }
-                    _context.Exercises.Add(await Mapper.Map(_context, exercise));
+                    _context.Exercises.Add(await Mapper.MapToModel(_context, exercise));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -70,7 +70,7 @@ namespace GymExerciseClassLibrary.Services
 
             try
             {
-                _context.Exercises.Update(await Mapper.Map(_context, exercise));
+                _context.Exercises.Update(await Mapper.MapToModel(_context, exercise));
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)

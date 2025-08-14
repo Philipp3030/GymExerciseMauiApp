@@ -2,6 +2,7 @@
 using GymExerciseClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymExerciseClassLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250812235820_AddedExerciseIndex")]
+    partial class AddedExerciseIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -53,6 +56,7 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("RepsGoal")
@@ -94,6 +98,7 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -136,6 +141,7 @@ namespace GymExerciseClassLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

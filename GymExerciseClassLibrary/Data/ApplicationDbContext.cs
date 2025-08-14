@@ -32,6 +32,7 @@ namespace GymExerciseClassLibrary.Data
         public DbSet<Training> Trainings { get; set; }
         public DbSet<Musclegroup> Musclegroups { get; set; }
         public DbSet<Set> Sets { get; set; }
+        public DbSet<ExerciseIndex> ExerciseIndices { get; set; }
 
         public async void SeedData()
         {

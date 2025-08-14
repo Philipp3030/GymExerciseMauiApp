@@ -23,7 +23,7 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is empty.")]
-        private string _name;
+        private string? _name;
 
         // error messages
         [ObservableProperty]

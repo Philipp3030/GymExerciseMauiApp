@@ -39,6 +39,7 @@ namespace GymExerciseClassLibrary.ViewModels
                                     //.AsNoTracking()
                                     .Include(e => e.Musclegroup)
                                     .Include(e => e.Sets)
+                                    .Include(e => e.ExerciseIndices)
                                     .ToListAsync();
 
             // add current ExercisesOfTraining to ExercisesToChooseFrom
@@ -54,7 +55,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 {
                     continue;
                 }
-                ExercisesToChooseFrom.Add(Mapper.Map(exercise));
+                ExercisesToChooseFrom.Add(Mapper.MapToViewModel(exercise, null));
             }
 
             foreach (var exercise in ExercisesToChooseFrom)

@@ -21,7 +21,7 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _trainingService = new TrainingService(context);
-            LoadAllTrainingsFromDb();   // stattdessen var main = new MainViewModel();
+            //LoadAllTrainingsFromDb();   // stattdessen var main = new MainViewModel();
                                         // await main. LoadAllTrainingsFromDb(); onAppearing()
         }
 
@@ -35,10 +35,12 @@ namespace GymExerciseClassLibrary.ViewModels
                     .ThenInclude(e => e.Musclegroup)
                 .Include(t => t.Exercises)
                     .ThenInclude(e => e.Sets)
+                .Include(t => t.Exercises)
+                    .ThenInclude(e => e.ExerciseIndices)
                 .ToListAsync();
             foreach (var training in trainingsFromDb)
             {
-                SavedTrainings.Add(Mapper.Map(training));
+                SavedTrainings.Add(Mapper.MapToViewModel(training, null));
                 CheckAmountOfSets(training);
             }
         }

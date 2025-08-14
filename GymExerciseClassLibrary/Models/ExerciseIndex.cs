@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GymExerciseClassLibrary.Models
 {
-    public class Musclegroup
+    public class ExerciseIndex
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public int Index { get; set; }
+        public int ExerciseId { get; set; }
+        public int TrainingId { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace GymExerciseClassLibrary.Services
             await _context.SaveChangesAsync();
 
             // updating view
-            exercise.Sets.Add(Mapper.Map(newSet));
+            exercise.Sets.Add(Mapper.MapToViewModel(newSet, null));
             exercise.AmountOfSets = exerciseDb.AmountOfSets.ToString();
         }
         #endregion
