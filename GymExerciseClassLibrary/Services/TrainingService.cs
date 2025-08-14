@@ -16,24 +16,61 @@ namespace GymExerciseClassLibrary.Services
     public class TrainingService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ExerciseIndexService _exerciseIndexService;
 
         public TrainingService(ApplicationDbContext context)
         {
             _context = context;
+            _exerciseIndexService = new ExerciseIndexService(context);
         }
 
         #region Create
-        public async Task SaveNewTraining(TrainingViewModel training)
+        public async Task SaveNewTraining(TrainingViewModel trainingVm)
         {
-            bool hasErrors = training.Validate();
+            bool hasErrors = trainingVm.Validate();
 
             // Check if "Name" is empty
             if (!hasErrors)
             {
                 try
                 {
-                    _context.Trainings.Add(await Mapper.Map(_context, training));
+                    _exerciseIndexService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm);
+                    Training trainingDb = await Mapper.MapToModel(_context, trainingVm);
+                    _context.Trainings.Add(trainingDb);
                     await _context.SaveChangesAsync();
+
+                    //foreach (var exerciseIndex in await _context.ExerciseIndices.Where(e => e.TrainingId == 0).ToListAsync()) 
+                    //{
+                    //    exerciseIndex.TrainingId = trainingDb.Id;
+                    //    _context.ExerciseIndices.Update(exerciseIndex);
+                    //}
+                    //await _context.SaveChangesAsync();
+                    Mapper.MapToViewModel(trainingDb, trainingVm);
+
+
+
+
+
+                    // save new empty training to get Id of training
+                    //Training trainingDb = new Training();
+                    //_context.Trainings.Add(trainingDb);
+                    //await _context.SaveChangesAsync();
+
+                    //// oder: bei der ToggleSelection von Add-/Update-Training immmer das ExerciseIndexViewModel erzeugen + an das ExerciseViewModel anheften
+                    //// bzw wieder entfernen/löschen. Dann könnte der Mapper die
+
+
+                    //// update ViewModel with id
+                    //trainingVm.Id = trainingDb.Id;
+
+                    //// save actual data of new training
+                    ////_exerciseIndexService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm, trainingDb);
+                    
+                    //trainingDb = await Mapper.MapToModel(_context, trainingVm);
+                    //await _context.SaveChangesAsync();
+
+                    //// update ViewModel
+                    //Mapper.MapToViewModel(trainingDb, trainingVm);
                 }
                 catch (Exception e)
                 {
@@ -44,7 +81,7 @@ namespace GymExerciseClassLibrary.Services
             }
             else
             {
-                training.CheckForErrorsCommand.Execute(null);
+                trainingVm.CheckForErrorsCommand.Execute(null);
             }
         }
         #endregion
@@ -58,7 +95,7 @@ namespace GymExerciseClassLibrary.Services
             {
                 try
                 {
-                    _context.Trainings.Update(await Mapper.Map(_context, training));
+                    _context.Trainings.Update(await Mapper.MapToModel(_context, training));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)

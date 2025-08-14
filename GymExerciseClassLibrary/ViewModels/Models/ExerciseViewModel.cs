@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GymExerciseClassLibrary.ViewModels.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,13 +14,13 @@ namespace GymExerciseClassLibrary.ViewModels
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
-        private string _name;
+        private string? _name;
         [ObservableProperty]
         private bool _isActive = true;
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = "This field is required.")]
-        private MusclegroupViewModel _musclegroup;
+        private MusclegroupViewModel? _musclegroup;
         [ObservableProperty]
         private string? _machineName;
         [ObservableProperty]
@@ -36,6 +37,8 @@ namespace GymExerciseClassLibrary.ViewModels
         private string? _repsGoal;
         [ObservableProperty]
         private ObservableCollection<int> _trainingIds = new();
+        [ObservableProperty]
+        private ObservableCollection<ExerciseIndexViewModel> exerciseIndices = new();
 
         // additional properties
         [ObservableProperty]

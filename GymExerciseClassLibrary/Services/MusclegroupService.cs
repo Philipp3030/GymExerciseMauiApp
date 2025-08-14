@@ -29,7 +29,7 @@ namespace GymExerciseClassLibrary.Services
                 try
                 {
                     // Save new musclegroup to database
-                    _context.Musclegroups.Add(await Mapper.Map(_context, musclegroup));
+                    _context.Musclegroups.Add(await Mapper.MapToModel(_context, musclegroup));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)

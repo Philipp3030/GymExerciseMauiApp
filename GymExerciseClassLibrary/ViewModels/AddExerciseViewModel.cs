@@ -40,7 +40,7 @@ namespace GymExerciseClassLibrary.ViewModels
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
-                Musclegroups.Add(Mapper.Map(musclegroup));
+                Musclegroups.Add(Mapper.MapToViewModel(musclegroup, null));
             }
         }
 
