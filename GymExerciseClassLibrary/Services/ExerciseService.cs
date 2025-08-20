@@ -16,30 +16,32 @@ namespace GymExerciseClassLibrary.Services
     public class ExerciseService
     {
         private readonly ApplicationDbContext _context;
+        private readonly Mapper _mapper;
 
         public ExerciseService(ApplicationDbContext context)
         {
             _context = context;
+            _mapper = new Mapper(context);
         }
 
         #region Create
-        public async Task SaveNewExercise(ExerciseViewModel exercise)
+        public async Task SaveNewExercise(ExerciseViewModel exerciseVm)
         {
-            bool hasErrors = exercise.Validate();
+            bool hasErrors = exerciseVm.Validate();
 
             // Check for errors
             if (!hasErrors)
             {
                 try
                 {
-                    for (int i = 0; i < Convert.ToInt32(exercise.AmountOfSets); i++)
+                    for (int i = 0; i < Convert.ToInt32(exerciseVm.AmountOfSets); i++)
                     {
-                        exercise.Sets.Add(new SetViewModel
+                        exerciseVm.Sets.Add(new SetViewModel
                         {
                             Index = i + 1
                         });
                     }
-                    _context.Exercises.Add(await Mapper.MapToModel(_context, exercise));
+                    _context.Exercises.Add(await _mapper.MapToModel(exerciseVm));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -51,26 +53,26 @@ namespace GymExerciseClassLibrary.Services
             }
             else
             {
-                exercise.CheckForErrorsOnSaveCommand.Execute(null);
+                exerciseVm.CheckForErrorsOnSaveCommand.Execute(null);
             }
         }
         #endregion
 
         #region Update
         // Update
-        public async Task UpdateExercise(ExerciseViewModel exercise)
+        public async Task UpdateExercise(ExerciseViewModel exerciseVm)
         {
-            bool hasErrors = exercise.Validate();
+            bool hasErrors = exerciseVm.Validate();
 
             if (hasErrors)
             {
-                exercise.CheckForErrorsOnSaveCommand.Execute(null);
+                exerciseVm.CheckForErrorsOnSaveCommand.Execute(null);
                 return;
             }
 
             try
             {
-                _context.Exercises.Update(await Mapper.MapToModel(_context, exercise));
+                _context.Exercises.Update(await _mapper.MapToModel(exerciseVm));
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)

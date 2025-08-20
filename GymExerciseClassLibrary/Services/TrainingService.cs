@@ -17,11 +17,13 @@ namespace GymExerciseClassLibrary.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ExerciseIndexService _exerciseIndexService;
+        private readonly Mapper _mapper;
 
         public TrainingService(ApplicationDbContext context)
         {
             _context = context;
             _exerciseIndexService = new ExerciseIndexService(context);
+            _mapper = new Mapper(context);
         }
 
         #region Create
@@ -35,7 +37,7 @@ namespace GymExerciseClassLibrary.Services
                 try
                 {
                     _exerciseIndexService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm);
-                    Training trainingDb = await Mapper.MapToModel(_context, trainingVm);
+                    Training trainingDb = await _mapper.MapToModel(trainingVm);
                     _context.Trainings.Add(trainingDb);
                     await _context.SaveChangesAsync();
 
@@ -45,7 +47,9 @@ namespace GymExerciseClassLibrary.Services
                     //    _context.ExerciseIndices.Update(exerciseIndex);
                     //}
                     //await _context.SaveChangesAsync();
-                    Mapper.MapToViewModel(trainingDb, trainingVm);
+                    
+                    
+                    //Mapper.MapToViewModel(trainingDb, trainingVm);
 
 
 
@@ -87,15 +91,15 @@ namespace GymExerciseClassLibrary.Services
         #endregion
 
         #region Update
-        public async Task UpdateTraining(TrainingViewModel training)
+        public async Task UpdateTraining(TrainingViewModel trainingVm)
         {
-            bool hasErrors = training.Validate();
+            bool hasErrors = trainingVm.Validate();
 
             if (!hasErrors)
             {
                 try
                 {
-                    _context.Trainings.Update(await Mapper.MapToModel(_context, training));
+                    _context.Trainings.Update(await _mapper.MapToModel(trainingVm));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -106,7 +110,7 @@ namespace GymExerciseClassLibrary.Services
             }
             else
             {
-                training.CheckForErrorsCommand.Execute(null);
+                trainingVm.CheckForErrorsCommand.Execute(null);
             }
         }
         #endregion

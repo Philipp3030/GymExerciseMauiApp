@@ -15,6 +15,7 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         private readonly ExerciseService _exerciseService;
+        private readonly Mapper _mapper;
         [ObservableProperty]
         private ExerciseViewModel _exercise;
         [ObservableProperty]
@@ -24,12 +25,13 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _exerciseService = new ExerciseService(context);
+            _mapper = new Mapper(context);
             Exercise = exercise;
         }
 
         public async Task InitializeAsync()
         {
-            int musclegroupId = Exercise.Musclegroup.Id;
+            int musclegroupId = Exercise.Musclegroup == null ? 0 : Exercise.Musclegroup.Id;
             await LoadMusclegroupsFromDbAsync();
             Exercise.Musclegroup = Musclegroups.FirstOrDefault(m => m.Id == musclegroupId); // set value for picker to find entity
         }
@@ -41,7 +43,7 @@ namespace GymExerciseClassLibrary.ViewModels
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
-                Musclegroups.Add(Mapper.MapToViewModel(musclegroup, null));
+                Musclegroups.Add(_mapper.MapToViewModel(musclegroup, null));
             }
         }
 

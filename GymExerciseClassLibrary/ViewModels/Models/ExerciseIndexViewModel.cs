@@ -15,8 +15,8 @@ namespace GymExerciseClassLibrary.ViewModels.Models
         [ObservableProperty]
         private int _index;
         [ObservableProperty]
-        private int _exerciseId;
+        private ExerciseViewModel _exercise;
         [ObservableProperty]
-        private int _trainingId;
+        private TrainingViewModel _training;
     }
 }

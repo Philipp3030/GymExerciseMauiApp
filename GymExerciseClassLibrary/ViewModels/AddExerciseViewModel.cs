@@ -21,6 +21,7 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         private readonly ExerciseService _exerciseService;
+        private readonly Mapper _mapper;
         [ObservableProperty]
         private ExerciseViewModel _exercise = new();
         [ObservableProperty]
@@ -30,6 +31,7 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _exerciseService = new ExerciseService(context);
+            _mapper = new Mapper(context);
             LoadMusclegroupsFromDb();
         }
 
@@ -40,7 +42,7 @@ namespace GymExerciseClassLibrary.ViewModels
             var musclegroups = await _context.Musclegroups.ToListAsync();
             foreach (var musclegroup in musclegroups)
             {
-                Musclegroups.Add(Mapper.MapToViewModel(musclegroup, null));
+                Musclegroups.Add(_mapper.MapToViewModel(musclegroup, null));
             }
         }
 

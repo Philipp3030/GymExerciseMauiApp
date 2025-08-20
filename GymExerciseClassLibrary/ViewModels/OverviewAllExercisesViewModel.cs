@@ -21,6 +21,7 @@ namespace GymExerciseClassLibrary.ViewModels
         private readonly ExerciseService _exerciseService;
         private readonly SetService _setService;
         private readonly ExerciseViewModelService _vmService;
+        private readonly Mapper _mapper;
         [ObservableProperty]
         ObservableCollection<ExerciseViewModel> _exercises = new();
 
@@ -30,6 +31,7 @@ namespace GymExerciseClassLibrary.ViewModels
             _exerciseService = new ExerciseService(context);
             _setService = new SetService(context);
             _vmService = new ExerciseViewModelService();
+            _mapper = new Mapper(context);
         }
 
         // executes onAppearing; constructor does NOT
@@ -51,7 +53,7 @@ namespace GymExerciseClassLibrary.ViewModels
 
             foreach (var exercise in exercisesFromDb)
             {
-                Exercises.Add(Mapper.MapToViewModel(exercise, null));
+                Exercises.Add(_mapper.MapToViewModel(exercise, null));
             }
         }
 

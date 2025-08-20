@@ -14,6 +14,7 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         private readonly TrainingService _trainingService;
+        private readonly Mapper _mapper;
         [ObservableProperty]
         ObservableCollection<TrainingViewModel> _savedTrainings = new();
 
@@ -21,8 +22,9 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _trainingService = new TrainingService(context);
+            _mapper = new Mapper(context);
             //LoadAllTrainingsFromDb();   // stattdessen var main = new MainViewModel();
-                                        // await main. LoadAllTrainingsFromDb(); onAppearing()
+            // await main. LoadAllTrainingsFromDb(); onAppearing()
         }
 
         private async void LoadAllTrainingsFromDb()
@@ -40,7 +42,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 .ToListAsync();
             foreach (var training in trainingsFromDb)
             {
-                SavedTrainings.Add(Mapper.MapToViewModel(training, null));
+                SavedTrainings.Add(_mapper.MapToViewModel(training, null));
                 CheckAmountOfSets(training);
             }
         }
