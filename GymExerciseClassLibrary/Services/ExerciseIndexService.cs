@@ -45,7 +45,7 @@ namespace GymExerciseClassLibrary.Services
                 {
                     ExerciseIndexViewModel exerciseIndex = new ExerciseIndexViewModel();
                     exerciseIndex.Index = index++;                                              // training.Exercises.IndexOf(exercise); O(n) statt O(n^2)
-                    exerciseIndex.ExerciseId = exercise.Id;
+                    //exerciseIndex.ExerciseId = exercise.Id;
                     //exerciseIndex.TrainingId = trainingDb.Id;
                     exercise.ExerciseIndices.Add(exerciseIndex);
                 }

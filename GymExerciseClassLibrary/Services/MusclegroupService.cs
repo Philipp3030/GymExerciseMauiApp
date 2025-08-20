@@ -14,10 +14,12 @@ namespace GymExerciseClassLibrary.Services
     public class MusclegroupService
     {
         private readonly ApplicationDbContext _context;
+        private readonly Mapper _mapper;
 
         public MusclegroupService(ApplicationDbContext context)
         {
             _context = context;
+            _mapper = new Mapper(context);
         }
 
         public async Task SaveNewMusclegroup(MusclegroupViewModel musclegroup)
@@ -29,7 +31,7 @@ namespace GymExerciseClassLibrary.Services
                 try
                 {
                     // Save new musclegroup to database
-                    _context.Musclegroups.Add(await Mapper.MapToModel(_context, musclegroup));
+                    _context.Musclegroups.Add(await _mapper.MapToModel(musclegroup));
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)

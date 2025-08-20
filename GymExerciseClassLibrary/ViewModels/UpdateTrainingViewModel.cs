@@ -19,6 +19,7 @@ namespace GymExerciseClassLibrary.ViewModels
     {
         private readonly ApplicationDbContext _context;
         private readonly TrainingService _trainingService;
+        private readonly Mapper _mapper;
         [ObservableProperty]
         private ObservableCollection<ExerciseViewModel> _exercisesToChooseFrom = new();
         [ObservableProperty]
@@ -28,6 +29,7 @@ namespace GymExerciseClassLibrary.ViewModels
         {
             _context = context;
             _trainingService = new TrainingService(context);
+            _mapper = new Mapper(context);
             _training = training;
             LoadExercisesToChooseFrom();
         }
@@ -55,7 +57,7 @@ namespace GymExerciseClassLibrary.ViewModels
                 {
                     continue;
                 }
-                ExercisesToChooseFrom.Add(Mapper.MapToViewModel(exercise, null));
+                ExercisesToChooseFrom.Add(_mapper.MapToViewModel(exercise, null));
             }
 
             foreach (var exercise in ExercisesToChooseFrom)

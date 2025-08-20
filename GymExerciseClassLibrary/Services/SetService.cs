@@ -14,9 +14,12 @@ namespace GymExerciseClassLibrary.Services
     public class SetService
     {
         private readonly ApplicationDbContext _context;
+        private readonly Mapper _mapper;
+
         public SetService(ApplicationDbContext context)
         {
             _context = context;
+            _mapper = new Mapper(context);
         }
 
         #region Create
@@ -48,7 +51,7 @@ namespace GymExerciseClassLibrary.Services
             await _context.SaveChangesAsync();
 
             // updating view
-            exercise.Sets.Add(Mapper.MapToViewModel(newSet, null));
+            exercise.Sets.Add(_mapper.MapToViewModel(newSet, null));
             exercise.AmountOfSets = exerciseDb.AmountOfSets.ToString();
         }
         #endregion
