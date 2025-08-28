@@ -44,6 +44,7 @@ namespace GymExerciseClassLibrary.ViewModels
                                     .Include(e => e.Musclegroup)
                                     .Include(e => e.Sets)
                                     .Include(e => e.ExerciseIndices)
+                                        .ThenInclude(exInd => exInd.Training)
                                     .ToListAsync();
 
             foreach (var exercise in exercisesFromDb)

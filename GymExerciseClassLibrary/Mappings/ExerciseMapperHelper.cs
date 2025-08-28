@@ -292,25 +292,21 @@ namespace GymExerciseClassLibrary.Mappings
         #region ExerciseIndexViewModel
         private ExerciseIndexViewModel MapExerciseIndexToNewViewModel_Exercise(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm)
         {
-            TrainingViewModel trainingVm = MapBasicPropertiesOfTrainingToNewViewModel_Exercise(exerciseIndex.Training);
-
             return new ExerciseIndexViewModel
             {
                 Id = exerciseIndex.Id,
                 Index = exerciseIndex.Index,
                 Exercise = exerciseVm,
-                Training = trainingVm
+                Training = MapBasicPropertiesOfTrainingToNewViewModel_Exercise(exerciseIndex.Training)
             };
         }
 
         private ExerciseIndexViewModel MapExerciseIndexToExistingViewModel_Exercise(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm, ExerciseIndexViewModel exerciseIndexVm)
         {
-            TrainingViewModel trainingVm = MapBasicPropertiesOfTrainingToNewViewModel_Exercise(exerciseIndex.Training);
-
             exerciseIndexVm.Id = exerciseIndex.Id;
             exerciseIndexVm.Index = exerciseIndex.Index;
             exerciseIndexVm.Exercise = exerciseVm;
-            exerciseIndexVm.Training = trainingVm;
+            exerciseIndexVm.Training = MapBasicPropertiesOfTrainingToNewViewModel_Exercise(exerciseIndex.Training);
             return exerciseIndexVm;
         }
         #endregion

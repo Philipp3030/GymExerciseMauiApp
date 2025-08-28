@@ -186,21 +186,33 @@
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
 
-                                                <ImageButton Grid.Row="0" Grid.Column="0" Source="icon_checkmark.png" 
+                                                <!--<ImageButton Grid.Row="0" Grid.Column="0" Source="icon_checkmark.png" 
                                                              MaximumWidthRequest="40" MaximumHeightRequest="35" Background="Transparent"
                                                              Clicked="SetStatusOfExercise">
-                                                </ImageButton>
+                                                </ImageButton>-->
 
-                                                <ImageButton Grid.Row="0" Grid.Column="1" Source="icon_edit.png"
+                                                <!--<ImageButton Grid.Row="0" Grid.Column="1" Source="icon_edit.png"
                                                              MaximumWidthRequest="40" MaximumHeightRequest="35"
                                                              BackgroundColor="Transparent" Clicked="NavigateToUpdateExercise">
-                                                </ImageButton>
+                                                </ImageButton>-->
 
                                                 <ImageButton Grid.Row="0" Grid.Column="2" Source="icon_delete.png" 
                                                              MaximumWidthRequest="40" MaximumHeightRequest="30"
                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DeleteExerciseCommand}"
                                                              CommandParameter="{Binding .}">
                                                 </ImageButton>
+
+                                                <Button Text="inc" Grid.Row="0" Grid.Column="0"
+                                                        MaximumWidthRequest="40" MaximumHeightRequest="35" Background="Red"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=IncreaseIndexOfExerciseCommand}"
+                                                        CommandParameter="{Binding .}">
+                                                </Button>
+                                                
+                                                <Button Text="dec" Grid.Row="0" Grid.Column="1"
+                                                        MaximumWidthRequest="40" MaximumHeightRequest="35" Background="Green"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OverviewExercisesOfTrainingViewModel}}, Path=DecreaseIndexOfExerciseCommand}"
+                                                        CommandParameter="{Binding .}">
+                                                </Button>
                                             </Grid>                               
                                         </Grid>
 

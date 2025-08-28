@@ -19,7 +19,7 @@ namespace GymExerciseClassLibrary.ViewModels
 {
     public partial class OverviewExercisesOfTrainingViewModel : ObservableValidator
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TrainingService _trainingService;
         private readonly ExerciseService _exerciseService;
         private readonly SetService _setService;
         private readonly ExerciseViewModelService _vmService;
@@ -28,12 +28,14 @@ namespace GymExerciseClassLibrary.ViewModels
 
         public OverviewExercisesOfTrainingViewModel(ApplicationDbContext context, TrainingViewModel training)
         {
-            _context = context;
             _training = training;
+            _trainingService = new TrainingService(context);
             _exerciseService = new ExerciseService(context);
             _setService = new SetService(context);
             _vmService = new ExerciseViewModelService();
             SetColorOfExercises();
+
+            TrainingViewModelService.SortExercisesOfTrainingByExerciseIndex(Training.ExercisesOfTraining, Training.Id);
         }
 
         private void SetColorOfExercises()
@@ -128,6 +130,26 @@ namespace GymExerciseClassLibrary.ViewModels
                 //exercise.Color = Color.FromArgb("#808080");
                 //exercise.Color = "#808080";
                 Debug.WriteLine($"Color for {exercise.Name} set to {exercise.Color}");
+            }
+        }
+
+        [RelayCommand]
+        private async Task IncreaseIndexOfExercise(ExerciseViewModel exercise)
+        {
+            bool canUpdate = ExerciseViewModelService.IncreaseIndexOfExerciseInTrainingViewModel(exercise, Training);
+            if (canUpdate == true)
+            {
+                await _trainingService.UpdateTraining(Training);
+            }
+        }
+
+        [RelayCommand]
+        private async Task DecreaseIndexOfExercise(ExerciseViewModel exercise)
+        {
+            bool canUpdate = ExerciseViewModelService.DecreaseIndexOfExerciseInTrainingViewModel(exercise, Training);
+            if (canUpdate == true)
+            {
+                await _trainingService.UpdateTraining(Training); 
             }
         }
     }
