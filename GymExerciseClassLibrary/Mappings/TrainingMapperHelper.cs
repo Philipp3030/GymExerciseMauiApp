@@ -31,7 +31,9 @@ namespace GymExerciseClassLibrary.Mappings
 
         private async Task<Training> MapBasicPropertiesOfTrainingVmToModel_Training(TrainingViewModel trainingVm)
         {
-            var existingTraining = await _context.Trainings.FirstOrDefaultAsync(t => trainingVm.Id != 0 && t.Id == trainingVm.Id);
+            var existingTraining = await _context.Trainings
+                .Include(t => t.Exercises)  //then include....
+                .FirstOrDefaultAsync(t => trainingVm.Id != 0 && t.Id == trainingVm.Id);
 
             if (existingTraining == null)
             {
@@ -152,13 +154,12 @@ namespace GymExerciseClassLibrary.Mappings
                     Index = exIndexVm.Index,
                     Exercise = exercise,                // is not necessary because exerciseIndex is in list of exercise -> fk is set automatically
                     Training = training                 // is set to new specific training
+                    // sollte richtig sein
                 };
             }
             else
             {
                 existingExIndex.Index = exIndexVm.Index;
-                existingExIndex.Exercise = exercise;    // is not necessary because exerciseIndex is in list of exercise -> fk is set automatically
-                // existingExIndex.Training stays the same
                 return existingExIndex;
             }
         }
@@ -289,11 +290,11 @@ namespace GymExerciseClassLibrary.Mappings
 
                     if (existingExIndexVm == null)
                     {
-                        exerciseIndices.Add(MapExerciseIndexToNewViewModel_Training(exerciseIndex, exerciseVm, trainingVm));
+                        exerciseIndices.Add(MapExerciseIndexToNewViewModel_Training(exerciseIndex, exerciseVm));
                     }
                     else
                     {
-                        exerciseIndices.Add(MapExerciseIndexToExistingViewModel_Training(exerciseIndex, exerciseVm, trainingVm, existingExIndexVm));
+                        exerciseIndices.Add(MapExerciseIndexToExistingViewModel_Training(exerciseIndex, exerciseVm, existingExIndexVm));
                     }
                 }
             }
@@ -372,23 +373,23 @@ namespace GymExerciseClassLibrary.Mappings
         #endregion
 
         #region ExerciseIndexViewModel
-        private ExerciseIndexViewModel MapExerciseIndexToNewViewModel_Training(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm, TrainingViewModel trainingVm)
+        private ExerciseIndexViewModel MapExerciseIndexToNewViewModel_Training(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm)
         {
             return new ExerciseIndexViewModel
             {
                 Id = exerciseIndex.Id,
                 Index = exerciseIndex.Index,
                 Exercise = exerciseVm,
-                Training = trainingVm
+                Training = MapBasicPropertiesOfTrainingToNewViewModel_Training(exerciseIndex.Training)
             };
         }
 
-        private ExerciseIndexViewModel MapExerciseIndexToExistingViewModel_Training(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm, TrainingViewModel trainingVm, ExerciseIndexViewModel exerciseIndexVm)
+        private ExerciseIndexViewModel MapExerciseIndexToExistingViewModel_Training(ExerciseIndex exerciseIndex, ExerciseViewModel exerciseVm, ExerciseIndexViewModel exerciseIndexVm)
         {
             exerciseIndexVm.Id = exerciseIndex.Id;
             exerciseIndexVm.Index = exerciseIndex.Index;
             exerciseIndexVm.Exercise = exerciseVm;
-            exerciseIndexVm.Training = trainingVm;
+            exerciseIndexVm.Training = MapBasicPropertiesOfTrainingToNewViewModel_Training(exerciseIndex.Training);
             return exerciseIndexVm;
         }
         #endregion

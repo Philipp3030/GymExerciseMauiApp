@@ -1,4 +1,5 @@
 ﻿using GymExerciseClassLibrary.Data;
+using GymExerciseClassLibrary.FrontendServices;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
 using GymExerciseClassLibrary.ViewModels;
@@ -26,6 +27,9 @@ namespace GymExerciseClassLibrary.Services
             _mapper = new Mapper(context);
         }
 
+        // OnLoad: make sure "ExerciseIndices" are created for each Training
+        dsad
+
         #region Create
         public async Task SaveNewTraining(TrainingViewModel trainingVm)
         {
@@ -41,40 +45,8 @@ namespace GymExerciseClassLibrary.Services
                     _context.Trainings.Add(trainingDb);
                     await _context.SaveChangesAsync();
 
-                    //foreach (var exerciseIndex in await _context.ExerciseIndices.Where(e => e.TrainingId == 0).ToListAsync()) 
-                    //{
-                    //    exerciseIndex.TrainingId = trainingDb.Id;
-                    //    _context.ExerciseIndices.Update(exerciseIndex);
-                    //}
-                    //await _context.SaveChangesAsync();
-                    
-                    
-                    //Mapper.MapToViewModel(trainingDb, trainingVm);
-
-
-
-
-
-                    // save new empty training to get Id of training
-                    //Training trainingDb = new Training();
-                    //_context.Trainings.Add(trainingDb);
-                    //await _context.SaveChangesAsync();
-
-                    //// oder: bei der ToggleSelection von Add-/Update-Training immmer das ExerciseIndexViewModel erzeugen + an das ExerciseViewModel anheften
-                    //// bzw wieder entfernen/löschen. Dann könnte der Mapper die
-
-
-                    //// update ViewModel with id
-                    //trainingVm.Id = trainingDb.Id;
-
-                    //// save actual data of new training
-                    ////_exerciseIndexService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm, trainingDb);
-                    
-                    //trainingDb = await Mapper.MapToModel(_context, trainingVm);
-                    //await _context.SaveChangesAsync();
-
-                    //// update ViewModel
-                    //Mapper.MapToViewModel(trainingDb, trainingVm);
+                    _mapper.MapToViewModel(trainingDb, trainingVm);
+                    TrainingViewModelService.SortExercisesOfTrainingByExerciseIndex(trainingVm.ExercisesOfTraining, trainingVm.Id);
                 }
                 catch (Exception e)
                 {
@@ -101,6 +73,8 @@ namespace GymExerciseClassLibrary.Services
                 {
                     _context.Trainings.Update(await _mapper.MapToModel(trainingVm));
                     await _context.SaveChangesAsync();
+
+                    TrainingViewModelService.SortExercisesOfTrainingByExerciseIndex(trainingVm.ExercisesOfTraining, trainingVm.Id);
                 }
                 catch (Exception e)
                 {
