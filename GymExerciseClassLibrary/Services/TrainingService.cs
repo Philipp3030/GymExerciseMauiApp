@@ -27,8 +27,10 @@ namespace GymExerciseClassLibrary.Services
             _mapper = new Mapper(context);
         }
 
-        // OnLoad: make sure "ExerciseIndices" are created for each Training
-        dsad
+        // OnLoad: make sure "ExerciseIndices" are created for each Training - noch unsicher
+        #region Verify
+
+        #endregion
 
         #region Create
         public async Task SaveNewTraining(TrainingViewModel trainingVm)
@@ -40,7 +42,7 @@ namespace GymExerciseClassLibrary.Services
             {
                 try
                 {
-                    _exerciseIndexService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm);
+                    TrainingViewModelService.CreateNewExerciseIndexForEachExerciseInTrainingViewModel(trainingVm);
                     Training trainingDb = await _mapper.MapToModel(trainingVm);
                     _context.Trainings.Add(trainingDb);
                     await _context.SaveChangesAsync();

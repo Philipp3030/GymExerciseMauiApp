@@ -1,4 +1,5 @@
 ﻿using GymExerciseClassLibrary.ViewModels;
+using GymExerciseClassLibrary.ViewModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,22 @@ namespace GymExerciseClassLibrary.FrontendServices
             foreach (var exerciseVm in sorted)
             {
                 exercisesOfTrainingVm.Add(exerciseVm);
+            }
+        }
+
+        public static void CreateNewExerciseIndexForEachExerciseInTrainingViewModel(TrainingViewModel trainingVm)//, Training trainingDb)
+        {
+            if (trainingVm.ExercisesOfTraining != null && trainingVm.ExercisesOfTraining.Count > 0)
+            {
+                int index = 0;
+                foreach (var exercise in trainingVm.ExercisesOfTraining)
+                {
+                    ExerciseIndexViewModel exerciseIndex = new ExerciseIndexViewModel();
+                    exerciseIndex.Index = index++;                                              // training.Exercises.IndexOf(exercise); O(n) statt O(n^2)
+                    //exerciseIndex.ExerciseId = exercise.Id;
+                    //exerciseIndex.TrainingId = trainingDb.Id;
+                    exercise.ExerciseIndices.Add(exerciseIndex);
+                }
             }
         }
     }

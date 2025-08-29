@@ -19,24 +19,5 @@ namespace GymExerciseClassLibrary.Services
             _context = context;
         }
 
-        #region Create
-        // move to TrainingViewModelService?
-        dsadas
-        public void CreateNewExerciseIndexForEachExerciseInTrainingViewModel(TrainingViewModel trainingVm)//, Training trainingDb)
-        {
-            if (trainingVm.ExercisesOfTraining != null && trainingVm.ExercisesOfTraining.Count > 0)
-            {
-                int index = 0;
-                foreach (var exercise in trainingVm.ExercisesOfTraining)
-                {
-                    ExerciseIndexViewModel exerciseIndex = new ExerciseIndexViewModel();
-                    exerciseIndex.Index = index++;                                              // training.Exercises.IndexOf(exercise); O(n) statt O(n^2)
-                    //exerciseIndex.ExerciseId = exercise.Id;
-                    //exerciseIndex.TrainingId = trainingDb.Id;
-                    exercise.ExerciseIndices.Add(exerciseIndex);
-                }
-            }
-        }
-        #endregion
     }
 }
