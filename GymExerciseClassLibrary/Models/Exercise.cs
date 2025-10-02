@@ -20,6 +20,6 @@ namespace GymExerciseClassLibrary.Models
         public List<Set> Sets { get; set; } = new List<Set>();
         public int? RepsGoal { get; set; }
         public List<Training> Trainings { get; set; } = new List<Training>();
-        public List<ExerciseIndex> ExerciseIndices { get; set; } = new List<ExerciseIndex>();
+        //public List<ExerciseIndex> ExerciseIndices { get; set; } = new List<ExerciseIndex>(); // Change_0210
     }
 }
