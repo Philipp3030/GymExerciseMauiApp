@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using GymExerciseClassLibrary.Data;
 using GymExerciseClassLibrary.Mappings;
 using GymExerciseClassLibrary.Models;
+using GymExerciseClassLibrary.ViewModels.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,8 @@ namespace GymExerciseClassLibrary.ViewModels
         private ObservableCollection<ExerciseViewModel> _exercisesOfTraining = new();
         [ObservableProperty]
         private ObservableCollection<int> _exerciseIds = new();
+        [ObservableProperty]
+        private ObservableCollection<ExerciseIndexViewModel> exerciseIndices = new();
 
         // additional properties
         [ObservableProperty]
