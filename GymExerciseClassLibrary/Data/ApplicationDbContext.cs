@@ -40,9 +40,9 @@ namespace GymExerciseClassLibrary.Data
             {
                 Musclegroups.AddRange(
                 [
-                new Musclegroup { Name = "Brust" },
-                new Musclegroup { Name = "Rücken" },
-                new Musclegroup { Name = "Beine" }
+                    new Musclegroup { Name = "Brust" },
+                    new Musclegroup { Name = "Rücken" },
+                    new Musclegroup { Name = "Beine" }
                 ]);
             }
             await SaveChangesAsync();
