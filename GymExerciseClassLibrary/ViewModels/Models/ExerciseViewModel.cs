@@ -37,8 +37,8 @@ namespace GymExerciseClassLibrary.ViewModels
         private string? _repsGoal;
         [ObservableProperty]
         private ObservableCollection<int> _trainingIds = new();
-        //[ObservableProperty]
-        //private ObservableCollection<ExerciseIndexViewModel> exerciseIndices = new();
+        [ObservableProperty]
+        private ObservableCollection<ExerciseIndexViewModel> _exerciseIndices = new();
 
         // additional properties
         [ObservableProperty]

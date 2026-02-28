@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymExerciseMauiApp", "GymExerciseMauiApp\GymExerciseMauiApp.csproj", "{06748487-82C9-4D6E-8DCA-D9AF7B58BA62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymExerciseClassLibrary", "GymExerciseClassLibrary\GymExerciseClassLibrary.csproj", "{DB0932DB-F2A4-471A-B285-81A6091EBABC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GymExerciseTests", "GymExerciseTests\GymExerciseTests.csproj", "{F688FF60-1C74-4335-BDBF-B681883A6E6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +25,15 @@ Global
 		{DB0932DB-F2A4-471A-B285-81A6091EBABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB0932DB-F2A4-471A-B285-81A6091EBABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB0932DB-F2A4-471A-B285-81A6091EBABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F688FF60-1C74-4335-BDBF-B681883A6E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F688FF60-1C74-4335-BDBF-B681883A6E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F688FF60-1C74-4335-BDBF-B681883A6E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F688FF60-1C74-4335-BDBF-B681883A6E6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4412D74D-B90F-447D-8AB5-CCC697C5B499}
 	EndGlobalSection
 EndGlobal

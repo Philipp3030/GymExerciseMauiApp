@@ -11,7 +11,7 @@ namespace GymExerciseClassLibrary.Mappings
 {
     public partial class Mapper // Change_0210
     {
-        private async Task<Training> MapTrainingVmToModelTest2(TrainingViewModel trainingVm)
+        public async Task<Training> MapTrainingVmToModelTest2(TrainingViewModel trainingVm)
         {
             Training training = await _context.Trainings
                 .Include(t => t.Exercises)
@@ -90,6 +90,7 @@ namespace GymExerciseClassLibrary.Mappings
                         exerciseIndex.Training = training;
                         exerciseIndex.Exercise = exercise;
                     }
+                    exerciseIndices.Add(exerciseIndex);
                 }
             }
             training.ExerciseIndices = exerciseIndices;

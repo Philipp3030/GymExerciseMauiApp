@@ -34,7 +34,7 @@ namespace GymExerciseClassLibrary.Mappings
                     var exIndex = await MapExerciseIndexVmToModel_Exercise(exIndexVm, exercise);
                     if (exIndex != null)
                     {
-                        exerciseIndices.Add(exIndex); 
+                        exerciseIndices.Add(exIndex);
                     }
                 }
             }
@@ -191,7 +191,7 @@ namespace GymExerciseClassLibrary.Mappings
                     {
                         if (exerciseIndex.Training != null)
                         {
-                            exerciseIndices.Add(MapExerciseIndexToNewViewModel_Exercise(exerciseIndex, exerciseVm)); 
+                            exerciseIndices.Add(MapExerciseIndexToNewViewModel_Exercise(exerciseIndex, exerciseVm));
                         }
                     }
                     else
